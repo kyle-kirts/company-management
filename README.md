@@ -16,3 +16,7 @@ Run `module load courses/cs415`.
 This loads the correct version of Java, Maven, and NodeJS.
 
 You should not be defining `JAVA_HOME` in your `~/.bashrc` or anywhere else.
+
+Run `module list` 
+
+This shows whether the cs415 course module is loaded successfully or not.
