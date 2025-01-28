@@ -9,6 +9,9 @@ Run `npm install`.
 
 Run `npm start`.
 
+Output:
+![Screenshot_2025-01-27_17-07-51](https://github.com/user-attachments/assets/aa8c34b0-f36e-4b93-a9b8-1500fe66bc16)
+
 ## Build client
 
 Run `npm run build`.
