@@ -7,7 +7,7 @@ const Home = () => {
                 <h1>Company Management</h1>
                 <br />
                 <h2>CS415 - Colorado State University</h2>
-                <h2>Spring 2023</h2>
+                <h2>Spring 2025</h2>
             </div>
         </div>
     )
