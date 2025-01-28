@@ -20,3 +20,5 @@ You should not be defining `JAVA_HOME` in your `~/.bashrc` or anywhere else.
 Run `module list` 
 
 This shows whether the cs415 course module is loaded successfully or not.
+Output:
+![Screenshot_2025-01-27_17-19-59](https://github.com/user-attachments/assets/ee5ca197-f550-4a29-884c-2be42664bfc3)
