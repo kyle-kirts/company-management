@@ -10,6 +10,9 @@ public class Qualification {
 	private Set<Worker> workers;
 
 	public Qualification(String description) {
+		if (description == null) {
+			throw new IllegalArgumentException("Null is not a valid description");
+		}
 		this.description = description;
 	}
 
