@@ -11,7 +11,7 @@ public class QualificationTest {
 	}
 
 	 @Test(expected = IllegalArgumentException.class)
-    public void test_nullDescription_constructorThrows() {
+    public void test_nullDescription_Constructor() {
         new Qualification(null);
     }
 
