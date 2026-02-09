@@ -25,6 +25,24 @@
 
 
 ## Class: Qualification
+**Method:** `toString()`
+
+| Variable  | Characteristic     | Partition  | Value  |
+|-----------|--------------------|------------|--------|
+| description | A\) Value Type   | A1: Valid Description | "Valid Description" |
+|           |                     | A2: Null Type  | null |
+|           |                     | A3: Empty String | "" |
+
+
+**Method:** `toString()`
+
+| Test | A   | JUnit Test Name                  |
+|------|-----|----------------------------------|
+| T1 (base test) | A1  | `test_validDescription_toString()`|
+| T2   | A2  | `test_nullType_toString()`   |
+| T3   | A3  | `test_emptyString_toString()`  |
+
+---
 
 ## Class: Worker
 

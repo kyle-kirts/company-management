@@ -10,6 +10,7 @@ public class Qualification {
 	private Set<Worker> workers;
 
 	public Qualification(String description) {
+		this.description = description;
 	}
 
 	@Override
@@ -24,7 +25,7 @@ public class Qualification {
 
 	@Override
 	public String toString() {
-		return null;
+		return this.description;
 	}
 
 	public Set<Worker> getWorkers() {
