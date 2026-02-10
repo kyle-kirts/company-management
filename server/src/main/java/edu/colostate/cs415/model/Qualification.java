@@ -10,9 +10,10 @@ public class Qualification {
 	private Set<Worker> workers;
 
 	public Qualification(String description) {
-		if (description == null) {
+		if (validateDescription(description)) {
 			throw new IllegalArgumentException("Null is not a valid description");
 		}
+		
 		this.description = description;
 	}
 
@@ -43,5 +44,16 @@ public class Qualification {
 
 	public QualificationDTO toDTO() {
 		return null;
+	}
+
+	private boolean validateDescription(String description) {
+		if (description == null) {
+			return true;
+		}
+		if (description.trim().length() == 0) {
+			return true;
+		}
+
+		return false;
 	}
 }

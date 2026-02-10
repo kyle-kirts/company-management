@@ -15,16 +15,20 @@ public class QualificationTest {
         new Qualification(null);
     }
 
+	@Test(expected = IllegalArgumentException.class)
+	public void test_emptyString_Constructor() {
+		new Qualification("");
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void test_whiteSpaces_Constructor() {
+		new Qualification("    ");
+	}
+
 	@Test
 	public void test_validDescription_toString() {
 		Qualification q = new Qualification("Valid Description");
 		assertEquals("Valid Description", q.toString());
-	}
-
-	@Test
-	public void test_emptyString_toString() {
-		Qualification q = new Qualification("");
-		assertEquals("", q.toString());
 	}
 
 }

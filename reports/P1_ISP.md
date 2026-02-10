@@ -30,6 +30,8 @@
 | Variable  | Characteristic     | Partition  | Value  |
 |-----------|--------------------|------------|--------|
 | description | A\) Value Type   | A1: null | null |
+|             |                  | A2: empty string | "" |
+|             |                  | A3: only whitespaces | "   " |
 
 
 **Method:** `Qualification(String description)`
@@ -37,6 +39,8 @@
 | Test | A   | JUnit Test Name                  |
 |------|-----|----------------------------------|
 | T1 (base test) | A1  | `test_nullDescription_Constructor()`|
+| T2             | A2  | `test_emptyString_Constructor()`|
+| T3             | A3  | `test_whitespacesDescription_Constructor()`|
 
 ---
 
@@ -45,14 +49,12 @@
 | Variable  | Characteristic     | Partition  | Value  |
 |-----------|--------------------|------------|--------|
 | description | A\) Value Type   | A1: Valid Description | "Valid Description" |
-|           |                     | A2: Empty String | "" |
 
 **Method:** `toString()`
 
 | Test | A   | JUnit Test Name                  |
 |------|-----|----------------------------------|
 | T1 (base test) | A1  | `test_validDescription_toString()`|
-| T2   | A2  | `test_emptyString_toString()`  |
 
 ---
 
