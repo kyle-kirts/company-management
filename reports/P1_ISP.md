@@ -79,6 +79,23 @@
 
 ---
 
+**Method:** `hashCode()`
+
+ Variable  | Characteristic     | Partition  | Value  |
+|-----------|--------------------|------------|--------|
+| description | A\) Value Type   | A1: valid   | "valid description" |
+
+
+***Method:** `hashCode()`
+
+| Test | A   | JUnit Test Name                  |
+|------|-----|----------------------------------|
+| T1 (base test) | A1  | `test_validDescriptionHash_hashCode()`|
+
+
+
+---
+
 ## Class: Worker
 
 ## Class: Project
