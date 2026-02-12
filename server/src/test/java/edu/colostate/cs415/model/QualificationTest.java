@@ -64,4 +64,12 @@ public class QualificationTest {
 		assertFalse(q.equals(other));
 	} 
 
+	@Test
+	public void test_validDescriptionHash_hashCode() {
+		int hashInteger = -307059209;
+		Qualification q = new Qualification("valid description");
+
+		assertEquals("Hashcode should match hashInteger", q.hashCode(), hashInteger);
+	}
+
 }

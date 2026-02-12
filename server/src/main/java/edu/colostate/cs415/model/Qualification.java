@@ -1,5 +1,6 @@
 package edu.colostate.cs415.model;
 
+import java.util.Objects;
 import java.util.Set;
 
 import edu.colostate.cs415.dto.QualificationDTO;
@@ -29,7 +30,7 @@ public class Qualification {
 
 	@Override
 	public int hashCode() {
-		return 0;
+		return Objects.hash(this.description);
 	}
 
 	@Override
