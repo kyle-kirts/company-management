@@ -14,6 +14,22 @@ public class Worker {
 	private Set<Qualification> qualifications;
 
 	public Worker(String name, Set<Qualification> qualifications, double salary) {
+		if (name == null) {
+			throw new IllegalArgumentException("A Worker name cannot be null");
+		}
+		if (name.trim().length() == 0) {
+			throw new IllegalArgumentException("A Worker name cannot be empty or only whitespaces");
+		}
+		if (qualifications == null) {
+			throw new IllegalArgumentException("A Worker Qualification set cannot be null");
+		}
+		if (salary < 0) {
+			throw new IllegalArgumentException("A Worker salary cannot be negative");
+		}
+
+		this.name = name;
+		this.qualifications = qualifications;
+		this.salary = salary;
 	}
 
 	@Override
