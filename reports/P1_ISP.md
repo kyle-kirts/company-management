@@ -58,6 +58,27 @@
 
 ---
 
+**Method:** `equals(Object other)`
+
+| Variable  | Characteristic     | Partition  | Value  |
+|-----------|--------------------|------------|--------|
+| Object    | A\) Type           | A1: null   | null   |
+|           |                    | A2: valid  | Qualification |
+|           |                    | A3: invalid | Integer |
+| Description | B\) equal        | B1: True   | "valid description" |
+|           |                    | B2: False  | "valid descriptin" & " valid description " |
+
+**Method:** `equals(Object other)`
+
+| Test | A   | B   | JUnit Test Name                  |
+|------|-----|-----|----------------------------------|
+| T1 (base test) | A2  | B1  | `test_equalOther_equals()`|
+| T2   | A2  | B2  | `test_unequalOther_equals()`   |
+| T3   | A1  |     | `test_nullOther_equals()`  |
+| T4   | A3  |     | `test_invalidType_equals()`  |
+
+---
+
 ## Class: Worker
 
 ## Class: Project
