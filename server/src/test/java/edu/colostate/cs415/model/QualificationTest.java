@@ -1,6 +1,8 @@
 package edu.colostate.cs415.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -30,5 +32,36 @@ public class QualificationTest {
 		Qualification q = new Qualification("Valid Description");
 		assertEquals("Valid Description", q.toString());
 	}
+
+	@Test
+	public void test_equalOther_equals() {
+		Qualification other = new Qualification("valid description");
+		Qualification q = new Qualification("valid description");
+
+		assertTrue(q.equals(other));
+	}
+
+	@Test
+	public void test_unequalOther_equals() {
+		Qualification other = new Qualification(" valid description ");
+		Qualification q = new Qualification("valid description");
+
+		assertFalse(q.equals(other));
+	}
+
+	@Test
+	public void test_nullOther_equals() {
+		Qualification q = new Qualification("valid description");
+
+		assertFalse(q.equals(null));
+	}
+
+	@Test
+	public void test_invalidType_equals() {
+		Integer other = 10;
+		Qualification q = new Qualification("valid description");
+
+		assertFalse(q.equals(other));
+	} 
 
 }

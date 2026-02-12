@@ -19,7 +19,12 @@ public class Qualification {
 
 	@Override
 	public boolean equals(Object other) {
-		return false;
+		if (!(other instanceof Qualification)) {
+			return false;
+		}
+
+		Qualification otherQ = (Qualification) other;
+		return (this.description.equals(otherQ.description));
 	}
 
 	@Override
