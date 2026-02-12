@@ -81,6 +81,36 @@
 
 ## Class: Worker
 
+**Method:** `Worker(String name, Set<Qualification> qualifications, double salary)`
+
+| Variable  | Characteristic     | Partition  | Value  |
+|-----------|--------------------|------------|--------|
+| name      | A\) String Value   | A1: empty  | "" |
+|           |                    | A2: valid name | "Bob B" |
+|           |                    | A3: only whitespace  | "   " |
+|           |                    | A4: null   | null |
+| salary    | B\) salary amount  | B1: negative salary  | -1.00 |
+|           |                    | B2: 0 salary | 0.00 |
+|           |                    | B3: positive salary | 1.00 |
+| qualifications  | C\) Set Value | C1: null   | null |
+|           |                    | C2: empty  | [] |
+|           |                    | C3: atleast 1 qualification | ["Qualification"] |
+
+**Method:** `Worker(String name, Set<Qualification> qualifications, double salary)`
+
+| Test | A   | B   | C   | JUnit Test Name                  |
+|------|-----|-----|-----|----------------------------------|
+| T1 (base test) | A2  | B3  | C3  | `test_validWorker_Worker()`|
+| T2   | A1  | B3  | C2  | `test_emptyName_Worker()`        |
+| T3   | A3  | B3  | C2  | `test_whitespaceName_Worker()`   |
+| T4   | A4  | B3  | C2  | `test_nullName_Worker()`         |
+| T5   | A2  | B1  | C2  | `test_negativeSalary_Worker()`   |
+| T6   | A2  | B2  | C2  | `test_zeroSalary_Worker()`       |
+| T7   | A2  | B3  | C1  | `test_nullQsSet_Worker()`        |
+| T8   | A2  | B3  | C2  | `test_emptyQsSet_Worker()`       |
+
+---
+
 ## Class: Project
 
 ## Class: Company
