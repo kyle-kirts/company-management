@@ -66,7 +66,7 @@
 |           |                    | A2: valid  | Qualification |
 |           |                    | A3: invalid | Integer |
 | Description | B\) equal        | B1: True   | "valid description" |
-|           |                    | B2: False  | "valid descriptin" & " valid description " |
+|           |                    | B2: False  | "valid description" & " valid description " |
 
 **Method:** `equals(Object other)`
 
