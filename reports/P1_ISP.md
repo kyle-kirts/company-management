@@ -79,14 +79,14 @@
 
 ---
 
-**Method:** `hashCode()`
+**Method:** `hashCode()_isp`
 
  Variable  | Characteristic     | Partition  | Value  |
 |-----------|--------------------|------------|--------|
 | description | A\) Value Type   | A1: valid   | "valid description" |
 
 
-***Method:** `hashCode()`
+***Method:** `hashCode()_bcc`
 
 | Test | A   | JUnit Test Name                  |
 |------|-----|----------------------------------|
