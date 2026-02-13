@@ -60,7 +60,7 @@ public class Worker {
 	}
 
 	public Set<Qualification> getQualifications() {
-		return null;
+		return this.qualifications;
 	}
 
 	public void addQualification(Qualification qualification) {
