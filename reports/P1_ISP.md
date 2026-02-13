@@ -92,8 +92,6 @@
 |------|-----|----------------------------------|
 | T1 (base test) | A1  | `test_validDescriptionHash_hashCode()`|
 
-
-
 ---
 
 ## Class: Worker
@@ -113,6 +111,7 @@
 |           |                    | C2: empty  | [] |
 |           |                    | C3: atleast 1 qualification | ["Qualification"] |
 
+
 **Method:** `Worker(String name, Set<Qualification> qualifications, double salary)`
 
 | Test | A   | B   | C   | JUnit Test Name                  |
@@ -125,6 +124,21 @@
 | T6   | A2  | B2  | C2  | `test_zeroSalary_Worker()`       |
 | T7   | A2  | B3  | C1  | `test_nullQsSet_Worker()`        |
 | T8   | A2  | B3  | C2  | `test_emptyQsSet_Worker()`       |
+
+---
+
+**Method:** `hashCode()_isp`
+
+ Variable  | Characteristic     | Partition  | Value  |
+|-----------|--------------------|------------|--------|
+| name | A\) Value Type   | A1: valid   | "valid description" |
+
+
+***Method:** `hashCode()_bcc`
+
+| Test | A   | JUnit Test Name                  |
+|------|-----|----------------------------------|
+| T1 (base test) | A1  | `test_validNameHash_hashCode()`|
 
 ---
 
