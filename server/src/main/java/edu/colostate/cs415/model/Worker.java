@@ -1,5 +1,6 @@
 package edu.colostate.cs415.model;
 
+import java.util.Objects;
 import java.util.Set;
 
 import edu.colostate.cs415.dto.WorkerDTO;
@@ -39,7 +40,7 @@ public class Worker {
 
 	@Override
 	public int hashCode() {
-		return 0;
+		return Objects.hash(this.name);
 	}
 
 	@Override
