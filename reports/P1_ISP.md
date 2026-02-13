@@ -124,6 +124,23 @@
 | T6   | A2  | B2  | C2  | `test_zeroSalary_Worker()`       |
 | T7   | A2  | B3  | C1  | `test_nullQsSet_Worker()`        |
 | T8   | A2  | B3  | C2  | `test_emptyQsSet_Worker()`       |
+| T8   | A2  | B3  | C3  | `test_nonemptyQsSet_Worker()`    |
+
+---
+
+**Method:** `getQualifications()`
+
+| Variable  | Characteristic     | Partition  | Value  |
+|-----------|--------------------|------------|--------|
+| qualifications | A\) empty     | A1: True   | []     |
+|           |                    | A2: False  | ["Qualification1", "Qualification2"] |
+
+**Method:** `getQualifications()`
+
+| Test | A   | JUnit Test Name                  |
+|------|-----|----------------------------------|
+| T1 (base test) | A1  | `test_emptyQualifications_getQualifications()`|
+| T2   | A2  | `test_multipleQualifications_getQualifications()`   |
 
 ---
 
