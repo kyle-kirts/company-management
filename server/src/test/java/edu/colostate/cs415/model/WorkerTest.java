@@ -14,7 +14,7 @@ public class WorkerTest {
 		assert (true);
 	}
 	
-	@Test()
+	@Test
 	public void test_validWorker_Worker() {
 		Set<Qualification> qs = new HashSet<>();
 		Qualification q = new Qualification("Qualification");
@@ -23,7 +23,7 @@ public class WorkerTest {
 
 		assertTrue(worker.getQualifications().contains(q));
 		/*assertTrue(worker.getName().contains("Bob B")) */
-		/*assertTrue(worker.getSalary().contains(1.00)) */
+		assertEquals(1.00, worker.getSalary(), 0.0);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -114,4 +114,21 @@ public class WorkerTest {
 
 
 	}
+
+	@Test
+	public void test_zeroSalary_getSalary() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 0.00);
+
+		assertEquals(0.00, worker.getSalary(), 0.0);
+	}
+
+	@Test
+	public void test_positiveSalary_getSalary() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+
+		assertEquals(1000.00, worker.getSalary(), 0.0);
+	}
+
 }
