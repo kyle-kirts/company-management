@@ -1,5 +1,6 @@
 package edu.colostate.cs415.model;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -30,6 +31,7 @@ public class Worker {
 
 		this.name = name;
 		this.qualifications = qualifications;
+		this.projects = new HashSet<Project>();
 		this.salary = salary;
 	}
 
@@ -45,7 +47,8 @@ public class Worker {
 
 	@Override
 	public String toString() {
-		return null;
+		long sal = (long)this.salary;
+		return (this.name + ":" + Integer.toString(this.projects.size()) + ":" + Integer.toString(this.qualifications.size()) + ":" + sal);
 	}
 
 	public String getName() {
