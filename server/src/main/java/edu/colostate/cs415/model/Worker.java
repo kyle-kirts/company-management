@@ -56,7 +56,7 @@ public class Worker {
 	}
 
 	public double getSalary() {
-		return 0.0;
+		return this.salary;
 	}
 
 	public void setSalary(double salary) {

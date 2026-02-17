@@ -179,6 +179,22 @@
 
 ---
 
+**Method:** `getSalary()`
+
+| Variable  | Characteristic     | Partition  | Value  |
+|-----------|--------------------|------------|--------|
+| salary    | value              | 0          | 0.00    |
+|           |                    | 0 <        | 1000.00 |
+
+**Method:** `getSalary()`
+
+| Test | A   | JUnit Test Name                  |
+|------|-----|----------------------------------|
+| T1 (base test) | A2  | `test_zeroSalary_getSalary()`|
+| T2   | A1  | `test_positiveSalary_getSalary()`   |
+
+---
+
 ## Class: Project
 
 ## Class: Company
