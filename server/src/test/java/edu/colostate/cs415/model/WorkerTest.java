@@ -115,7 +115,50 @@ public class WorkerTest {
 
 	}
 
+	public void test_noProjects_LongQualifications_normalSalary_toString(){
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Synkronized"));
+		qs.add(new Qualification("Dynamite"));
+		Worker worker = new Worker("Jamiroquai", qs, 123456);
+		assertEquals("this should work", worker.toString(), "Jamiroquai:0:2:123456");
+	}
+
 	@Test
+	public void test_LongProjects_LongQualifications_normalSalary_toString(){
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Synkronized"));
+		qs.add(new Qualification("Dynamite"));
+		//Must come back when addProjects mutator is implemented. For now, is a copy of base case test
+		Worker worker = new Worker("Jamiroquai", qs, 123456);
+		assertEquals(worker.toString(), "Jamiroquai:0:2:123456");
+	}
+
+	@Test
+	public void test_noProjects_NoQualifications_normalSalary_toString(){
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Jamiroquai", qs, 123456);
+		assertEquals(worker.toString(), "Jamiroquai:0:0:123456");
+	}
+
+	@Test
+	public void test_noProjects_LongQualifications_noSalary_toString(){
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Synkronized"));
+		qs.add(new Qualification("Dynamite"));
+		Worker worker = new Worker("Jamiroquai", qs, 0);
+		assertEquals(worker.toString(), "Jamiroquai:0:2:0");
+	}
+
+	@Test
+	public void test_noProjects_LongQualifications_hugeSalary_toString(){
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Synkronized"));
+		qs.add(new Qualification("Dynamite"));
+		Worker worker = new Worker("Jamiroquai", qs, Integer.MAX_VALUE+100.0);
+		assertEquals(worker.toString(), "Jamiroquai:0:2:2147483747");
+	}
+
+  @Test
 	public void test_zeroSalary_getSalary() {
 		Set<Qualification> qs = new HashSet<>();
 		Worker worker = new Worker("Bob B", qs, 0.00);
@@ -130,5 +173,4 @@ public class WorkerTest {
 
 		assertEquals(1000.00, worker.getSalary(), 0.0);
 	}
-
 }

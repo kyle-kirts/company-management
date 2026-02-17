@@ -157,6 +157,26 @@
 |------|-----|----------------------------------|
 | T1 (base test) | A1  | `test_validNameHash_hashCode()`|
 
+**Method: ** 'toString()_isp'
+|Variable  | Characteristic     | Partition  | Value  |
+|----------|--------------------|------------|--------|
+|name      |String Length       |A1: length > 0  |"Jamiroquai"|
+|projects  |List Length         |B1: length = 0  |new HashSet()|
+|          |                    |B2: length > 0  |new HashSet("Synkronized", "Dynamite")|
+|qualifications|List Length     |C1: length = 0  |new HashSet()|
+|          |                    |C2: length > 0  |new HashSet("Virtual Insanity", "Canned Heat")|
+|salary    |size                |D1: salary = 0  |0      |
+|          |                    |D2: 0 < salary < INTEGER.MAX_Value|123456|
+|          |                    |D3: salary > INTEGER.MAX_Value|
+
+| Test | A   | B   | C   | D   | JUnit Test Name                  |
+|------|-----|-----|-----|-----|----------------------------------|
+| T1 (base test)|A1|B1|C2| D2  | `test_noProjects_LongQualifications_normalSalary_toString()`|
+| T2   | A1  | B2  | C2  | D2  | `test_LongProjects_LongQualifications_normalSalary_toString()`  |
+| T3   | A1  | B1  | C1  | D2  | `test_noProjects_NoQualifications_normalSalary_toString()`  |
+| T4   | A1  | B1  | C2  | D1  | `test_noProjects_LongQualifications_noSalary_toString()`   |
+| T5   | A1  | B1  | C2  | D3  | `test_noProjects_LongQualifications_hugeSalary_toString()` |
+
 ---
 
 **Method:** `getSalary()`
