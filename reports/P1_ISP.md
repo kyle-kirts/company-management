@@ -124,7 +124,7 @@
 | Test | A   | JUnit Test Name                  |
 |------|-----|----------------------------------|
 | T1 (base test) | A1  | `test_validWworkerSet_getWorker()` |
-| T2 |      | A2 | `test_emptyWorkerSet_getWorker()` |
+| T2 | A2 | `test_emptyWorkerSet_getWorker()` |
 
 ---
 
