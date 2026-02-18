@@ -215,19 +215,19 @@
 
 | Variable  | Characteristic     | Partition  | Value  |
 |-----------|--------------------|------------|--------|
-| salary    | A\) value          | NaN        | NaN    |
-|           |                    | < 0        | -100.00 |
-|           |                    | 0          | 0.00   |
-|           |                    | 0 < salary | 100.00 |
+| salary    | A\) value          | A1: NaN        | NaN    |
+|           |                    | A2: < 0        | -100.00 |
+|           |                    | A3: 0          | 0.00   |
+|           |                    | A4: 0 <        | 100.00 |
 
 **Method:** `setSalary(double salary)`
 
 | Test | A   | JUnit Test Name                  |
-|------|-----|-----|-----|----------------------------------|
-| T1 (base test) | A2  | `test_positiveSalary_setSalary()`  |
-| T2   | A1  | `test_negativeSalary_setSalary()`            |
+|------|-----|----------------------------------|
+| T1 (base test) | A4  | `test_positiveSalary_setSalary()`  |
+| T2   | A2  | `test_negativeSalary_setSalary()`            |
 | T3   | A3  | `test_zeroSalary_setSalary()`                |
-| T4   | A2  | `test_nanSalary_setSalary()`                 |
+| T4   | A1  | `test_nanSalary_setSalary()`                 |
 
 ---
 
