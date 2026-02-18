@@ -22,7 +22,7 @@ public class WorkerTest {
 		Worker worker = new Worker("Bob B", qs, 1.00);
 
 		assertTrue(worker.getQualifications().contains(q));
-		/*assertTrue(worker.getName().contains("Bob B")) */
+		assertTrue(worker.getName().contains("Bob B"));
 		assertEquals(1.00, worker.getSalary(), 0.0);
 	}
 
@@ -172,5 +172,13 @@ public class WorkerTest {
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 
 		assertEquals(1000.00, worker.getSalary(), 0.0);
+	}
+
+	@Test
+	public void test_validName_getName() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+
+		assertEquals("Bob B", worker.getName());
 	}
 }

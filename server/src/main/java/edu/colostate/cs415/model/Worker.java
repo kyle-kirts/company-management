@@ -52,7 +52,7 @@ public class Worker {
 	}
 
 	public String getName() {
-		return null;
+		return this.name;
 	}
 
 	public double getSalary() {

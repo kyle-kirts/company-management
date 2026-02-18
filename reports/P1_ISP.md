@@ -195,6 +195,19 @@
 
 ---
 
+**Method:** `getName()`
+
+| Variable  | Characteristic     | Partition  | Value  |
+|-----------|--------------------|------------|--------|
+| name      | A\) value          | A1: valid      | "Bob B" |
+
+**Method:** `getName()`
+
+| Test | A   | JUnit Test Name                  |
+|------|-----|----------------------------------|
+| T1 (base test) | A1 | `test_validName_getName()`|
+
+---
 ## Class: Project
 
 ## Class: Company
