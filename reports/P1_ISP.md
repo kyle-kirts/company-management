@@ -201,7 +201,7 @@
 
 | Variable  | Characteristic     | Partition  | Value  |
 |-----------|--------------------|------------|--------|
-| name      | nullness           | A1: null   | null   |
+| name      | String Value       | A1: null   | null   |
 |           |                    | A2: not null| "Project Runway"|
 |           |                    | A3: Empty String| ""|
 | qualifications| set size       | B1: null   | null   |
