@@ -59,6 +59,15 @@ public class WorkerTest {
 		Set<Qualification> qs = new HashSet<>();
 		qs.add(new Qualification("Qualification"));
 		Worker worker = new Worker("Bob B", qs, 0.00);
+
+		assertEquals(0.00, worker.getSalary(), 0.00 );
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void test_nanSalary_Worker() {
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Qualification"));
+		new Worker("Bob B", qs, Double.NaN);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -180,5 +189,37 @@ public class WorkerTest {
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 
 		assertEquals("Bob B", worker.getName());
+	}
+
+	@Test
+	public void test_positiveSalary_setSalary() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		worker.setSalary(100.00);
+
+		assertEquals(100.00, worker.getSalary(), 0.00);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void test_negativeSalary_setSalary() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 0.00);
+		worker.setSalary(-100.00);
+	}
+
+	@Test
+	public void test_zeroSalary_setSalary() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		worker.setSalary(0.00);
+
+		assertEquals(0.00, worker.getSalary(), 0.00);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void test_nanSalary_setSalary() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		worker.setSalary(Double.NaN);
 	}
 }
