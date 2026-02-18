@@ -86,11 +86,45 @@
 | description | A\) Value Type   | A1: valid   | "valid description" |
 
 
-***Method:** `hashCode()_bcc`
+**Method:** `hashCode()_bcc`
 
 | Test | A   | JUnit Test Name                  |
 |------|-----|----------------------------------|
 | T1 (base test) | A1  | `test_validDescriptionHash_hashCode()`|
+
+---
+
+
+ Variable  | Characteristic     | Partition  | Value  |
+|-----------|--------------------|------------|--------|
+| w | A\) Worker object  | A1: Worker Added   | worker1 |
+
+
+
+| Test | A   | JUnit Test Name                  |
+|------|-----|----------------------------------|
+| T1 (base test) | A1  | `test_validWorkerObject_addWorker()`|
+
+---
+
+**Method:** `getWorkers()_isp`
+
+**Method:** `addWorker()_isp`
+
+ Variable  | Characteristic     | Partition  | Value  |
+|-----------|--------------------|------------|--------|
+| workers | A\) Set of workers | A1: Valid Set  | [worker1] |
+|         |                     | A2: Empty Set | [] |
+
+**Method:** `getWorkers()_bcc`
+
+**Method:** `addWorker()_bcc`
+
+
+| Test | A   | JUnit Test Name                  |
+|------|-----|----------------------------------|
+| T1 (base test) | A1  | `test_validWworkerSet_getWorker()` |
+| T2 |      | A2 | `test_emptyWorkerSet_getWorker()` |
 
 ---
 
@@ -157,7 +191,10 @@
 |------|-----|----------------------------------|
 | T1 (base test) | A1  | `test_validNameHash_hashCode()`|
 
-**Method: ** 'toString()_isp'
+---
+
+**Method:** `toString()_isp`
+
 |Variable  | Characteristic     | Partition  | Value  |
 |----------|--------------------|------------|--------|
 |name      |String Length       |A1: length > 0  |"Jamiroquai"|
@@ -168,6 +205,8 @@
 |salary    |size                |D1: salary = 0  |0      |
 |          |                    |D2: 0 < salary < INTEGER.MAX_Value|123456|
 |          |                    |D3: salary > INTEGER.MAX_Value|
+
+**Method:** `toString()_bcc`
 
 | Test | A   | B   | C   | D   | JUnit Test Name                  |
 |------|-----|-----|-----|-----|----------------------------------|

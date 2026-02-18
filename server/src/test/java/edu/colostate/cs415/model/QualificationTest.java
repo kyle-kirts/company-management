@@ -4,6 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.Test;
 
 public class QualificationTest {
@@ -70,6 +73,26 @@ public class QualificationTest {
 		Qualification q = new Qualification("valid description");
 
 		assertEquals("Hashcode should match hashInteger", q.hashCode(), hashInteger);
+	}
+
+	@Test
+	public void test_validWorkerObject_addWorker() {
+		Qualification q = new Qualification("valid description");
+		Set<Qualification> qualifications = new HashSet<Qualification>();
+		qualifications.add(q);
+		Set<Worker> workers = new HashSet<Worker>();
+		Worker worker1 = new Worker("Worker1", qualifications, 0);
+		workers.add(worker1);
+		q.addWorker(worker1);
+
+		assertEquals(workers, q.getWorkers());
+	}
+
+	@Test
+	public void test_emptyWorkerSet_getWorkers() {
+		Qualification q = new Qualification("valid description");
+
+		assertTrue(q.getWorkers().isEmpty());
 	}
 
 }

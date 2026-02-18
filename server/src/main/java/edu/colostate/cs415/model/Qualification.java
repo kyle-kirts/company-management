@@ -1,5 +1,6 @@
 package edu.colostate.cs415.model;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -16,6 +17,7 @@ public class Qualification {
 		}
 		
 		this.description = description;
+		this.workers = new HashSet<Worker>();
 	}
 
 	@Override
@@ -39,10 +41,11 @@ public class Qualification {
 	}
 
 	public Set<Worker> getWorkers() {
-		return null;
+		return workers;
 	}
 
 	public void addWorker(Worker worker) {
+		workers.add(worker);
 	}
 
 	public void removeWorker(Worker worker) {
