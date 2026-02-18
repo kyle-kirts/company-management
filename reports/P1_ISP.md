@@ -157,7 +157,7 @@
 |------|-----|----------------------------------|
 | T1 (base test) | A1  | `test_validNameHash_hashCode()`|
 
-**Method: ** 'toString()_isp'
+**Method:** `toString()_isp`
 |Variable  | Characteristic     | Partition  | Value  |
 |----------|--------------------|------------|--------|
 |name      |String Length       |A1: length > 0  |"Jamiroquai"|
@@ -169,6 +169,7 @@
 |          |                    |D2: 0 < salary < INTEGER.MAX_Value|123456|
 |          |                    |D3: salary > INTEGER.MAX_Value|
 
+**Method:** `toString()_bcc`
 | Test | A   | B   | C   | D   | JUnit Test Name                  |
 |------|-----|-----|-----|-----|----------------------------------|
 | T1 (base test)|A1|B1|C2| D2  | `test_noProjects_LongQualifications_normalSalary_toString()`|
@@ -196,5 +197,32 @@
 ---
 
 ## Class: Project
+**Method:** `Project(String name, Set<Qualification> qualifications, ProjectSize size)`
+
+| Variable  | Characteristic     | Partition  | Value  |
+|-----------|--------------------|------------|--------|
+| name      | nullness           | A1: null   | null   |
+|           |                    | A2: not null| "Project Runway"|
+|           |                    | A3: Empty String| ""|
+| qualifications| set size       | B1: null   | null   |
+|           |                    | B2: empty set| New HashSet()|
+|           |                    | B3: size > 1| New HashSet("Sean Kelley", "Grace Kelsey")|
+| size      | exists in enum     | C1: null   | null   |
+|           |                    | C2: small project| ProjectSize.SMALL|
+|           |                    | C3: medium project| ProjectSize.MEDIUM|
+|           |                    | C4: large project| ProjectSize.BIG|
+
+**Method:** `Project(String name, Set<Qualification> qualifications, ProjectSize size)`
+
+| Test | A   | B   | C   | JUnit Test Name                  |
+|------|-----|-----|-----|----------------------------------|
+| T1(Base)| A2| B3 | C3  | `test_nonNullName_someQualifications_mediumProject()`|
+| T2   | A1  | B3  | C3  | `test_NullName_someQualifications_mediumProject()`|
+| T3   | A3  | B3  | C3  | `test_emptyName_someQualifications_mediumProject()`|
+| T4   | A2  | B1  | C3  | `test_nonNullName_nullQualifications_mediumProject()`|
+| T5   | A2  | B2  | C3  | `test_nonNullName_noQualifications_mediumProject()`|
+| T6   | A2  | B3  | C1  | `test_nonNullName_someQualifications_nullProject()`|
+| T7   | A2  | B3  | C2  | `test_nonNullName_someQualifications_smallProject()`|
+| T8   | A2  | B3  | C4  | `test_nonNullName_someQualifications_bigProject()`|
 
 ## Class: Company
