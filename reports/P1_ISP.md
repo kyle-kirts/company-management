@@ -233,7 +233,7 @@
 ---
 
 ## Class: Project
-**Method:** `Project(String name, Set<Qualification> qualifications, ProjectSize size)`
+**Method:** `Project(String name, Set<Qualification> qualifications, ProjectSize size)_isp`
 
 | Variable  | Characteristic     | Partition  | Value  |
 |-----------|--------------------|------------|--------|
@@ -248,7 +248,7 @@
 |           |                    | C3: medium project| ProjectSize.MEDIUM|
 |           |                    | C4: large project| ProjectSize.BIG|
 
-**Method:** `Project(String name, Set<Qualification> qualifications, ProjectSize size)`
+**Method:** `Project(String name, Set<Qualification> qualifications, ProjectSize size)_bcc`
 
 | Test | A   | B   | C   | JUnit Test Name                  |
 |------|-----|-----|-----|----------------------------------|
@@ -260,5 +260,15 @@
 | T6   | A2  | B3  | C1  | `test_nonNullName_someQualifications_nullProject()`|
 | T7   | A2  | B3  | C2  | `test_nonNullName_someQualifications_smallProject()`|
 | T8   | A2  | B3  | C4  | `test_nonNullName_someQualifications_bigProject()`|
+
+**Method:** `getName()_isp`
+| Variable  | Characteristic     | Partition  | Value  |
+|-----------|--------------------|------------|--------|
+| name      | validity(checked on construction)| A1: valid name| "Project Runway"|
+
+**Method:** `getName()_bcc`
+| Test | A   | JUnit Test Name                  |
+|------|-----|----------------------------------|
+| T1(base) | A1| `test_validName_getName()      |
 
 ## Class: Company
