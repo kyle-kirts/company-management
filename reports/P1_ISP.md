@@ -107,6 +107,7 @@
 | salary    | B\) salary amount  | B1: negative salary  | -1.00 |
 |           |                    | B2: 0 salary | 0.00 |
 |           |                    | B3: positive salary | 1.00 |
+|           |                    | B4: NaN salary | NaN |
 | qualifications  | C\) Set Value | C1: null   | null |
 |           |                    | C2: empty  | [] |
 |           |                    | C3: atleast 1 qualification | ["Qualification"] |
@@ -125,6 +126,7 @@
 | T7   | A2  | B3  | C1  | `test_nullQsSet_Worker()`        |
 | T8   | A2  | B3  | C2  | `test_emptyQsSet_Worker()`       |
 | T8   | A2  | B3  | C3  | `test_nonemptyQsSet_Worker()`    |
+| T9   | A2  | B4  | C3  | `test_nanSalary_Worker()`        |
 
 ---
 
@@ -208,6 +210,27 @@
 | T1 (base test) | A1 | `test_validName_getName()`|
 
 ---
+
+**Method:** `setSalary(double salary)`
+
+| Variable  | Characteristic     | Partition  | Value  |
+|-----------|--------------------|------------|--------|
+| salary    | A\) value          | NaN        | NaN    |
+|           |                    | < 0        | -100.00 |
+|           |                    | 0          | 0.00   |
+|           |                    | 0 < salary | 100.00 |
+
+**Method:** `setSalary(double salary)`
+
+| Test | A   | JUnit Test Name                  |
+|------|-----|-----|-----|----------------------------------|
+| T1 (base test) | A2  | `test_positiveSalary_setSalary()`  |
+| T2   | A1  | `test_negativeSalary_setSalary()`            |
+| T3   | A3  | `test_zeroSalary_setSalary()`                |
+| T4   | A2  | `test_nanSalary_setSalary()`                 |
+
+---
+
 ## Class: Project
 
 ## Class: Company
