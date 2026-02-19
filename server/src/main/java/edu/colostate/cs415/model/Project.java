@@ -56,7 +56,7 @@ public class Project {
 	}
 
 	public ProjectSize getSize() {
-		return null;
+		return this.size;
 	}
 
 	public ProjectStatus getStatus() {

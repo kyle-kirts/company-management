@@ -17,7 +17,7 @@ public class ProjectTest {
 
 		assertNotNull(p);
 		assertEquals("Project Runway", p.getName());
-		//assertEquals(2, p.getSize().getValue());
+		assertEquals(2, p.getSize().getValue());
 		//assertEquals(ProjectStatus.PLANNED, p.getStatus());
 		//assertEquals(0, p.getWorkers.size());
 		//assertEquals(2, p.getRequiredQualifications().size());
@@ -102,5 +102,14 @@ public class ProjectTest {
 		Project p = new Project("valid description", qs, ProjectSize.MEDIUM);
 
 		assertEquals("Hashcode should match hashInteger", p.hashCode(), hashInteger);
+	}
+
+	@Test
+	public void test_validEnumSize_getSize(){
+		Set<Qualification> qs = new HashSet<>();
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+
+		assertEquals(2, p.getSize().getValue());
+		assertEquals(ProjectSize.MEDIUM, p.getSize());
 	}
 }
