@@ -25,8 +25,8 @@ public class Worker {
 		if (qualifications == null) {
 			throw new IllegalArgumentException("A Worker Qualification set cannot be null");
 		}
-		if (salary < 0) {
-			throw new IllegalArgumentException("A Worker salary cannot be negative");
+		if (salary < 0 || Double.isNaN(salary)) {
+			throw new IllegalArgumentException("A Worker salary cannot be negative or NaN value");
 		}
 
 		this.name = name;
@@ -60,6 +60,10 @@ public class Worker {
 	}
 
 	public void setSalary(double salary) {
+		if (salary < 0 || Double.isNaN(salary)) {
+			throw new IllegalArgumentException("A Worker salary cannot be negative or NaN value");
+		}
+		this.salary = salary;
 	}
 
 	public Set<Qualification> getQualifications() {

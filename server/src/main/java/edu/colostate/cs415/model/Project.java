@@ -1,5 +1,6 @@
 package edu.colostate.cs415.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import edu.colostate.cs415.dto.ProjectDTO;
@@ -13,6 +14,25 @@ public class Project {
 	private Set<Qualification> qualifications;
 
 	public Project(String name, Set<Qualification> qualifications, ProjectSize size) {
+		if (name == null) {
+			throw new IllegalArgumentException("Project name cannot be null");
+		}
+		if (name.trim().length() == 0) {
+			throw new IllegalArgumentException("Project name cannot be empty");
+		}
+		if (qualifications == null) {
+			throw new IllegalArgumentException("Project qualifications cannot be null");
+		}
+		if (size == null) {
+			throw new IllegalArgumentException("Project size cannot be null");
+		}
+		this.name = name;
+		this.size = size;
+		this.status = ProjectStatus.PLANNED;
+		this.workers = new HashSet<Worker>();
+		this.qualifications = qualifications;
+		
+		
 	}
 
 	@Override
@@ -31,7 +51,7 @@ public class Project {
 	}
 
 	public String getName() {
-		return null;
+		return this.name;
 	}
 
 	public ProjectSize getSize() {

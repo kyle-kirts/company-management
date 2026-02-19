@@ -141,6 +141,7 @@
 | salary    | B\) salary amount  | B1: negative salary  | -1.00 |
 |           |                    | B2: 0 salary | 0.00 |
 |           |                    | B3: positive salary | 1.00 |
+|           |                    | B4: NaN salary | NaN |
 | qualifications  | C\) Set Value | C1: null   | null |
 |           |                    | C2: empty  | [] |
 |           |                    | C3: atleast 1 qualification | ["Qualification"] |
@@ -159,6 +160,7 @@
 | T7   | A2  | B3  | C1  | `test_nullQsSet_Worker()`        |
 | T8   | A2  | B3  | C2  | `test_emptyQsSet_Worker()`       |
 | T8   | A2  | B3  | C3  | `test_nonemptyQsSet_Worker()`    |
+| T9   | A2  | B4  | C3  | `test_nanSalary_Worker()`        |
 
 ---
 
@@ -185,7 +187,7 @@
 | name | A\) Value Type   | A1: valid   | "valid description" |
 
 
-***Method:** `hashCode()_bcc`
+**Method:** `hashCode()_bcc`
 
 | Test | A   | JUnit Test Name                  |
 |------|-----|----------------------------------|
@@ -247,6 +249,64 @@
 | T1 (base test) | A1 | `test_validName_getName()`|
 
 ---
+
+**Method:** `setSalary(double salary)`
+
+| Variable  | Characteristic     | Partition  | Value  |
+|-----------|--------------------|------------|--------|
+| salary    | A\) value          | A1: NaN        | NaN    |
+|           |                    | A2: < 0        | -100.00 |
+|           |                    | A3: 0          | 0.00   |
+|           |                    | A4: 0 <        | 100.00 |
+
+**Method:** `setSalary(double salary)`
+
+| Test | A   | JUnit Test Name                  |
+|------|-----|----------------------------------|
+| T1 (base test) | A4  | `test_positiveSalary_setSalary()`  |
+| T2   | A2  | `test_negativeSalary_setSalary()`            |
+| T3   | A3  | `test_zeroSalary_setSalary()`                |
+| T4   | A1  | `test_nanSalary_setSalary()`                 |
+
+---
+
 ## Class: Project
+**Method:** `Project(String name, Set<Qualification> qualifications, ProjectSize size)_isp`
+
+| Variable  | Characteristic     | Partition  | Value  |
+|-----------|--------------------|------------|--------|
+| name      | String Value       | A1: null   | null   |
+|           |                    | A2: not null| "Project Runway"|
+|           |                    | A3: Empty String| ""|
+| qualifications| set size       | B1: null   | null   |
+|           |                    | B2: empty set| New HashSet()|
+|           |                    | B3: size > 1| New HashSet("Sean Kelley", "Grace Kelsey")|
+| size      | exists in enum     | C1: null   | null   |
+|           |                    | C2: small project| ProjectSize.SMALL|
+|           |                    | C3: medium project| ProjectSize.MEDIUM|
+|           |                    | C4: large project| ProjectSize.BIG|
+
+**Method:** `Project(String name, Set<Qualification> qualifications, ProjectSize size)_bcc`
+
+| Test | A   | B   | C   | JUnit Test Name                  |
+|------|-----|-----|-----|----------------------------------|
+| T1(Base)| A2| B3 | C3  | `test_nonNullName_someQualifications_mediumProject()`|
+| T2   | A1  | B3  | C3  | `test_NullName_someQualifications_mediumProject()`|
+| T3   | A3  | B3  | C3  | `test_emptyName_someQualifications_mediumProject()`|
+| T4   | A2  | B1  | C3  | `test_nonNullName_nullQualifications_mediumProject()`|
+| T5   | A2  | B2  | C3  | `test_nonNullName_noQualifications_mediumProject()`|
+| T6   | A2  | B3  | C1  | `test_nonNullName_someQualifications_nullProject()`|
+| T7   | A2  | B3  | C2  | `test_nonNullName_someQualifications_smallProject()`|
+| T8   | A2  | B3  | C4  | `test_nonNullName_someQualifications_bigProject()`|
+
+**Method:** `getName()_isp`
+| Variable  | Characteristic     | Partition  | Value  |
+|-----------|--------------------|------------|--------|
+| name      | validity(checked on construction)| A1: valid name| "Project Runway"|
+
+**Method:** `getName()_bcc`
+| Test | A   | JUnit Test Name                  |
+|------|-----|----------------------------------|
+| T1(base) | A1| `test_validName_getName()      |
 
 ## Class: Company
