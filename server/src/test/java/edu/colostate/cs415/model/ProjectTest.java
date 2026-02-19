@@ -1,10 +1,11 @@
 package edu.colostate.cs415.model;
 
-import org.junit.Test;
 import static org.junit.Assert.*;
 
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
+
+import org.junit.Test;
 
 public class ProjectTest {
 	@Test
@@ -15,7 +16,7 @@ public class ProjectTest {
 		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
 
 		assertNotNull(p);
-		//assertEquals("Project Runway", p.getName());
+		assertEquals("Project Runway", p.getName());
 		//assertEquals(2, p.getSize().getValue());
 		//assertEquals(ProjectStatus.PLANNED, p.getStatus());
 		//assertEquals(0, p.getWorkers.size());
@@ -82,5 +83,14 @@ public class ProjectTest {
 
 		assertNotNull(p);
 		//assertEquals(3, p.getSize().getValue());
+	}
+
+	@Test
+	public void test_validName_getName(){
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Sean Kelley"));
+		qs.add(new Qualification("Grace Kelsey"));
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+		assertEquals(p.getName(), "Project Runway");
 	}
 }
