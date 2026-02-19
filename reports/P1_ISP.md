@@ -326,6 +326,17 @@
 |------|-----|----------------------------------|
 | T1 (base test) | A1  | `test_validNameHash_hashCode()`|
 
+**Method:** `getSize()_isp`
+| Variable  | Characteristic     | Partition  | Value  |
+|-----------|--------------------|------------|--------|
+| size      | valid enum value   | A1: valid  |ProjectSize.MEDIUM|
+
+**Method:** `getSize()_bcc`
+
+| Test | A   | JUnit Test Name                  |
+|------|-----|----------------------------------|
+| T1 (base test) | A1  | `test_validEnumSize_getSize()`|
+
 ---
 
 ## Class: Company
