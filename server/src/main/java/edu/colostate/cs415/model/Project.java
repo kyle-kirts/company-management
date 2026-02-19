@@ -1,6 +1,7 @@
 package edu.colostate.cs415.model;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import edu.colostate.cs415.dto.ProjectDTO;
@@ -42,7 +43,7 @@ public class Project {
 
 	@Override
 	public int hashCode() {
-		return 0;
+		return Objects.hash(this.name);
 	}
 
 	@Override

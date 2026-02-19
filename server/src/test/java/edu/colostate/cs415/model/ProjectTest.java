@@ -93,4 +93,14 @@ public class ProjectTest {
 		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
 		assertEquals(p.getName(), "Project Runway");
 	}
+
+	@Test()
+	public void test_validNameHash_hashCode() {
+		int hashInteger = -307059209;
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Qualification"));
+		Project p = new Project("valid description", qs, ProjectSize.MEDIUM);
+
+		assertEquals("Hashcode should match hashInteger", p.hashCode(), hashInteger);
+	}
 }

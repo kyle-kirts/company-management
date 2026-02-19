@@ -299,6 +299,8 @@
 | T7   | A2  | B3  | C2  | `test_nonNullName_someQualifications_smallProject()`|
 | T8   | A2  | B3  | C4  | `test_nonNullName_someQualifications_bigProject()`|
 
+---
+
 **Method:** `getName()_isp`
 | Variable  | Characteristic     | Partition  | Value  |
 |-----------|--------------------|------------|--------|
@@ -308,5 +310,22 @@
 | Test | A   | JUnit Test Name                  |
 |------|-----|----------------------------------|
 | T1(base) | A1| `test_validName_getName()      |
+
+---
+
+**Method:** `hashCode()_isp`
+
+ Variable  | Characteristic     | Partition  | Value  |
+|-----------|--------------------|------------|--------|
+| name | A\) Value Type   | A1: valid   | "valid description" |
+
+
+**Method:** `hashCode()_bcc`
+
+| Test | A   | JUnit Test Name                  |
+|------|-----|----------------------------------|
+| T1 (base test) | A1  | `test_validNameHash_hashCode()`|
+
+---
 
 ## Class: Company
