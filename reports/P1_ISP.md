@@ -278,6 +278,24 @@
 
 ---
 
+**Method:** `addProject(), getProjects(), removeProject()`
+
+| Variable  | Characteristic  | Partition | Value |
+| --------- | --------------- | --------- | ----- |
+| project   | A\) value           | A1: Project Object | Project("Project", qs, ProjectSize.MEDIUM); |
+| projects  | B\) empty           | B1: True      | empty set |
+|           |                     | B2: False     | projects size 2 |
+
+**Method:** `addProject(Project project), getProjects(), removeProject(Project project)`
+
+| Test           | A   | B   | JUnit Test Name                 |
+| -------------- | --- | --- | ------------------------------- |
+| T1 (base test) | A1  | B1  | `test_validProject_addProject()`   |
+| T2             |     | B1  | `test_emptyProjects_getProjects()`  |
+| T3             | A1  | B2  | `test_validProject_removeProject()` |
+
+---
+
 ## Class: Project
 
 **Method:** `Project(String name, Set<Qualification> qualifications, ProjectSize size)_isp`

@@ -232,4 +232,35 @@ public class WorkerTest {
 
 		assertTrue(worker.getQualifications().contains(qs1));
 	}
+
+	@Test
+	public void test_validProject_addProject() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		Project p = new Project("Project", qs, ProjectSize.MEDIUM);
+		worker.addProject(p);
+
+		assertTrue(worker.getProjects().contains(p));
+	}
+
+	@Test
+	public void test_emptyProjects_getProjects() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+
+		assertTrue(worker.getProjects().isEmpty());
+	}
+
+	@Test
+	public void test_validProject_removeProject() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		Project p = new Project("Project", qs, ProjectSize.MEDIUM);
+		Project p2 = new Project("Project2", qs, ProjectSize.SMALL);
+		worker.addProject(p);
+		worker.addProject(p2);
+		worker.removeProject(p);
+
+		assertTrue(!(worker.getProjects().contains(p)));
+	}
 }

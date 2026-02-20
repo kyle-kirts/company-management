@@ -75,13 +75,15 @@ public class Worker {
 	}
 
 	public Set<Project> getProjects() {
-		return null;
+		return this.projects;
 	}
 
 	public void addProject(Project project) {
+		projects.add(project);
 	}
 
 	public void removeProject(Project project) {
+		projects.remove(project);
 	}
 
 	public int getWorkload() {
