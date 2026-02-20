@@ -112,4 +112,38 @@ public class ProjectTest {
 		assertEquals(2, p.getSize().getValue());
 		assertEquals(ProjectSize.MEDIUM, p.getSize());
 	}
+
+	@Test
+	public void test_projectO_equalNames_equals(){
+		Set<Qualification> qs = new HashSet<>();
+		Project p = new Project("Projected", qs, ProjectSize.MEDIUM);
+		Project proj = new Project("Projected", qs, ProjectSize.SMALL);
+
+		assertTrue(p.equals(proj));
+	}
+
+	@Test
+	public void test_nullO_equalNames_equals(){
+		Set<Qualification> qs = new HashSet<>();
+		Project p = new Project("Projected", qs, ProjectSize.MEDIUM);
+
+		assertFalse(p.equals(null));
+	}
+
+	@Test
+	 public void test_nonprojectO_equalNames_equals(){
+		Set<Qualification> qs = new HashSet<>();
+		Project p = new Project("Projected", qs, ProjectSize.MEDIUM);
+
+		assertFalse(p.equals("NotAProject"));
+	}
+
+	@Test
+	public void test_projecto_nonEqualNames_equals(){
+		Set<Qualification> qs = new HashSet<>();
+		Project p = new Project("Projected", qs, ProjectSize.MEDIUM);
+		Project proj = new Project("UnProjected", qs, ProjectSize.SMALL);
+
+		assertFalse(p.equals(proj));
+	}
 }
