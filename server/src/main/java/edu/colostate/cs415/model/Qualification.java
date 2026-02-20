@@ -15,7 +15,7 @@ public class Qualification {
 		if (validateDescription(description)) {
 			throw new IllegalArgumentException("Null is not a valid description");
 		}
-		
+
 		this.description = description;
 		this.workers = new HashSet<Worker>();
 	}
@@ -49,6 +49,9 @@ public class Qualification {
 	}
 
 	public void removeWorker(Worker worker) {
+		if (!(workers.isEmpty())) {
+			workers.remove(worker);
+		}
 	}
 
 	public QualificationDTO toDTO() {
