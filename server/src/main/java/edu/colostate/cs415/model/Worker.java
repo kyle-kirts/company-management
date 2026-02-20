@@ -71,6 +71,7 @@ public class Worker {
 	}
 
 	public void addQualification(Qualification qualification) {
+		qualifications.add(qualification);
 	}
 
 	public Set<Project> getProjects() {
