@@ -273,7 +273,7 @@
 **Method:** `addQualification(Qualification qualification)`
 | Variable  | Characteristic     | Partition  | Value  |
 |-----------|--------------------|------------|--------|
-| qualification | value          | Qualification Object     | new Qualification("Qualification_One") |
+| qualification | A\) value          | A1: Qualification Object     | new Qualification("Qualification_One") |
 
 
 ---
