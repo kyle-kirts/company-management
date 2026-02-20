@@ -270,6 +270,15 @@
 
 ---
 
+**Method:** `addQualification(Qualification qualification)`
+| Variable  | Characteristic     | Partition  | Value  |
+|-----------|--------------------|------------|--------|
+| qualification | value          | Qualification Object     | new Qualification("Qualification_One") |
+
+
+---
+
+
 ## Class: Project
 **Method:** `Project(String name, Set<Qualification> qualifications, ProjectSize size)_isp`
 

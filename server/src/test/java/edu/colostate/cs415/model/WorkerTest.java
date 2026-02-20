@@ -222,4 +222,14 @@ public class WorkerTest {
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 		worker.setSalary(Double.NaN);
 	}
+
+	@Test
+	public void test_validQualification_addQualification() {
+		Qualification qs1 = new Qualification("Qualification_One");
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		worker.addQualification(qs1);
+
+		assertTrue(worker.getQualifications().contains(qs1));
+	}
 }
