@@ -345,6 +345,23 @@
 | -------------- | --- | ------------------------------ |
 | T1 (base test) | A1  | `test_validEnumSize_getSize()` |
 
+**Method:** `equals()_isp`
+| Variable | Characteristic | Partition | Value               |
+| -------- | -------------- | --------- | ------------------- |
+| Object O | Object Type    | A1: null  | null                |
+|          |                | A2: not Project | "NotAProject" |
+|          |                | A3: Project | new Project()     |
+|Name, O.name | equality    | B1: name = O.name | "Projected" |
+|          |                | B2: name != O.name | "Projected", "UnProjected" |
+
+**Method:** `equals()_bcc`
+| Test           | A   | B   | JUnit Test Name                |
+| -------------- | --- | --- | ------------------------------ |
+| T1(Base)       | A3  | B1  | `test_projectO_equalNames_equals()` |
+| T2             | A1  | B1  | `test_nullO_equalNames_equals()` |
+| T3             | A2  | B1  | `test_nonprojectO_equalNames_equals()` |
+| T4             | A3  | B2  | `test_projecto_nonEqualNames_equals()` |
+
 ---
 
 ## Class: Company

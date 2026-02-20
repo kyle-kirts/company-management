@@ -38,6 +38,9 @@ public class Project {
 
 	@Override
 	public boolean equals(Object other) {
+		if(!(other instanceof Project)) return false;
+		Project otherp = (Project) other;
+		if(this.name.equals(otherp.getName())) return true;
 		return false;
 	}
 
