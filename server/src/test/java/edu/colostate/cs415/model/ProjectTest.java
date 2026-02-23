@@ -18,7 +18,7 @@ public class ProjectTest {
 		assertNotNull(p);
 		assertEquals("Project Runway", p.getName());
 		assertEquals(2, p.getSize().getValue());
-		//assertEquals(ProjectStatus.PLANNED, p.getStatus());
+		assertEquals(ProjectStatus.PLANNED, p.getStatus());
 		//assertEquals(0, p.getWorkers.size());
 		//assertEquals(2, p.getRequiredQualifications().size());
 		
@@ -71,7 +71,7 @@ public class ProjectTest {
 		Project p = new Project("Project Runway", qs, ProjectSize.SMALL);
 
 		assertNotNull(p);
-		//assertEquals(1, p.getSize().getValue());
+		assertEquals(1, p.getSize().getValue());
 	}
 
 	@Test
@@ -82,7 +82,7 @@ public class ProjectTest {
 		Project p = new Project("Project Runway", qs, ProjectSize.BIG);
 
 		assertNotNull(p);
-		//assertEquals(3, p.getSize().getValue());
+		assertEquals(3, p.getSize().getValue());
 	}
 
 	@Test
@@ -145,5 +145,30 @@ public class ProjectTest {
 		Project proj = new Project("UnProjected", qs, ProjectSize.SMALL);
 
 		assertFalse(p.equals(proj));
+	}
+
+	@Test (expected = IllegalArgumentException.class)
+	public void testNullStatus_setStatus(){
+		Set<Qualification> qs = new HashSet<>();
+		Project p = new Project("Projected", qs, ProjectSize.MEDIUM);
+
+		p.setStatus(null);
+	}
+
+	@Test
+	public void testNotNullStatus_setStatus(){
+		Set<Qualification> qs = new HashSet<>();
+		Project p = new Project("Projected", qs, ProjectSize.MEDIUM);
+		p.setStatus(ProjectStatus.ACTIVE);
+
+		assertEquals(p.getStatus(), ProjectStatus.ACTIVE);
+	}
+
+	@Test
+	public void testValidEnumgetStatus(){
+		Set<Qualification> qs = new HashSet<>();
+		Project p = new Project("Projected", qs, ProjectSize.MEDIUM);
+
+		assertEquals(p.getStatus(), ProjectStatus.PLANNED);
 	}
 }
