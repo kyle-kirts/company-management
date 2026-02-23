@@ -296,6 +296,25 @@
 
 ---
 
+**Method:** `getWorkload()`
+
+| Variable  | Characteristic  | Partition | Value |
+| --------- | --------------- | --------- | ----- |
+| projects  | A\) Empty projects| A1: True | empty set projects |
+|           |                 | A2: False | SMALL, MEDIUM, BIG projects |
+| project   | B\) Atleast One Finished Project | B1: True | ProjectStatus.FINISHED |
+|           |                 | B2: False | ProjectStatus.PlANNED |
+
+**Method:** `getWorkload()`
+
+| Test           | A   | B   | JUnit Test Name                 |
+| -------------- | --- | --- | ------------------------------- |
+| T1 (base test) | A2  | B2  | `test_validWorkload_getWorkload()`   |
+| T2             | A2  | B1  | `test_onlyFinishedProjects_getWorkload()`  |
+| T3             | A1  | B2  | `test_emptyProjects_getWorkload()` |
+| T4             | A2  | B1  | `test_oneFinishedProject_getWorkload()` |
+---
+
 ## Class: Project
 
 **Method:** `Project(String name, Set<Qualification> qualifications, ProjectSize size)_isp`

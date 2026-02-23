@@ -263,4 +263,55 @@ public class WorkerTest {
 
 		assertTrue(!(worker.getProjects().contains(p)));
 	}
+
+	@Test
+	public void test_validWorkload_getWorkload() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		Project p = new Project("Project", qs, ProjectSize.MEDIUM);
+		Project p2 = new Project("Project2", qs, ProjectSize.SMALL);
+		Project p3 = new Project("Project3", qs, ProjectSize.BIG);
+		worker.addProject(p);
+		worker.addProject(p2);
+		worker.addProject(p3);
+
+		assertEquals(6, worker.getWorkload());
+	}
+
+	@Test
+	public void test_onlyFinishedProjects_getWorkload() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		Project p = new Project("Project", qs, ProjectSize.MEDIUM);
+		p.setStatus(ProjectStatus.FINISHED);
+		Project p2 = new Project("Project2", qs, ProjectSize.SMALL);
+		p2.setStatus(ProjectStatus.FINISHED);
+		worker.addProject(p);
+		worker.addProject(p2);
+
+		assertEquals(0, worker.getWorkload());
+	}
+
+	@Test
+	public void test_emptyProjects_getWorkload() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+
+		assertEquals(0, worker.getWorkload());
+	}
+
+	@Test
+	public void test_oneFinishedProject_getWorkload() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		Project p = new Project("Project", qs, ProjectSize.MEDIUM);
+		p.setStatus(ProjectStatus.FINISHED);
+		Project p2 = new Project("Project2", qs, ProjectSize.SMALL);
+		worker.addProject(p);
+		worker.addProject(p2);
+
+		assertEquals(1, worker.getWorkload());
+	}
+
+	
 }

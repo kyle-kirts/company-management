@@ -87,7 +87,14 @@ public class Worker {
 	}
 
 	public int getWorkload() {
-		return 0;
+		int workload = 0;
+		for (Project project : projects) {
+			if (project.getStatus() == ProjectStatus.FINISHED) {
+				continue;
+			}
+			workload += project.getSize().getValue();
+		}
+		return workload;
 	}
 
 	public boolean willOverload(Project project) {
