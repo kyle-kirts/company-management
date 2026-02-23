@@ -63,10 +63,12 @@ public class Project {
 	}
 
 	public ProjectStatus getStatus() {
-		return null;
+		return this.status;
 	}
 
 	public void setStatus(ProjectStatus status) {
+		if(status == null) throw new IllegalArgumentException("Must be a valid ProjectStatus");
+		this.status = status;
 	}
 
 	public void addWorker(Worker worker) {

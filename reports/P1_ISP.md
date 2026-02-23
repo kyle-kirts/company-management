@@ -380,6 +380,25 @@
 | T3             | A2  | B1  | `test_nonprojectO_equalNames_equals()` |
 | T4             | A3  | B2  | `test_projecto_nonEqualNames_equals()` |
 
+**Method:** `setStatus()_isp`
+| Variable | Characteristic | Partition | Value               |
+|input status| nullness     | A1: null  | null                |
+|          |                | A2: not null| ProjectStatus.ACTIVE|
+
+**Method:** `setStatus()_bcc`
+| Test           | A   | JUnit Test Name                |
+| -------------- | --- | ------------------------------ |
+| T1(Base)       | A1  | `testNullStatus_setStatus()`   |
+| T2             | A2  | `testNotNullStatus_setStatus()`|
+
+**Method:** `getStatus_isp`
+| Variable | Characteristic | Partition | Value               |
+| this.status| valid enum   | A1: valid | ProjectStatus.PLANNED |
+
+**Method:** `getStatus()_bcc`
+| Test           | A   | JUnit Test Name                |
+| -------------- | --- | ------------------------------ |
+| T1(Base)       | A1  | `testValidEnumgetStatus()`     |
 ---
 
 ## Class: Company
