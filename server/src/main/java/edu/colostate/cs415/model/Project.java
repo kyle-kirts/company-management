@@ -72,13 +72,18 @@ public class Project {
 	}
 
 	public void addWorker(Worker worker) {
+		if(worker == null) throw new IllegalArgumentException("Must be a valid worker");
+		this.workers.add(worker);
 	}
 
 	public void removeWorker(Worker worker) {
+		if(worker == null) throw new IllegalArgumentException("Must be a valid worker");
+		this.workers.remove(worker);
+
 	}
 
 	public Set<Worker> getWorkers() {
-		return null;
+		return this.workers;
 	}
 
 	public void removeAllWorkers() {

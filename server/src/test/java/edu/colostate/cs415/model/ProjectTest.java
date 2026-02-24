@@ -171,4 +171,171 @@ public class ProjectTest {
 
 		assertEquals(p.getStatus(), ProjectStatus.PLANNED);
 	}
+
+	@Test
+	public void test_hasWorkers_getWorkers(){
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q = new Qualification("Sean Kelley");
+		qs.add(q);
+		Worker w = new Worker("Bob b", qs, 100000.0);
+		Worker s = new Worker("Jeanie J", qs, 23450.0);
+		qs.add(new Qualification("Grace Kelsey"));
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+		p.addWorker(w);
+		p.addWorker(s);
+
+		assertEquals(2, p.getWorkers().size());
+		assertTrue(p.getWorkers().contains(w));
+	}
+
+	@Test
+	public void test_noWorkers_getWorkers(){
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q = new Qualification("Sean Kelley");
+		qs.add(q);
+		qs.add(new Qualification("Grace Kelsey"));
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+
+		assertEquals(0, p.getWorkers().size());
+	}
+
+	@Test
+	public void test_realWorker_hasWorkers_addWorker(){
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q = new Qualification("Sean Kelley");
+		qs.add(q);
+		Worker w = new Worker("Bob b", qs, 100000.0);
+		Worker s = new Worker("Jeanie J", qs, 23450.0);
+		qs.add(new Qualification("Grace Kelsey"));
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+		
+		p.addWorker(w);
+
+		assertEquals(1, p.getWorkers().size());
+		
+		p.addWorker(s);
+
+		assertEquals(2, p.getWorkers().size());
+		assertTrue(p.getWorkers().contains(w));
+	}
+
+	@Test (expected = IllegalArgumentException.class)
+	public void test_nullWorker_hasWorkers_addWorker(){
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q = new Qualification("Sean Kelley");
+		qs.add(q);
+		Worker w = new Worker("Bob b", qs, 100000.0);
+		Worker s = new Worker("Jeanie J", qs, 23450.0);
+		qs.add(new Qualification("Grace Kelsey"));
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+		
+		p.addWorker(w);
+
+		assertEquals(1, p.getWorkers().size());
+		p.addWorker(null);
+	}
+
+	@Test
+	public void test_dupeWorker_hasWorkers_addWorker(){
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q = new Qualification("Sean Kelley");
+		qs.add(q);
+		Worker w = new Worker("Bob b", qs, 100000.0);
+		Worker s = new Worker("Jeanie J", qs, 23450.0);
+		qs.add(new Qualification("Grace Kelsey"));
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+		
+		p.addWorker(w);
+
+		assertEquals(1, p.getWorkers().size());
+		
+		p.addWorker(w);
+
+		assertEquals(1, p.getWorkers().size());
+		assertTrue(p.getWorkers().contains(w));
+	}
+
+	@Test
+	public void test_realWorker_noWorkers_addWorker(){
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q = new Qualification("Sean Kelley");
+		qs.add(q);
+		Worker w = new Worker("Bob b", qs, 100000.0);
+		qs.add(new Qualification("Grace Kelsey"));
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+		
+		assertEquals(0, p.getWorkers().size());
+		
+		p.addWorker(w);
+
+		assertEquals(1, p.getWorkers().size());
+		assertTrue(p.getWorkers().contains(w));
+	}
+
+	@Test 
+	public void test_notinList_hasWorkers_removeWorker(){
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q = new Qualification("Sean Kelley");
+		qs.add(q);
+		Worker w = new Worker("Bob b", qs, 100000.0);
+		Worker s = new Worker("Jeanie J", qs, 23450.0);
+		Worker a = new Worker("New", qs, 0);
+		qs.add(new Qualification("Grace Kelsey"));
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+		
+		p.addWorker(w);
+		p.addWorker(s);
+
+		p.removeWorker(a);
+		assertEquals(2, p.getWorkers().size());
+	}
+
+	@Test
+	public void test_inList_hasWorkers_removeWorker(){
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q = new Qualification("Sean Kelley");
+		qs.add(q);
+		Worker w = new Worker("Bob b", qs, 100000.0);
+		Worker s = new Worker("Jeanie J", qs, 23450.0);
+		qs.add(new Qualification("Grace Kelsey"));
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+		
+		p.addWorker(w);
+		p.addWorker(s);
+
+		p.removeWorker(s);
+
+		assertEquals(1, p.getWorkers().size());
+		assertFalse(p.getWorkers().contains(s));
+	}
+
+	@Test (expected = IllegalArgumentException.class)
+	public void test_nullWorker_hasWorkers_removeWorker(){
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q = new Qualification("Sean Kelley");
+		qs.add(q);
+		Worker w = new Worker("Bob b", qs, 100000.0);
+		Worker s = new Worker("Jeanie J", qs, 23450.0);
+		qs.add(new Qualification("Grace Kelsey"));
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+		
+		p.addWorker(w);
+		p.addWorker(s);
+
+		p.removeWorker(null);
+	}
+
+	@Test
+	public void test_notinList_noWorkers_removeWorker(){
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q = new Qualification("Sean Kelley");
+		qs.add(q);
+		Worker w = new Worker("Bob b", qs, 100000.0);
+		qs.add(new Qualification("Grace Kelsey"));
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+
+		p.removeWorker(w);
+		assertEquals(0, p.getWorkers().size());
+	}
+
 }
