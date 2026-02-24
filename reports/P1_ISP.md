@@ -302,15 +302,16 @@
 | --------- | --------------- | --------- | ----- |
 | projects  | A\) Empty projects| A1: True | empty set projects |
 |           |                 | A2: False | SMALL, MEDIUM, BIG projects |
-| project   | B\) Atleast One Finished Project | B1: True | ProjectStatus.FINISHED |
-|           |                 | B2: False | ProjectStatus.PlANNED |
+| project   | B\) Portion of FINISHED projects | B1: At least one finished project, but not all finished | ProjectStatus.FINISHED |
+|           |                 | B2: No finished projects | ProjectStatus.PlANNED |
+|           |                 | B3: All projects are finished projects | ProjectStatus.FINISHED |
 
 **Method:** `getWorkload()`
 
 | Test           | A   | B   | JUnit Test Name                 |
 | -------------- | --- | --- | ------------------------------- |
 | T1 (base test) | A2  | B2  | `test_validWorkload_getWorkload()`   |
-| T2             | A2  | B1  | `test_onlyFinishedProjects_getWorkload()`  |
+| T2             | A2  | B3  | `test_onlyFinishedProjects_getWorkload()`  |
 | T3             | A1  | B2  | `test_emptyProjects_getWorkload()` |
 | T4             | A2  | B1  | `test_oneFinishedProject_getWorkload()` |
 ---
