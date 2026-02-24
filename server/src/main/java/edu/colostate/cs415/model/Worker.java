@@ -37,6 +37,9 @@ public class Worker {
 
 	@Override
 	public boolean equals(Object other) {
+		if (!(other instanceof Worker)) return false;
+		Worker otherw = (Worker) other;
+		if(this.name.equals(otherw.getName())) return true;
 		return false;
 	}
 
