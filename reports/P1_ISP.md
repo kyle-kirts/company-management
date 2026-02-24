@@ -399,6 +399,49 @@
 | Test           | A   | JUnit Test Name                |
 | -------------- | --- | ------------------------------ |
 | T1(Base)       | A1  | `testValidEnumgetStatus()`     |
+
+**Method:** `getWorkers()_isp`
+| Variable | Characteristic | Partition | Value               |
+| set(worker) | Emptiness   | A1: empty | new HashSet()       |
+|          |                | A2: not emptY| new HashSet(Worker w, Worker s) |
+
+**Method:** `getWorkers()_bcc`
+| Test           | A   | JUnit Test Name                |
+| T1(Base)       | A2  | `test_hasWorkers_getWorkers()` |
+| T2             | A1  | `test_noWorkers_getWorkers()`  |
+
+**Method:** `addWorker()_isp`
+| Variable | Characteristic | Partition | Value               |
+| Worker worker | Existence in set | A1: null  | null         |
+|          |                | A2: not Duplicate | new Worker("newguy", qs, 10000) |
+|          |                | A3: Duplicate | new Worker("Bob B", qs, 10000) |
+| set(worker) | Emptiness   | B1: empty | new HashSet()       |
+|          |                | B2: not empty| new HashSet(Worker w, Worker s) |
+
+**Method:** `addWorker()_bcc`
+| Test           | A   | B   | JUnit Test Name                |
+| T1(Base)       | A2  | B2  | `test_realWorker_hasWorkers_addWorker()` |
+| T2             | A1  | B2  | `test_nullWorker_hasWorkers_addWorker()` |
+| T3             | A3  | B2  | `test_dupeWorker_hasWorkers_addWorker()` | 
+| T4             | A2  | B1  | `test_realWorker_noWorkers_addWorker()`  |
+
+**Method:** `removeWorker()_isp`
+| Variable | Characteristic | Partition | Value               |
+| Worker w | relationship to worker list | A1: null | null        |
+|          |                | A2: worker not in worker list | new Worker("New", qs, 0) |
+|          |                | A3: worker in worker list |  new Worker("Bob B", qs, 10000) |
+| set(worker) | Emptiness   | B1: empty | new HashSet()       |
+|          |                | B2: not empty| new HashSet(Worker w, Worker s) |
+
+**Method:** `removeWorker()_bcc`
+| Test           | A   | B   | JUnit Test Name                |
+| T1(Base)       | A2  | B2  | `test_notinList_hasWorkers_removeWorker()` |
+| T2             | A1  | B2  | `test_nullWorker_hasWorkers_removeWorker()` |
+| T3             | A3  | B2  | `test_inList_hasWorkers_removeWorker()` |
+| T4             | A2  | B1  | `test_notinList_noWorkers_removeWorker()` |
+
+
+
 ---
 
 ## Class: Company
