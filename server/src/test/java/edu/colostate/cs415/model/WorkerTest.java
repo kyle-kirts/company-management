@@ -1,6 +1,7 @@
 package edu.colostate.cs415.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.HashSet;
@@ -313,5 +314,46 @@ public class WorkerTest {
 		assertEquals(1, worker.getWorkload());
 	}
 
-	
+	@Test
+	public void test_isWorker_notequalWorkers_equals(){
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q = new Qualification("Qualification");
+		qs.add(q);
+		Worker worker = new Worker("Bob b", qs, 10000);
+		Worker toEqual = new Worker("Betty Boop", qs, 15000);
+
+		assertFalse(worker.equals(toEqual));
+
+	}
+
+	@Test
+	public void test_nullWorker_notequalWorkers_equals(){
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q = new Qualification("Qualification");
+		qs.add(q);
+		Worker worker = new Worker("Bob b", qs, 10000);
+
+		assertFalse(worker.equals(null));
+	}
+
+	@Test 
+	public void test_notWorker_notequalWorkers_equals(){
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q = new Qualification("Qualification");
+		qs.add(q);
+		Worker worker = new Worker("Bob b", qs, 10000);
+
+		assertFalse(worker.equals("notaworker"));
+	}
+
+	@Test 
+	public void test_isWorker_equalWorkers_equals(){
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q = new Qualification("Qualification");
+		qs.add(q);
+		Worker worker = new Worker("Bob b", qs, 10000);
+		Worker toEqual = new Worker("Bob b", qs, 125400);
+
+		assertTrue(worker.equals(toEqual));
+	}
 }
