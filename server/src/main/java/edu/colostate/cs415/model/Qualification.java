@@ -55,7 +55,11 @@ public class Qualification {
 	}
 
 	public QualificationDTO toDTO() {
-		return null;
+		QualificationDTO dto = new QualificationDTO();
+		dto.setDescription(description);
+		dto.setWorkers(null);
+		return dto;
+
 	}
 
 	private boolean validateDescription(String description) {
