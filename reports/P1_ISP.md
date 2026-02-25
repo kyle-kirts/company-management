@@ -135,8 +135,7 @@
 
 | Variable | Characteristic     | Partition       | Value     |
 | -------- | ------------------ | --------------- | --------- |
-| description | A\) null | A1: non null | "valid description" |
-|               |               | A2: null | null |
+| description | A\) null | A1: Valid | "valid description" |
 | workers  | B\) Set of workers | B1: Valid Set   | [worker1] |
 |          |                    | B2: Empty Set   | []        |
 
@@ -146,8 +145,6 @@
 | -------------- | --- | --- | ------------------------------------------- |
 | T1 (base test) | A1  | B1  | `test_validDescription_workerSetNotEmpty_toDTO()`         |
 | T2             | A1  | B2  | `test_validDescription_workerSetEmpty_toDTO()`            |
-| T3             | A2  | B1  | `test_nullDescription_workerSetNotEmpty_toDTO()` |
-| T4             | A2  | B2  | `test_nullDescription_workerSetEmpty_toDTO()` |
 
 ---
 
