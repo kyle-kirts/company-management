@@ -55,7 +55,15 @@ public class Qualification {
 	}
 
 	public QualificationDTO toDTO() {
-		return null;
+		String[] workerStrings = {};
+		int i = 0;
+		for (Worker workers : workers) {
+			workerStrings[i] = workers.getName();
+			i++;
+		}
+		QualificationDTO dto = new QualificationDTO(description, workerStrings);
+		return dto;
+
 	}
 
 	private boolean validateDescription(String description) {

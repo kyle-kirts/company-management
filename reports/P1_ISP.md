@@ -131,6 +131,23 @@
 
 ---
 
+**Method:** `toDTO()_isp`
+
+| Variable | Characteristic     | Partition       | Value     |
+| -------- | ------------------ | --------------- | --------- |
+| description | A\) null | A1: Valid | "valid description" |
+| workers  | B\) Set of workers | B1: Valid Set   | [worker1] |
+|          |                    | B2: Empty Set   | []        |
+
+**Method:** `toDTO()_bcc`
+
+| Test           | A   | B   | JUnit Test Name                             |
+| -------------- | --- | --- | ------------------------------------------- |
+| T1 (base test) | A1  | B1  | `test_validDescription_workerSetNotEmpty_toDTO()`         |
+| T2             | A1  | B2  | `test_validDescription_workerSetEmpty_toDTO()`            |
+
+---
+
 ## Class: Worker
 
 **Method:** `Worker(String name, Set<Qualification> qualifications, double salary)`
