@@ -91,7 +91,7 @@ public class Worker {
 
 	public int getWorkload() {
 		int workload = 0;
-		for (Project project : projects) {
+		for (Project project : this.projects) {
 			if (project.getStatus() == ProjectStatus.FINISHED) {
 				continue;
 			}
@@ -105,6 +105,9 @@ public class Worker {
 	}
 
 	public boolean isAvailable() {
+		if (getWorkload() < 12) {
+			return true;
+		}
 		return false;
 	}
 

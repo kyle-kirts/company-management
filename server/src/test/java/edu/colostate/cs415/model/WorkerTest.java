@@ -356,4 +356,72 @@ public class WorkerTest {
 
 		assertTrue(worker.equals(toEqual));
 	}
+
+	@Test
+	public void test_underTwelve_isAvailable() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		Project p = new Project("Project", qs, ProjectSize.MEDIUM);
+		Project p2 = new Project("Project2", qs, ProjectSize.SMALL);
+		Project p3 = new Project("Project3", qs, ProjectSize.BIG);
+		worker.addProject(p);
+		worker.addProject(p2);
+		worker.addProject(p3);
+
+		assertTrue(worker.isAvailable());
+	}
+
+	@Test
+	public void test_atTwelve_isAvailable() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		Project p = new Project("Project", qs, ProjectSize.BIG);
+		Project p2 = new Project("Project2", qs, ProjectSize.BIG);
+		Project p3 = new Project("Project3", qs, ProjectSize.BIG);
+		Project p4 = new Project("Project4", qs, ProjectSize.BIG);
+		worker.addProject(p);
+		worker.addProject(p2);
+		worker.addProject(p3);
+		worker.addProject(p4);
+
+		assertFalse(worker.isAvailable());
+	}
+
+	@Test
+	public void test_overTwelve_isAvailable() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		Project p = new Project("Project", qs, ProjectSize.BIG);
+		Project p2 = new Project("Project2", qs, ProjectSize.BIG);
+		Project p3 = new Project("Project3", qs, ProjectSize.BIG);
+		Project p4 = new Project("Project4", qs, ProjectSize.BIG);
+		Project p5 = new Project("Project5", qs, ProjectSize.SMALL);
+		worker.addProject(p);
+		worker.addProject(p2);
+		worker.addProject(p3);
+		worker.addProject(p4);
+		worker.addProject(p5);
+
+		assertFalse(worker.isAvailable());
+	}
+
+	@Test
+	public void test_atTwelve_FinishedProjects_isAvailable() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		Project p = new Project("Project", qs, ProjectSize.BIG);
+		Project p2 = new Project("Project2", qs, ProjectSize.BIG);
+		Project p3 = new Project("Project3", qs, ProjectSize.BIG);
+		Project p4 = new Project("Project4", qs, ProjectSize.BIG);
+		worker.addProject(p);
+		worker.addProject(p2);
+		worker.addProject(p3);
+		worker.addProject(p4);
+		p.setStatus(ProjectStatus.FINISHED);
+		p2.setStatus(ProjectStatus.FINISHED);
+		p3.setStatus(ProjectStatus.FINISHED);
+		p4.setStatus(ProjectStatus.FINISHED);
+
+		assertTrue(worker.isAvailable());
+	}
 }

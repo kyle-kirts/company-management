@@ -349,6 +349,28 @@
 | T2             | A2  | B3  | `test_onlyFinishedProjects_getWorkload()`  |
 | T3             | A1  | B2  | `test_emptyProjects_getWorkload()` |
 | T4             | A2  | B1  | `test_oneFinishedProject_getWorkload()` |
+
+---
+
+**Method:** `isAvailable()`
+
+| Variable  | Characteristic  | Partition | Value |
+| --------- | --------------- | --------- | ----- |
+| projects  | A\) combined workload | A1: over 12 | 4 BIG projects, 1 SMALL project |
+|           |                 | A2: at 12 | 4 BIG projects |
+|           |                 | A3: under 12 | 1 BIG, 1 SMALL, 1 MEDIUM project |
+|           | B\) All projects FINISHED | B1: True | all project status set to ProjectStatus.FINISHED |
+|           |                 | B2: False   | all project status set to ProjectStatus.PLANNED |
+
+**Method:** `isAvailable()`
+
+| Test           | A   | B   | JUnit Test Name                 |
+| -------------- | --- | --- | ------------------------------- |
+| T1 (base test) | A3  | B2  | `test_underTwelve_isAvailable()`   |
+| T2             | A2  | B2  | `test_atTwelve_isAvailable()`  |
+| T3             | A1  | B2  | `test_overTwelve_isAvailable()` |
+| T4             | A1  | B1  | `test_atTwelve_FinishedProjects_isAvailable()` |
+
 ---
 
 ## Class: Project
