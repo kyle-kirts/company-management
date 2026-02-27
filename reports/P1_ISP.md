@@ -133,18 +133,18 @@
 
 **Method:** `toDTO()_isp`
 
-| Variable | Characteristic     | Partition       | Value     |
-| -------- | ------------------ | --------------- | --------- |
-| description | A\) Valid String | A1: Valid | "valid description" |
-| workers  | B\) Set of workers | B1: Valid Set   | [worker1] |
-|          |                    | B2: Empty Set   | []        |
+| Variable    | Characteristic     | Partition     | Value               |
+| ----------- | ------------------ | ------------- | ------------------- |
+| description | A\) null           | A1: Valid     | "valid description" |
+| workers     | B\) Set of workers | B1: Valid Set | [worker1]           |
+|             |                    | B2: Empty Set | []                  |
 
 **Method:** `toDTO()_bcc`
 
-| Test           | A   | B   | JUnit Test Name                             |
-| -------------- | --- | --- | ------------------------------------------- |
-| T1 (base test) | A1  | B1  | `test_validDescription_workerSetNotEmpty_toDTO()`         |
-| T2             | A1  | B2  | `test_validDescription_workerSetEmpty_toDTO()`            |
+| Test           | A   | B   | JUnit Test Name                                   |
+| -------------- | --- | --- | ------------------------------------------------- |
+| T1 (base test) | A1  | B1  | `test_validDescription_workerSetNotEmpty_toDTO()` |
+| T2             | A1  | B2  | `test_validDescription_workerSetEmpty_toDTO()`    |
 
 ---
 
@@ -238,21 +238,20 @@
 
 **Method:** `equals_isp`
 
-| Variable | Characteristic | Partition | Value   |
-| Object O | Object type    | A1: null  | null    |
-|          |                | A2: not Worker| "notaworker" |
-|          |                | A3: Worker| new Worker("Bob b", qs, 10000) |
-|          | equality       | B1: O = this| new Worker("Bob b", qs, 10000) |
-|          |                | B2: O != this| new Worker("Betty Boop", qs, 15000) |
+| Variable | Characteristic | Partition | Value |
+| Object O | Object type | A1: null | null |
+| | | A2: not Worker| "notaworker" |
+| | | A3: Worker| new Worker("Bob b", qs, 10000) |
+| | equality | B1: O = this| new Worker("Bob b", qs, 10000) |
+| | | B2: O != this| new Worker("Betty Boop", qs, 15000) |
 
 **Method:** `equals()_bcc`
 
-| Test           | A   | B   | JUnit Test Name                   |
-| T1(Base)       | A3  | B2  | `test_isWorker_notequalWorkers_equals()` |
-| T2             | A1  | B2  | `test_nullWorker_notequalWorkers_equals()` |
-| T3             | A2  | B2  | `test_notWorker_notequalWorkers_equals()` |
-| T4             | A3  | B1  | `test_isWorker_equalWorkers_equals()` |
-
+| Test | A | B | JUnit Test Name |
+| T1(Base) | A3 | B2 | `test_isWorker_notequalWorkers_equals()` |
+| T2 | A1 | B2 | `test_nullWorker_notequalWorkers_equals()` |
+| T3 | A2 | B2 | `test_notWorker_notequalWorkers_equals()` |
+| T4 | A3 | B1 | `test_isWorker_equalWorkers_equals()` |
 
 ---
 
@@ -315,17 +314,17 @@
 
 **Method:** `addProject(), getProjects(), removeProject()`
 
-| Variable  | Characteristic  | Partition | Value |
-| --------- | --------------- | --------- | ----- |
-| project   | A\) value           | A1: Project Object | Project("Project", qs, ProjectSize.MEDIUM); |
-| projects  | B\) empty           | B1: True      | empty set |
-|           |                     | B2: False     | projects size 2 |
+| Variable | Characteristic | Partition          | Value                                       |
+| -------- | -------------- | ------------------ | ------------------------------------------- |
+| project  | A\) value      | A1: Project Object | Project("Project", qs, ProjectSize.MEDIUM); |
+| projects | B\) empty      | B1: True           | empty set                                   |
+|          |                | B2: False          | projects size 2                             |
 
 **Method:** `addProject(Project project), getProjects(), removeProject(Project project)`
 
-| Test           | A   | B   | JUnit Test Name                 |
-| -------------- | --- | --- | ------------------------------- |
-| T1 (base test) | A1  | B1  | `test_validProject_addProject()`   |
+| Test           | A   | B   | JUnit Test Name                     |
+| -------------- | --- | --- | ----------------------------------- |
+| T1 (base test) | A1  | B1  | `test_validProject_addProject()`    |
 | T2             |     | B1  | `test_emptyProjects_getProjects()`  |
 | T3             | A1  | B2  | `test_validProject_removeProject()` |
 
@@ -333,68 +332,64 @@
 
 **Method:** `getWorkload()`
 
-| Variable  | Characteristic  | Partition | Value |
-| --------- | --------------- | --------- | ----- |
-| projects  | A\) Empty projects| A1: True | empty set projects |
-|           |                 | A2: False | SMALL, MEDIUM, BIG projects |
-| project   | B\) Portion of FINISHED projects | B1: At least one finished project, but not all finished | ProjectStatus.FINISHED |
-|           |                 | B2: No finished projects | ProjectStatus.PlANNED |
-|           |                 | B3: All projects are finished projects | ProjectStatus.FINISHED |
+| Variable | Characteristic                   | Partition                                               | Value                       |
+| -------- | -------------------------------- | ------------------------------------------------------- | --------------------------- |
+| projects | A\) Empty projects               | A1: True                                                | empty set projects          |
+|          |                                  | A2: False                                               | SMALL, MEDIUM, BIG projects |
+| project  | B\) Portion of FINISHED projects | B1: At least one finished project, but not all finished | ProjectStatus.FINISHED      |
+|          |                                  | B2: No finished projects                                | ProjectStatus.PlANNED       |
+|          |                                  | B3: All projects are finished projects                  | ProjectStatus.FINISHED      |
 
 **Method:** `getWorkload()`
 
-| Test           | A   | B   | JUnit Test Name                 |
-| -------------- | --- | --- | ------------------------------- |
-| T1 (base test) | A2  | B2  | `test_validWorkload_getWorkload()`   |
-| T2             | A2  | B3  | `test_onlyFinishedProjects_getWorkload()`  |
-| T3             | A1  | B2  | `test_emptyProjects_getWorkload()` |
-| T4             | A2  | B1  | `test_oneFinishedProject_getWorkload()` |
+| Test           | A   | B   | JUnit Test Name                           |
+| -------------- | --- | --- | ----------------------------------------- |
+| T1 (base test) | A2  | B2  | `test_validWorkload_getWorkload()`        |
+| T2             | A2  | B3  | `test_onlyFinishedProjects_getWorkload()` |
+| T3             | A1  | B2  | `test_emptyProjects_getWorkload()`        |
+| T4             | A2  | B1  | `test_oneFinishedProject_getWorkload()`   |
 
 ---
 
 **Method:** `isAvailable()`
 
-| Variable  | Characteristic  | Partition | Value |
-| --------- | --------------- | --------- | ----- |
-| projects  | A\) combined workload | A1: over 12 | 4 BIG projects, 1 SMALL project |
-|           |                 | A2: at 12 | 4 BIG projects |
-|           |                 | A3: under 12 | 1 BIG, 1 SMALL, 1 MEDIUM project |
-|           | B\) All projects FINISHED | B1: True | all project status set to ProjectStatus.FINISHED |
-|           |                 | B2: False   | all project status set to ProjectStatus.PLANNED |
+| Variable | Characteristic            | Partition    | Value                                            |
+| -------- | ------------------------- | ------------ | ------------------------------------------------ |
+| projects | A\) combined workload     | A1: over 12  | 4 BIG projects, 1 SMALL project                  |
+|          |                           | A2: at 12    | 4 BIG projects                                   |
+|          |                           | A3: under 12 | 1 BIG, 1 SMALL, 1 MEDIUM project                 |
+|          | B\) All projects FINISHED | B1: True     | all project status set to ProjectStatus.FINISHED |
+|          |                           | B2: False    | all project status set to ProjectStatus.PLANNED  |
 
 **Method:** `isAvailable()`
 
-| Test           | A   | B   | JUnit Test Name                 |
-| -------------- | --- | --- | ------------------------------- |
-| T1 (base test) | A3  | B2  | `test_underTwelve_isAvailable()`   |
-| T2             | A2  | B2  | `test_atTwelve_isAvailable()`  |
-| T3             | A1  | B2  | `test_overTwelve_isAvailable()` |
+| Test           | A   | B   | JUnit Test Name                                |
+| -------------- | --- | --- | ---------------------------------------------- |
+| T1 (base test) | A3  | B2  | `test_underTwelve_isAvailable()`               |
+| T2             | A2  | B2  | `test_atTwelve_isAvailable()`                  |
+| T3             | A1  | B2  | `test_overTwelve_isAvailable()`                |
 | T4             | A1  | B1  | `test_atTwelve_FinishedProjects_isAvailable()` |
 
 ---
 
 **Method:** `willOverload(Project project)`
 
-| Variable  | Characteristic  | Partition | Value |
-| --------- | --------------- | --------- | ----- |
-| project   | A\) project size | A1: BIG      | ProjectSize.BIG |
-|           |                 | A2: MEDIUM    | ProjectSize.MEDIUM |
-|           |                 | A3: SMALL     | ProjectSize.SMALL |
-| workload  | B\) workload plus project overloads| B1: True   | 12 |
-|           |                 | B2: False     | 11,10,9 |
-
+| Variable | Characteristic            | Partition    | Value                                            |
+| -------- | ------------------------- | ------------ | ------------------------------------------------ |
+| projects | A\) combined workload     | A1: over 12  | 4 BIG projects, 1 SMALL project                  |
+|          |                           | A2: at 12    | 4 BIG projects                                   |
+|          |                           | A3: under 12 | 1 BIG, 1 SMALL, 1 MEDIUM project                 |
+|          | B\) All projects FINISHED | B1: True     | all project status set to ProjectStatus.FINISHED |
+|          |                           | B2: False    | all project status set to ProjectStatus.PLANNED  |
 
 **Method:** `willOverload(Project project)`
 
-| Test           | A   | B   | JUnit Test Name                 |
-| -------------- | --- | --- | ------------------------------- |
-| T1 (base test) | A1  | B2  | `test_bigProject_underload_willOverload()`   |
-| T2             | A1  | B1  | `test_bigProject_overload_willOverload()`  |
-| T3             | A2  | B1  | `test_mediumProject_overload_willOverload()` |
-| T4             | A2  | B2  | `test_mediumProject_underload_willOverload()` |
-| T5             | A3  | B1  | `test_smallProject_overload_willOverload()`   |
-| T6             | A3  | B2  | `test_smallProject_underload_willOverload()`     |
-
+| Test           | A   | B   | JUnit Test Name                                |
+| -------------- | --- | --- | ---------------------------------------------- |
+| T1 (base test) | A3  | B2  | `test_underTwelve_isAvailable()`               |
+| T2             | A2  | B2  | `test_atTwelve_isAvailable()`                  |
+| T3             | A1  | B2  | `test_overTwelve_isAvailable()`                |
+| T4             | A1  | B1  | `test_atTwelve_FinishedProjects_isAvailable()` |
 
 ---
 
@@ -469,6 +464,8 @@
 | -------------- | --- | ------------------------------- |
 | T1 (base test) | A1  | `test_validNameHash_hashCode()` |
 
+---
+
 **Method:** `getSize()_isp`
 | Variable | Characteristic | Partition | Value |
 |-----------|--------------------|------------|--------|
@@ -480,84 +477,107 @@
 | -------------- | --- | ------------------------------ |
 | T1 (base test) | A1  | `test_validEnumSize_getSize()` |
 
+---
+
+
 **Method:** `equals()_isp`
-| Variable | Characteristic | Partition | Value               |
+| Variable | Characteristic | Partition | Value |
 | -------- | -------------- | --------- | ------------------- |
-| Object O | Object Type    | A1: null  | null                |
-|          |                | A2: not Project | "NotAProject" |
-|          |                | A3: Project | new Project()     |
-|Name, O.name | equality    | B1: name = O.name | "Projected" |
-|          |                | B2: name != O.name | "Projected", "UnProjected" |
+| Object O | Object Type | A1: null | null |
+| | | A2: not Project | "NotAProject" |
+| | | A3: Project | new Project() |
+|Name, O.name | equality | B1: name = O.name | "Projected" |
+| | | B2: name != O.name | "Projected", "UnProjected" |
 
 **Method:** `equals()_bcc`
-| Test           | A   | B   | JUnit Test Name                |
+| Test | A | B | JUnit Test Name |
 | -------------- | --- | --- | ------------------------------ |
-| T1(Base)       | A3  | B1  | `test_projectO_equalNames_equals()` |
-| T2             | A1  | B1  | `test_nullO_equalNames_equals()` |
-| T3             | A2  | B1  | `test_nonprojectO_equalNames_equals()` |
-| T4             | A3  | B2  | `test_projecto_nonEqualNames_equals()` |
+| T1(Base) | A3 | B1 | `test_projectO_equalNames_equals()` |
+| T2 | A1 | B1 | `test_nullO_equalNames_equals()` |
+| T3 | A2 | B1 | `test_nonprojectO_equalNames_equals()` |
+| T4 | A3 | B2 | `test_projecto_nonEqualNames_equals()` |
+
+---
 
 **Method:** `setStatus()_isp`
-| Variable | Characteristic | Partition | Value               |
-|input status| nullness     | A1: null  | null                |
-|          |                | A2: not null| ProjectStatus.ACTIVE|
+| Variable | Characteristic | Partition | Value |
+| -------- | -------------- | --------- | ------------------- |
+|input status| nullness | A1: null | null |
+| | | A2: not null| ProjectStatus.ACTIVE|
 
 **Method:** `setStatus()_bcc`
-| Test           | A   | JUnit Test Name                |
+| Test | A | JUnit Test Name |
 | -------------- | --- | ------------------------------ |
-| T1(Base)       | A1  | `testNullStatus_setStatus()`   |
-| T2             | A2  | `testNotNullStatus_setStatus()`|
+| T1(Base) | A1 | `testNullStatus_setStatus()` |
+| T2 | A2 | `testNotNullStatus_setStatus()`|
+
+---
+
 
 **Method:** `getStatus_isp`
-| Variable | Characteristic | Partition | Value               |
-| this.status| valid enum   | A1: valid | ProjectStatus.PLANNED |
+| Variable | Characteristic | Partition | Value |
+| -------- | -------------- | --------- | ------------------- |
+| this.status| valid enum | A1: valid | ProjectStatus.PLANNED |
 
 **Method:** `getStatus()_bcc`
-| Test           | A   | JUnit Test Name                |
+| Test | A | JUnit Test Name |
 | -------------- | --- | ------------------------------ |
-| T1(Base)       | A1  | `testValidEnumgetStatus()`     |
+| T1(Base) | A1 | `testValidEnumgetStatus()` |
+
+---
+
 
 **Method:** `getWorkers()_isp`
-| Variable | Characteristic | Partition | Value               |
-| set(worker) | Emptiness   | A1: empty | new HashSet()       |
-|          |                | A2: not emptY| new HashSet(Worker w, Worker s) |
+| Variable | Characteristic | Partition | Value |
+| -------- | -------------- | --------- | ------------------- |
+| set(worker) | Emptiness | A1: empty | new HashSet() |
+| | | A2: not emptY| new HashSet(Worker w, Worker s) |
 
 **Method:** `getWorkers()_bcc`
-| Test           | A   | JUnit Test Name                |
-| T1(Base)       | A2  | `test_hasWorkers_getWorkers()` |
-| T2             | A1  | `test_noWorkers_getWorkers()`  |
+| Test | A | JUnit Test Name |
+| -------- | -------------- | --------- | 
+| T1(Base) | A2 | `test_hasWorkers_getWorkers()` |
+| T2 | A1 | `test_noWorkers_getWorkers()` |
+
+---
+
 
 **Method:** `addWorker()_isp`
-| Variable | Characteristic | Partition | Value               |
-| Worker worker | Existence in set | A1: null  | null         |
-|          |                | A2: not Duplicate | new Worker("newguy", qs, 10000) |
-|          |                | A3: Duplicate | new Worker("Bob B", qs, 10000) |
-| set(worker) | Emptiness   | B1: empty | new HashSet()       |
-|          |                | B2: not empty| new HashSet(Worker w, Worker s) |
+| Variable | Characteristic | Partition | Value |
+| -------- | -------------- | --------- | ------------------- |
+| Worker worker | Existence in set | A1: null | null |
+| | | A2: not Duplicate | new Worker("newguy", qs, 10000) |
+| | | A3: Duplicate | new Worker("Bob B", qs, 10000) |
+| set(worker) | Emptiness | B1: empty | new HashSet() |
+| | | B2: not empty| new HashSet(Worker w, Worker s) |
 
 **Method:** `addWorker()_bcc`
-| Test           | A   | B   | JUnit Test Name                |
-| T1(Base)       | A2  | B2  | `test_realWorker_hasWorkers_addWorker()` |
-| T2             | A1  | B2  | `test_nullWorker_hasWorkers_addWorker()` |
-| T3             | A3  | B2  | `test_dupeWorker_hasWorkers_addWorker()` | 
-| T4             | A2  | B1  | `test_realWorker_noWorkers_addWorker()`  |
+| Test | A | B | JUnit Test Name |
+| -------- | -------------- | --------- | ------------------- |
+| T1(Base) | A2 | B2 | `test_realWorker_hasWorkers_addWorker()` |
+| T2 | A1 | B2 | `test_nullWorker_hasWorkers_addWorker()` |
+| T3 | A3 | B2 | `test_dupeWorker_hasWorkers_addWorker()` |
+| T4 | A2 | B1 | `test_realWorker_noWorkers_addWorker()` |
+
+---
+
 
 **Method:** `removeWorker()_isp`
-| Variable | Characteristic | Partition | Value               |
-| Worker w | relationship to worker list | A1: null | null        |
-|          |                | A2: worker not in worker list | new Worker("New", qs, 0) |
-|          |                | A3: worker in worker list |  new Worker("Bob B", qs, 10000) |
-| set(worker) | Emptiness   | B1: empty | new HashSet()       |
-|          |                | B2: not empty| new HashSet(Worker w, Worker s) |
+| Variable | Characteristic | Partition | Value |
+| -------- | -------------- | --------- | ------------------- |
+| Worker w | relationship to worker list | A1: null | null |
+| | | A2: worker not in worker list | new Worker("New", qs, 0) |
+| | | A3: worker in worker list | new Worker("Bob B", qs, 10000) |
+| set(worker) | Emptiness | B1: empty | new HashSet() |
+| | | B2: not empty| new HashSet(Worker w, Worker s) |
 
 **Method:** `removeWorker()_bcc`
-| Test           | A   | B   | JUnit Test Name                |
-| T1(Base)       | A2  | B2  | `test_notinList_hasWorkers_removeWorker()` |
-| T2             | A1  | B2  | `test_nullWorker_hasWorkers_removeWorker()` |
-| T3             | A3  | B2  | `test_inList_hasWorkers_removeWorker()` |
-| T4             | A2  | B1  | `test_notinList_noWorkers_removeWorker()` |
-
-
+| Test | A | B | JUnit Test Name |
+| -------- | -------------- | --------- | ------------------- |
+| T1(Base) | A2 | B2 | `test_notinList_hasWorkers_removeWorker()` |
+| T2 | A1 | B2 | `test_nullWorker_hasWorkers_removeWorker()` |
+| T3 | A3 | B2 | `test_inList_hasWorkers_removeWorker()` |
+| T4 | A2 | B1 | `test_notinList_noWorkers_removeWorker()` |
 
 ---
 
