@@ -101,6 +101,11 @@ public class Worker {
 	}
 
 	public boolean willOverload(Project project) {
+		int workload = getWorkload();
+		int projectSize = project.getSize().getValue();
+		if ((workload + projectSize) > 12) {
+			return true;
+		}
 		return false;
 	}
 
