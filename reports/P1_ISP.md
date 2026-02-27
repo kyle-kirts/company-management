@@ -373,6 +373,31 @@
 
 ---
 
+**Method:** `willOverload(Project project)`
+
+| Variable  | Characteristic  | Partition | Value |
+| --------- | --------------- | --------- | ----- |
+| project   | A\) project size | A1: BIG      | ProjectSize.BIG |
+|           |                 | A2: MEDIUM    | ProjectSize.MEDIUM |
+|           |                 | A3: SMALL     | ProjectSize.SMALL |
+| workload  | B\) workload plus project overloads| B1: True   | 12 |
+|           |                 | B2: False     | 11,10,9 |
+
+
+**Method:** `willOverload(Project project)`
+
+| Test           | A   | B   | JUnit Test Name                 |
+| -------------- | --- | --- | ------------------------------- |
+| T1 (base test) | A1  | B2  | `test_bigProject_underload_willOverload()`   |
+| T2             | A1  | B1  | `test_bigProject_overload_willOverload()`  |
+| T3             | A2  | B1  | `test_mediumProject_overload_willOverload()` |
+| T4             | A2  | B2  | `test_mediumProject_underload_willOverload()` |
+| T5             | A3  | B1  | `test_smallProject_overload_willOverload()`   |
+| T6             | A3  | B2  | `test_smallProject_underload_willOverload()`     |
+
+
+---
+
 ## Class: Project
 
 **Method:** `Project(String name, Set<Qualification> qualifications, ProjectSize size)_isp`
