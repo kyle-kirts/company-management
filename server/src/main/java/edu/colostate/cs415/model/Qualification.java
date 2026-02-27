@@ -55,12 +55,10 @@ public class Qualification {
 	}
 
 	public QualificationDTO toDTO() {
-		String[] workerStrings = {};
-		int i = 0;
-		for (Worker workers : workers) {
-			workerStrings[i] = workers.getName();
-			i++;
-		}
+		String[] workerStrings = workers.stream()
+										.map(Worker::getName)
+										.toArray(String[]::new);
+		
 		QualificationDTO dto = new QualificationDTO(description, workerStrings);
 		return dto;
 
