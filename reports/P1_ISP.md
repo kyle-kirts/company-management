@@ -397,6 +397,27 @@
 
 ---
 
+**Method:** `toDTO()`
+
+| Variable  | Characteristic  | Partition | Value |
+| --------- | --------------- | --------- | ----- |
+| projects  | A\) Size of the set | A1: 0 projects | empty set |
+|           |                 | A2: size > 0 | 2 |
+| qualifications | B\) Size of the set | B1: 0 qualifications | empty set |
+|           |                 | B2: size > 0 | 2 |
+
+
+**Method:** `toDTO()`
+
+| Test           | A   | B   | JUnit Test Name                 |
+| -------------- | --- | --- | ------------------------------- |
+| T1 (base test) | A2  | B2  | `test_expectedState_toDTO()`    |
+| T2             | A1  | B2  | `test_emptyProjects_toDTO()`    |
+| T3             | A2  | B1  | `test_emptyQualifications_toDTO()` |
+| T4             | A1  | B1  | `test_allEmpty_toDTO()`         |
+
+
+---
 ## Class: Project
 
 **Method:** `Project(String name, Set<Qualification> qualifications, ProjectSize size)_isp`

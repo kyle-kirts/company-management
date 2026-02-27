@@ -9,6 +9,8 @@ import java.util.Set;
 
 import org.junit.Test;
 
+import edu.colostate.cs415.dto.WorkerDTO;
+
 public class WorkerTest {
 	@Test
 	public void test() {
@@ -523,5 +525,65 @@ public class WorkerTest {
 
 		Project incoming_p = new Project("Project5", qs, ProjectSize.SMALL);
 		assertFalse(worker.willOverload(incoming_p));
+	}
+
+	@Test
+	public void test_expectedState_toDTO() {
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("q1"));
+		qs.add(new Qualification("q2"));
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		worker.addProject(new Project("p1", qs, ProjectSize.BIG));
+		worker.addProject(new Project("p2", qs, ProjectSize.MEDIUM));
+		WorkerDTO actualDTO = worker.toDTO();
+		
+		assertEquals("Bob B", actualDTO.getName());
+		assertEquals(1000.00, actualDTO.getSalary(), 0.00);
+		assertEquals(5, actualDTO.getWorkload());
+		assertEquals(2, actualDTO.getProjects().length);
+		assertEquals(2, actualDTO.getQualifications().length);
+	}
+
+	@Test
+	public void test_emptyProjects_toDTO() {
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("q1"));
+		qs.add(new Qualification("q2"));
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		WorkerDTO actualDTO = worker.toDTO();
+		
+		assertEquals("Bob B", actualDTO.getName());
+		assertEquals(1000.00, actualDTO.getSalary(), 0.00);
+		assertEquals(0, actualDTO.getWorkload());
+		assertTrue(actualDTO.getProjects().length == 0);
+		assertEquals(2, actualDTO.getQualifications().length);
+	}
+
+	@Test
+	public void test_emptyQualifications_toDTO() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		worker.addProject(new Project("p1", qs, ProjectSize.BIG));
+		worker.addProject(new Project("p2", qs, ProjectSize.MEDIUM));
+		WorkerDTO actualDTO = worker.toDTO();
+		
+		assertEquals("Bob B", actualDTO.getName());
+		assertEquals(1000.00, actualDTO.getSalary(), 0.00);
+		assertEquals(5, actualDTO.getWorkload());
+		assertEquals(2, actualDTO.getProjects().length);
+		assertTrue(actualDTO.getQualifications().length == 0);
+	}
+
+	@Test
+	public void test_allEmpty_toDTO() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		WorkerDTO actualDTO = worker.toDTO();
+		
+		assertEquals("Bob B", actualDTO.getName());
+		assertEquals(1000.00, actualDTO.getSalary(), 0.00);
+		assertEquals(0, actualDTO.getWorkload());
+		assertTrue(actualDTO.getProjects().length == 0);
+		assertTrue(actualDTO.getQualifications().length == 0);
 	}
 }
