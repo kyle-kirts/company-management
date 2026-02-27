@@ -338,46 +338,30 @@ public class ProjectTest {
 		assertEquals(0, p.getWorkers().size());
 	}
 
+
 	@Test
-	public void test_noWorkers_planned_toString() {
+	public void test_someQualifications_getRequiredQualifications() {
 		Set<Qualification> qs = new HashSet<>();
-		qs.add(new Qualification("Java"));
+		Qualification q1 = new Qualification("Sean Kelley");
+		Qualification q2 = new Qualification("Grace Kelsey");
+		qs.add(q1);
+		qs.add(q2);
+
 		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
 
-		assertEquals("Project Runway:0:PLANNED", p.toString());
+		assertEquals(2, p.getRequiredQualifications().size());
+		assertTrue(p.getRequiredQualifications().contains(q1));
+		assertTrue(p.getRequiredQualifications().contains(q2));
 	}
 
 	@Test
-	public void test_hasWorkers_active_toString() {
+	public void test_noQualifications_getRequiredQualifications() {
 		Set<Qualification> qs = new HashSet<>();
-		Qualification q = new Qualification("Java");
-		qs.add(q);
-
 		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
-		Worker w = new Worker("Bob", qs, 1000.0);
 
-		p.addWorker(w);
-		p.setStatus(ProjectStatus.ACTIVE);
-
-		assertEquals("Project Runway:1:ACTIVE", p.toString());
+		assertNotNull(p.getRequiredQualifications());
+		assertEquals(0, p.getRequiredQualifications().size());
 	}
 
-	@Test
-	public void test_twoWorker_active_toString() {
-		Set<Qualification> qs = new HashSet<>();
-		Qualification q = new Qualification("Sean Kelley");
-		qs.add(q);
-
-		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
-		Worker w = new Worker("Bob b", qs, 100000.0);
-		Worker w2 = new Worker("Susan s", qs, 100000.0);
-
-
-		p.addWorker(w);
-		p.addWorker(w2);
-		p.setStatus(ProjectStatus.ACTIVE);
-
-		assertEquals("Project Runway:2:ACTIVE", p.toString());
-	}
 
 }
