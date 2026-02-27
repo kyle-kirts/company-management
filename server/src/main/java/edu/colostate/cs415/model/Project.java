@@ -92,6 +92,7 @@ public class Project {
 
 	public void addQualification(Qualification qualification) {
 	}
+		
 
 	public Set<Qualification> getMissingQualifications() {
 		return null;
