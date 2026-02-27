@@ -338,6 +338,88 @@ public class ProjectTest {
 		assertEquals(0, p.getWorkers().size());
 	}
 
+	@Test
+	public void test_noWorkers_planned_toString() {
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+
+		assertEquals("Project Runway:0:PLANNED", p.toString());
+	}
+
+	@Test
+	public void test_hasWorkers_active_toString() {
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q = new Qualification("Java");
+		qs.add(q);
+
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+		Worker w = new Worker("Bob", qs, 1000.0);
+
+		p.addWorker(w);
+		p.setStatus(ProjectStatus.ACTIVE);
+
+		assertEquals("Project Runway:1:ACTIVE", p.toString());
+	}
+
+	@Test
+	public void test_twoWorker_active_toString() {
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q = new Qualification("Sean Kelley");
+		qs.add(q);
+
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+		Worker w = new Worker("Bob b", qs, 100000.0);
+		Worker w2 = new Worker("Susan s", qs, 100000.0);
+
+
+		p.addWorker(w);
+		p.addWorker(w2);
+		p.setStatus(ProjectStatus.ACTIVE);
+
+		assertEquals("Project Runway:2:ACTIVE", p.toString());
+	}
+
+	@Test
+	public void test_oneWorker_planned_toString() {
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q = new Qualification("Java");
+		qs.add(q);
+
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+		Worker w = new Worker("Bob", qs, 1000.0);
+
+		p.addWorker(w);
+
+		assertEquals("Project Runway:1:PLANNED", p.toString());
+	}
+
+	@Test
+	public void test_noWorkers_active_toString() {
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
+
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+		p.setStatus(ProjectStatus.ACTIVE);
+
+		assertEquals("Project Runway:0:ACTIVE", p.toString());
+	}
+
+	@Test
+	public void test_twoWorkers_planned_toString() {
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q = new Qualification("Java");
+		qs.add(q);
+
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+		Worker w1 = new Worker("Bob", qs, 1000.0);
+		Worker w2 = new Worker("Susan", qs, 2000.0);
+
+		p.addWorker(w1);
+		p.addWorker(w2);
+
+		assertEquals("Project Runway:2:PLANNED", p.toString());
+	}
 	
 
 	@Test

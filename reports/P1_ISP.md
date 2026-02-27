@@ -417,6 +417,29 @@
 
 ---
 
+**Method:** `toString()_isp`
+| Variable | Characteristic | Partition | Value |
+|-----------|--------------------|------------|--------|
+| name | validity(checked on construction)| A1: valid name| "Project Runway"|
+| workers.size() | number of workers| B1: no workers| 0|
+| workers.size() | number of workers| B2: one worker| 1|
+| workers.size() | number of workers| B3: multiple workers| 2|
+| status | project status| C1: PLANNED| ProjectStatus.PLANNED|
+| status | project status| C2: ACTIVE| ProjectStatus.ACTIVE|
+
+**Method:** `toString()_bcc`
+| Test | A | B | C | JUnit Test Name |
+|------|-----|-----|-----|----------------------------------|
+| T1(base) | A1| B1| C1| `test_noWorkers_planned_toString()` |
+| T2 | A1| B2| C1| `test_oneWorker_planned_toString()` |
+| T3 | A1| B3| C1| `test_twoWorkers_planned_toString()` |
+| T4 | A1| B1| C2| `test_noWorkers_active_toString()` |
+| T5 | A1| B2| C2| `test_hasWorkers_active_toString()` |
+| T6 | A1| B3| C2| `test_twoWorker_active_toString()` |
+
+
+---
+
 **Method:** `getRequiredQualifications()_isp`
 | Variable | Characteristic | Partition | Value |
 |-----------|--------------------|------------|--------|
