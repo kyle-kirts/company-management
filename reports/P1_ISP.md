@@ -236,22 +236,26 @@
 | T4             | A1  | B1  | C2  | D1  | `test_noProjects_LongQualifications_noSalary_toString()`       |
 | T5             | A1  | B1  | C2  | D3  | `test_noProjects_LongQualifications_hugeSalary_toString()`     |
 
+---
+
 **Method:** `equals_isp`
 
-| Variable | Characteristic | Partition | Value |
-| Object O | Object type | A1: null | null |
-| | | A2: not Worker| "notaworker" |
-| | | A3: Worker| new Worker("Bob b", qs, 10000) |
-| | equality | B1: O = this| new Worker("Bob b", qs, 10000) |
-| | | B2: O != this| new Worker("Betty Boop", qs, 15000) |
+| Variable | Characteristic | Partition      | Value                               |
+| -------- | -------------- | -------------- | ----------------------------------- |
+| Object O | Object type    | A1: null       | null                                |
+|          |                | A2: not Worker | "notaworker"                        |
+|          |                | A3: Worker     | new Worker("Bob b", qs, 10000)      |
+|          | equality       | B1: O = this   | new Worker("Bob b", qs, 10000)      |
+|          |                | B2: O != this  | new Worker("Betty Boop", qs, 15000) |
 
 **Method:** `equals()_bcc`
 
-| Test | A | B | JUnit Test Name |
-| T1(Base) | A3 | B2 | `test_isWorker_notequalWorkers_equals()` |
-| T2 | A1 | B2 | `test_nullWorker_notequalWorkers_equals()` |
-| T3 | A2 | B2 | `test_notWorker_notequalWorkers_equals()` |
-| T4 | A3 | B1 | `test_isWorker_equalWorkers_equals()` |
+| Test     | A   | B   | JUnit Test Name                            |
+| -------- | --- | --- | ------------------------------------------ |
+| T1(Base) | A3  | B2  | `test_isWorker_notequalWorkers_equals()`   |
+| T2       | A1  | B2  | `test_nullWorker_notequalWorkers_equals()` |
+| T3       | A2  | B2  | `test_notWorker_notequalWorkers_equals()`  |
+| T4       | A3  | B1  | `test_isWorker_equalWorkers_equals()`      |
 
 ---
 
@@ -479,7 +483,6 @@
 
 ---
 
-
 **Method:** `equals()_isp`
 | Variable | Characteristic | Partition | Value |
 | -------- | -------------- | --------- | ------------------- |
@@ -513,7 +516,6 @@
 
 ---
 
-
 **Method:** `getStatus_isp`
 | Variable | Characteristic | Partition | Value |
 | -------- | -------------- | --------- | ------------------- |
@@ -526,7 +528,6 @@
 
 ---
 
-
 **Method:** `getWorkers()_isp`
 | Variable | Characteristic | Partition | Value |
 | -------- | -------------- | --------- | ------------------- |
@@ -535,12 +536,11 @@
 
 **Method:** `getWorkers()_bcc`
 | Test | A | JUnit Test Name |
-| -------- | -------------- | --------- | 
+| -------- | -------------- | --------- |
 | T1(Base) | A2 | `test_hasWorkers_getWorkers()` |
 | T2 | A1 | `test_noWorkers_getWorkers()` |
 
 ---
-
 
 **Method:** `addWorker()_isp`
 | Variable | Characteristic | Partition | Value |
@@ -560,7 +560,6 @@
 | T4 | A2 | B1 | `test_realWorker_noWorkers_addWorker()` |
 
 ---
-
 
 **Method:** `removeWorker()_isp`
 | Variable | Characteristic | Partition | Value |
