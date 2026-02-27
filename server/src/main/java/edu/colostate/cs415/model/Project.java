@@ -31,7 +31,7 @@ public class Project {
 		this.size = size;
 		this.status = ProjectStatus.PLANNED;
 		this.workers = new HashSet<Worker>();
-		this.qualifications = new HashSet<>(qualifications);
+		this.qualifications = qualifications;
 		
 		
 	}
@@ -51,7 +51,7 @@ public class Project {
 
 	@Override
 	public String toString() {
-		return this.name + ":" + this.workers.size() + ":" + this.status;
+		return null;
 	}
 
 	public String getName() {
@@ -94,7 +94,10 @@ public class Project {
 	}
 
 	public void addQualification(Qualification qualification) {
-		
+		if (qualification == null) {
+		throw new IllegalArgumentException("Must be a valid qualification");
+	}
+		this.qualifications.add(qualification);
 	}
 
 	public Set<Qualification> getMissingQualifications() {
