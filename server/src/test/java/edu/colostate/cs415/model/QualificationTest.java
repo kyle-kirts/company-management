@@ -153,15 +153,8 @@ public class QualificationTest {
 		Worker worker2 = new Worker("Worker2", qualifications, 0);
 		qualification.addWorker(worker1);
 		qualification.addWorker(worker2);
-	
 
-		String[] arrayWorkers = new String[2];
-		arrayWorkers[0] = worker1.getName();
-		arrayWorkers[1] = worker2.getName();
- 		QualificationDTO qualificationDTO = new QualificationDTO(dtoTestDescription, arrayWorkers);
-
-		assertNotNull("DTO should not be null", qualificationDTO );
-		assertEquals("Description mismatch", qualificationDTO.getDescription(), "valid description");
+		assertEquals("Description mismatch", qualification.toDTO().getDescription(), "valid description");
 		assertEquals(2, qualification.toDTO().getWorkers().length);
 	}
 
@@ -173,11 +166,7 @@ public class QualificationTest {
 		Qualification qualification = new Qualification(dtoTestDescription);
 		qualifications.add(qualification);
 
-		String[] arrayWorkers = new String[2];
- 		QualificationDTO qualificationDTO = new QualificationDTO(dtoTestDescription, arrayWorkers);
-
-		assertNotNull("DTO should not be null", qualificationDTO );
-		assertEquals("Description mismatch", qualificationDTO.getDescription(), "valid description");
+		assertEquals("Description mismatch", qualification.toDTO().getDescription(), "valid description");
 		assertEquals(0, qualification.toDTO().getWorkers().length);
 	}
 
