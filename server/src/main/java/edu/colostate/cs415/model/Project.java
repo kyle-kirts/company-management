@@ -32,8 +32,6 @@ public class Project {
 		this.status = ProjectStatus.PLANNED;
 		this.workers = new HashSet<Worker>();
 		this.qualifications = qualifications;
-		
-		
 	}
 
 	@Override
@@ -79,7 +77,6 @@ public class Project {
 	public void removeWorker(Worker worker) {
 		if(worker == null) throw new IllegalArgumentException("Must be a valid worker");
 		this.workers.remove(worker);
-
 	}
 
 	public Set<Worker> getWorkers() {
@@ -90,7 +87,7 @@ public class Project {
 	}
 
 	public Set<Qualification> getRequiredQualifications() {
-		return null;
+		return this.qualifications;
 	}
 
 	public void addQualification(Qualification qualification) {

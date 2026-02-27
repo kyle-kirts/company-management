@@ -338,4 +338,30 @@ public class ProjectTest {
 		assertEquals(0, p.getWorkers().size());
 	}
 
+
+	@Test
+	public void test_someQualifications_getRequiredQualifications() {
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q1 = new Qualification("Sean Kelley");
+		Qualification q2 = new Qualification("Grace Kelsey");
+		qs.add(q1);
+		qs.add(q2);
+
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+
+		assertEquals(2, p.getRequiredQualifications().size());
+		assertTrue(p.getRequiredQualifications().contains(q1));
+		assertTrue(p.getRequiredQualifications().contains(q2));
+	}
+
+	@Test
+	public void test_noQualifications_getRequiredQualifications() {
+		Set<Qualification> qs = new HashSet<>();
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+
+		assertNotNull(p.getRequiredQualifications());
+		assertEquals(0, p.getRequiredQualifications().size());
+	}
+
+
 }
