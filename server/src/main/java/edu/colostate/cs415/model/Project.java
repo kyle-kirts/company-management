@@ -31,8 +31,7 @@ public class Project {
 		this.size = size;
 		this.status = ProjectStatus.PLANNED;
 		this.workers = new HashSet<Worker>();
-		this.qualifications = qualifications;
-	}
+		this.qualifications = new HashSet<>(qualifications);	}
 
 	@Override
 	public boolean equals(Object other) {
@@ -49,7 +48,7 @@ public class Project {
 
 	@Override
 	public String toString() {
-		return null;
+		return this.name + ":" + this.workers.size() + ":" + this.status;
 	}
 
 	public String getName() {
