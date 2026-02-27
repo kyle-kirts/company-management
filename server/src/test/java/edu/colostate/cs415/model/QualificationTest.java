@@ -144,6 +144,29 @@ public class QualificationTest {
 	}
 
 	@Test
+	public void test_validDescription_workerSetNotEmpty_toDTO() {
+		String dtoTestDescription = "valid description"; 
+		Qualification qualification = new Qualification(dtoTestDescription);
+		Set<Qualification> qualifications = new HashSet<>();
+		qualifications.add(qualification);
+		Worker worker1 = new Worker("Worker1", qualifications, 0);
+		Worker worker2 = new Worker("Worker2", qualifications, 0);
+		qualification.addWorker(worker1);
+		qualification.addWorker(worker2);
+	
+
+		String[] arrayWorkers = new String[2];
+		arrayWorkers[0] = worker1.getName();
+		arrayWorkers[1] = worker2.getName();
+ 		QualificationDTO qualificationDTO = new QualificationDTO(dtoTestDescription, arrayWorkers);
+
+		assertNotNull("DTO should not be null", qualificationDTO );
+		assertEquals("Description mismatch", qualificationDTO.getDescription(), "valid description");
+		assertEquals(2, qualification.toDTO().getWorkers().length);
+	}
+
+
+	@Test
 	public void test_validDescription_workerSetEmpty_toDTO() {
 		String dtoTestDescription = "valid description"; 
 		Set<Qualification> qualifications = new HashSet<>();
