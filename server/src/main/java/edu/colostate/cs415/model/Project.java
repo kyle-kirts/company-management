@@ -31,7 +31,7 @@ public class Project {
 		this.size = size;
 		this.status = ProjectStatus.PLANNED;
 		this.workers = new HashSet<Worker>();
-		this.qualifications = new HashSet<>(qualifications);;
+		this.qualifications = qualifications;
 		
 		
 	}
@@ -94,8 +94,8 @@ public class Project {
 	}
 
 	public void addQualification(Qualification qualification) {
-	}
 		
+	}
 
 	public Set<Qualification> getMissingQualifications() {
 		return null;

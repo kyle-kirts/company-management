@@ -338,6 +338,7 @@ public class ProjectTest {
 		assertEquals(0, p.getWorkers().size());
 	}
 
+	
 
 	@Test
 	public void test_someQualifications_getRequiredQualifications() {
