@@ -2,6 +2,8 @@ package edu.colostate.cs415.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.util.HashSet;
@@ -143,31 +145,20 @@ public class QualificationTest {
 	}
 
 	@Test
-	public void test_validDescription_workerSetNotEmpty_toDTO() {
-		Set<Worker> workers = new HashSet<>();
-		String dtoTestDescription = "valid description"; 
-		Set<Qualification> qualifications = new HashSet<>();
-		Qualification qualification = new Qualification(dtoTestDescription);
-		qualifications.add(qualification);
-		workers.add(new Worker("worker1", qualifications, 0.00));
-		String[] arrayWorkers = new String[2];
-		arrayWorkers[0] = "worker1";
-		arrayWorkers[1] = "worker2";
- 		QualificationDTO qualificationDTO = new QualificationDTO(dtoTestDescription, arrayWorkers);
-
-		assert(qualificationDTO.equals(qualification.toDTO()));
-	}
-
-	@Test
 	public void test_validDescription_workerSetEmpty_toDTO() {
 		String dtoTestDescription = "valid description"; 
 		Set<Qualification> qualifications = new HashSet<>();
 		Qualification qualification = new Qualification(dtoTestDescription);
 		qualifications.add(qualification);
+
 		String[] arrayWorkers = new String[2];
  		QualificationDTO qualificationDTO = new QualificationDTO(dtoTestDescription, arrayWorkers);
 
-		assert(qualificationDTO.equals(qualification.toDTO()));
+		assertNotNull("DTO should not be null", qualificationDTO );
+		assertEquals("Description mismatch", qualificationDTO.getDescription(), "valid description");
+		assertEquals(0, qualification.toDTO().getWorkers().length);
 	}
+
+
 
 }

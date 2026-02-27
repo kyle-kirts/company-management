@@ -135,7 +135,7 @@
 
 | Variable | Characteristic     | Partition       | Value     |
 | -------- | ------------------ | --------------- | --------- |
-| description | A\) null | A1: Valid | "valid description" |
+| description | A\) Valid String | A1: Valid | "valid description" |
 | workers  | B\) Set of workers | B1: Valid Set   | [worker1] |
 |          |                    | B2: Empty Set   | []        |
 
