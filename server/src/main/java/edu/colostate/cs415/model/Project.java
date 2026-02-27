@@ -51,7 +51,7 @@ public class Project {
 
 	@Override
 	public String toString() {
-		return this.name + ":" + this.workers.size() + ":" + this.status;
+		return null;
 	}
 
 	public String getName() {
@@ -90,11 +90,12 @@ public class Project {
 	}
 
 	public Set<Qualification> getRequiredQualifications() {
-		return null;
+		return this.qualifications;
 	}
 
 	public void addQualification(Qualification qualification) {
 	}
+		
 
 	public Set<Qualification> getMissingQualifications() {
 		return null;

@@ -417,22 +417,18 @@
 
 ---
 
-**Method:** `toString()_isp`
+**Method:** `getRequiredQualifications()_isp`
 | Variable | Characteristic | Partition | Value |
 |-----------|--------------------|------------|--------|
-| name | validity(checked on construction)| A1: valid name| "Project Runway"|
-| workers.size() | number of workers| B1: no workers| 0|
-| workers.size() | number of workers| B2: one worker| 1|
-| workers.size() | number of workers| B3: multiple workers| 2|
-| status | project status| C1: PLANNED| ProjectStatus.PLANNED|
-| status | project status| C2: ACTIVE| ProjectStatus.ACTIVE|
+| qualifications | validity(checked on construction)| A1: valid set| `qs`|
+| qualifications.size() | number of qualifications| B1: no qualifications| `0`|
+| qualifications.size() | number of qualifications| B2: some qualifications| `2`|
 
-**Method:** `toString()_bcc`
-| Test | A | B | C | JUnit Test Name |
-|------|-----|-----|-----|----------------------------------|
-| T1 (base) | A1| B1| C1| test_noWorkers_planned_toString() |
-| T2 | A1| B2| C2| test_hasWorkers_active_toString() |
-| T3 | A1| B3| C2| test_twoWorker_active_toString() |
+**Method:** `getRequiredQualifications()_bcc`
+| Test | A | B | JUnit Test Name |
+|------|-----|-----|----------------------------------|
+| T1 | A1| B1| `test_noQualifications_getRequiredQualifications()` |
+| T2 (base) | A1| B2| `test_someQualifications_getRequiredQualifications()` |
 
 ---
 
