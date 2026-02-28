@@ -509,4 +509,39 @@ public class ProjectTest {
 		assertEquals(0, missing.size());
 	}
 
+	@Test
+	public void test_helpfulWorker_isHelpful() {
+		Set<Qualification> projectQs = new HashSet<>();
+		Qualification q1 = new Qualification("Java");
+		Qualification q2 = new Qualification("SQL");
+		projectQs.add(q1);
+		projectQs.add(q2);
+
+		Project p = new Project("Project Runway", projectQs, ProjectSize.MEDIUM);
+
+		Set<Qualification> workerQs = new HashSet<>();
+		workerQs.add(q1);
+		Worker w = new Worker("Bob", workerQs, 1000.0);
+
+		assertTrue(p.isHelpful(w));
+	}
+
+	@Test
+	public void test_notHelpfulWorker_isHelpful() {
+		Set<Qualification> projectQs = new HashSet<>();
+		Qualification q1 = new Qualification("Java");
+		Qualification q2 = new Qualification("SQL");
+		Qualification q3 = new Qualification("AWS");
+		projectQs.add(q1);
+		projectQs.add(q2);
+
+		Project p = new Project("Project Runway", projectQs, ProjectSize.MEDIUM);
+
+		Set<Qualification> workerQs = new HashSet<>();
+		workerQs.add(q3);
+		Worker w = new Worker("Bob", workerQs, 1000.0);
+
+		assertFalse(p.isHelpful(w));
+	}
+
 }

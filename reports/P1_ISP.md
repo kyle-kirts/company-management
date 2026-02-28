@@ -442,20 +442,20 @@
 
 ---
 
-**Method:** `getMissingQualifications()_isp`
+**Method:** `addQualification()_isp`
 | Variable | Characteristic | Partition | Value |
 |-----------|--------------------|------------|--------|
-| required qualifications | validity(checked on construction)| A1: valid set| `projectQs`|
-| coverage of required qualifications by project workers | amount covered| B1: none covered| no required qualifications covered|
-| coverage of required qualifications by project workers | amount covered| B2: some covered| some but not all required qualifications covered|
-| coverage of required qualifications by project workers | amount covered| B3: all covered| all required qualifications covered|
+| qualification | nullness| A1: non-null qualification| `new Qualification("Grace Kelsey")`|
+| qualification | nullness| A2: null qualification| `null`|
+| qualification | membership in current required qualifications| B1: qualification not already present| `q2` not in `qs`|
+| qualification | membership in current required qualifications| B2: qualification already present| `q1` already in `qs`|
 
-**Method:** `getMissingQualifications()_bcc`
+**Method:** `addQualification()_bcc`
 | Test | A | B | JUnit Test Name |
 |------|-----|-----|----------------------------------|
-| T1(base) | A1| B1| `test_noWorkers_getMissingQualifications()` |
-| T2 | A1| B2| `test_someCovered_getMissingQualifications()` |
-| T3 | A1| B3| `test_allCovered_getMissingQualifications()` |
+| T1(base) | A1| B1| `test_newQualification_addQualification()` |
+| T2 | A1| B2| `test_duplicateQualification_addQualification()` |
+| T3 | A2| --| `test_nullQualification_addQualification()` |
 
 ---
 
@@ -494,7 +494,7 @@
 | T5 | A1| B2| C2| `test_hasWorkers_active_toString()` |
 | T6 | A1| B3| C2| `test_twoWorker_active_toString()` |
 
-
+---
 
 **Method:** `hashCode()_isp`
 

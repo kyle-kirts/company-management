@@ -32,6 +32,8 @@ public class Project {
 		this.status = ProjectStatus.PLANNED;
 		this.workers = new HashSet<Worker>();
 		this.qualifications = new HashSet<>(qualifications);
+		
+		
 	}
 
 	@Override
@@ -77,6 +79,7 @@ public class Project {
 	public void removeWorker(Worker worker) {
 		if(worker == null) throw new IllegalArgumentException("Must be a valid worker");
 		this.workers.remove(worker);
+
 	}
 
 	public Set<Worker> getWorkers() {
@@ -91,7 +94,10 @@ public class Project {
 	}
 
 	public void addQualification(Qualification qualification) {
-		
+		if (qualification == null) {
+		throw new IllegalArgumentException("Must be a valid qualification");
+	}
+		this.qualifications.add(qualification);
 	}
 
 	public Set<Qualification> getMissingQualifications() {
@@ -105,6 +111,18 @@ public class Project {
 	}
 
 	public boolean isHelpful(Worker worker) {
+		if (worker == null) {
+			return false;
+		}
+
+		Set<Qualification> missing = this.getMissingQualifications();
+
+		for (Qualification q : worker.getQualifications()) {
+			if (missing.contains(q)) {
+				return true;
+			}
+		}
+
 		return false;
 	}
 
