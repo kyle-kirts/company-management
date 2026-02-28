@@ -420,7 +420,6 @@ public class ProjectTest {
 
 		assertEquals("Project Runway:2:PLANNED", p.toString());
 	}
-	
 
 	@Test
 	public void test_someQualifications_getRequiredQualifications() {
@@ -447,5 +446,47 @@ public class ProjectTest {
 	}
 
 
+		@Test
+		public void test_newQualification_addQualification() {
+			Set<Qualification> qs = new HashSet<>();
+			Qualification q1 = new Qualification("Sean Kelley");
+			Qualification q2 = new Qualification("Grace Kelsey");
+			qs.add(q1);
+
+			Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+
+			assertEquals(1, p.getRequiredQualifications().size());
+			assertTrue(p.getRequiredQualifications().contains(q1));
+
+			p.addQualification(q2);
+
+			assertEquals(2, p.getRequiredQualifications().size());
+			assertTrue(p.getRequiredQualifications().contains(q1));
+			assertTrue(p.getRequiredQualifications().contains(q2));
+		}
+
+	@Test
+	public void test_duplicateQualification_addQualification() {
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q1 = new Qualification("Sean Kelley");
+		qs.add(q1);
+
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+
+		p.addQualification(q1);
+
+		assertEquals(1, p.getRequiredQualifications().size());
+		assertTrue(p.getRequiredQualifications().contains(q1));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void test_nullQualification_addQualification() {
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Sean Kelley"));
+
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+
+		p.addQualification(null);
+	}
 
 }

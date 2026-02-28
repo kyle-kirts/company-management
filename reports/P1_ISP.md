@@ -439,6 +439,39 @@
 |------|-----|----------------------------------|
 | T1(base) | A1| `test_validName_getName() |
 
+
+---
+
+**Method:** `addQualification()_isp`
+| Variable | Characteristic | Partition | Value |
+|-----------|--------------------|------------|--------|
+| qualification | nullness| A1: non-null qualification| `new Qualification("Grace Kelsey")`|
+| qualification | nullness| A2: null qualification| `null`|
+| qualification | membership in current required qualifications| B1: qualification not already present| `q2` not in `qs`|
+| qualification | membership in current required qualifications| B2: qualification already present| `q1` already in `qs`|
+
+**Method:** `addQualification()_bcc`
+| Test | A | B | JUnit Test Name |
+|------|-----|-----|----------------------------------|
+| T1(base) | A1| B1| `test_newQualification_addQualification()` |
+| T2 | A1| B2| `test_duplicateQualification_addQualification()` |
+| T3 | A2| --| `test_nullQualification_addQualification()` |
+
+---
+
+**Method:** `getRequiredQualifications()_isp`
+| Variable | Characteristic | Partition | Value |
+|-----------|--------------------|------------|--------|
+| qualifications | validity(checked on construction)| A1: valid set| `qs`|
+| qualifications.size() | number of qualifications| B1: no qualifications| `0`|
+| qualifications.size() | number of qualifications| B2: some qualifications| `2`|
+
+**Method:** `getRequiredQualifications()_bcc`
+| Test | A | B | JUnit Test Name |
+|------|-----|-----|----------------------------------|
+| T1 | A1| B1| `test_noQualifications_getRequiredQualifications()` |
+| T2 (base) | A1| B2| `test_someQualifications_getRequiredQualifications()` |
+
 ---
 
 **Method:** `toString()_isp`
@@ -460,22 +493,6 @@
 | T4 | A1| B1| C2| `test_noWorkers_active_toString()` |
 | T5 | A1| B2| C2| `test_hasWorkers_active_toString()` |
 | T6 | A1| B3| C2| `test_twoWorker_active_toString()` |
-
-
----
-
-**Method:** `getRequiredQualifications()_isp`
-| Variable | Characteristic | Partition | Value |
-|-----------|--------------------|------------|--------|
-| qualifications | validity(checked on construction)| A1: valid set| `qs`|
-| qualifications.size() | number of qualifications| B1: no qualifications| `0`|
-| qualifications.size() | number of qualifications| B2: some qualifications| `2`|
-
-**Method:** `getRequiredQualifications()_bcc`
-| Test | A | B | JUnit Test Name |
-|------|-----|-----|----------------------------------|
-| T1 | A1| B1| `test_noQualifications_getRequiredQualifications()` |
-| T2 (base) | A1| B2| `test_someQualifications_getRequiredQualifications()` |
 
 ---
 
