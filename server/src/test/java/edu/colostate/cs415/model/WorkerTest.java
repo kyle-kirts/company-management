@@ -424,4 +424,104 @@ public class WorkerTest {
 
 		assertTrue(worker.isAvailable());
 	}
+
+	@Test
+	public void test_bigProject_underload_willOverload() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		Project p = new Project("Project", qs, ProjectSize.BIG);
+		Project p2 = new Project("Project2", qs, ProjectSize.BIG);
+		Project p3 = new Project("Project3", qs, ProjectSize.BIG);
+		worker.addProject(p);
+		worker.addProject(p2);
+		worker.addProject(p3);
+
+		Project incoming_p = new Project("Project5", qs, ProjectSize.BIG);
+		assertFalse(worker.willOverload(incoming_p));
+	}
+
+	@Test
+	public void test_bigProject_overload_willOverload() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		Project p = new Project("Project", qs, ProjectSize.BIG);
+		Project p2 = new Project("Project2", qs, ProjectSize.BIG);
+		Project p3 = new Project("Project3", qs, ProjectSize.BIG);
+		Project p4 = new Project("Project4", qs, ProjectSize.BIG);
+		worker.addProject(p);
+		worker.addProject(p2);
+		worker.addProject(p3);
+		worker.addProject(p4);
+
+		Project incoming_p = new Project("Project5", qs, ProjectSize.BIG);
+		assertTrue(worker.willOverload(incoming_p));
+	}
+
+	@Test
+	public void test_mediumProject_overload_willOverload() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		Project p = new Project("Project", qs, ProjectSize.BIG);
+		Project p2 = new Project("Project2", qs, ProjectSize.BIG);
+		Project p3 = new Project("Project3", qs, ProjectSize.BIG);
+		Project p4 = new Project("Project4", qs, ProjectSize.BIG);
+		worker.addProject(p);
+		worker.addProject(p2);
+		worker.addProject(p3);
+		worker.addProject(p4);
+
+		Project incoming_p = new Project("Project5", qs, ProjectSize.MEDIUM);
+		assertTrue(worker.willOverload(incoming_p));
+	}
+
+	@Test
+	public void test_mediumProject_underload_willOverload() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		Project p = new Project("Project", qs, ProjectSize.BIG);
+		Project p2 = new Project("Project2", qs, ProjectSize.BIG);
+		Project p3 = new Project("Project3", qs, ProjectSize.BIG);
+		Project p4 = new Project("Project4", qs, ProjectSize.SMALL);
+		worker.addProject(p);
+		worker.addProject(p2);
+		worker.addProject(p3);
+		worker.addProject(p4);
+
+		Project incoming_p = new Project("Project5", qs, ProjectSize.MEDIUM);
+		assertFalse(worker.willOverload(incoming_p));
+	}
+
+	@Test
+	public void test_smallProject_overload_willOverload() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		Project p = new Project("Project", qs, ProjectSize.BIG);
+		Project p2 = new Project("Project2", qs, ProjectSize.BIG);
+		Project p3 = new Project("Project3", qs, ProjectSize.BIG);
+		Project p4 = new Project("Project4", qs, ProjectSize.BIG);
+		worker.addProject(p);
+		worker.addProject(p2);
+		worker.addProject(p3);
+		worker.addProject(p4);
+
+		Project incoming_p = new Project("Project5", qs, ProjectSize.SMALL);
+		assertTrue(worker.willOverload(incoming_p));
+	}
+
+	@Test
+	public void test_smallProject_underload_willOverload() {
+		Set<Qualification> qs = new HashSet<>();
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		Project p = new Project("Project", qs, ProjectSize.BIG);
+		Project p2 = new Project("Project2", qs, ProjectSize.BIG);
+		Project p3 = new Project("Project3", qs, ProjectSize.BIG);
+		Project p4 = new Project("Project4", qs, ProjectSize.MEDIUM);
+		worker.addProject(p);
+		worker.addProject(p2);
+		worker.addProject(p3);
+		worker.addProject(p4);
+
+		Project incoming_p = new Project("Project5", qs, ProjectSize.SMALL);
+		assertFalse(worker.willOverload(incoming_p));
+	}
 }

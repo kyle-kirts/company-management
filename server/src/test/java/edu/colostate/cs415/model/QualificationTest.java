@@ -2,6 +2,7 @@ package edu.colostate.cs415.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.HashSet;
@@ -144,19 +145,19 @@ public class QualificationTest {
 
 	@Test
 	public void test_validDescription_workerSetNotEmpty_toDTO() {
-		Set<Worker> workers = new HashSet<>();
 		String dtoTestDescription = "valid description"; 
-		Set<Qualification> qualifications = new HashSet<>();
 		Qualification qualification = new Qualification(dtoTestDescription);
+		Set<Qualification> qualifications = new HashSet<>();
 		qualifications.add(qualification);
-		workers.add(new Worker("worker1", qualifications, 0.00));
-		String[] arrayWorkers = new String[2];
-		arrayWorkers[0] = "worker1";
-		arrayWorkers[1] = "worker2";
- 		QualificationDTO qualificationDTO = new QualificationDTO(dtoTestDescription, arrayWorkers);
+		Worker worker1 = new Worker("Worker1", qualifications, 0);
+		Worker worker2 = new Worker("Worker2", qualifications, 0);
+		qualification.addWorker(worker1);
+		qualification.addWorker(worker2);
 
-		assert(qualificationDTO.equals(qualification.toDTO()));
+		assertEquals("Description mismatch", qualification.toDTO().getDescription(), "valid description");
+		assertEquals(2, qualification.toDTO().getWorkers().length);
 	}
+
 
 	@Test
 	public void test_validDescription_workerSetEmpty_toDTO() {
@@ -164,10 +165,11 @@ public class QualificationTest {
 		Set<Qualification> qualifications = new HashSet<>();
 		Qualification qualification = new Qualification(dtoTestDescription);
 		qualifications.add(qualification);
-		String[] arrayWorkers = new String[2];
- 		QualificationDTO qualificationDTO = new QualificationDTO(dtoTestDescription, arrayWorkers);
 
-		assert(qualificationDTO.equals(qualification.toDTO()));
+		assertEquals("Description mismatch", qualification.toDTO().getDescription(), "valid description");
+		assertEquals(0, qualification.toDTO().getWorkers().length);
 	}
+
+
 
 }
