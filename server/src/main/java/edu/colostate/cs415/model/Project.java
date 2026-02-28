@@ -91,14 +91,17 @@ public class Project {
 	}
 
 	public void addQualification(Qualification qualification) {
-		if (qualification == null) {
-			throw new IllegalArgumentException("Must be a valid qualification");
-		}
-		this.qualifications.add(qualification);
+		
 	}
 
 	public Set<Qualification> getMissingQualifications() {
-		return null;
+		Set<Qualification> missingQ = new HashSet<>(this.qualifications);
+
+		for (Worker worker : this.workers) {
+			missingQ.removeAll(worker.getQualifications());
+		}
+
+		return missingQ;
 	}
 
 	public boolean isHelpful(Worker worker) {
