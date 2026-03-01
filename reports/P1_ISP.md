@@ -496,6 +496,21 @@
 
 ---
 
+**Method:** `removeAllWorkers()_isp`
+| Variable | Characteristic | Partition | Value |
+|-----------|--------------------|------------|--------|
+| workers | validity(checked on construction)| A1: valid set| `workers`|
+| workers.size() | number of assigned workers| B1: no workers| `0`|
+| workers.size() | number of assigned workers| B2: has workers| `2`|
+
+**Method:** `removeAllWorkers()_bcc`
+| Test | A | B | JUnit Test Name |
+|------|-----|-----|----------------------------------|
+| T1(base) | A1| B1| `test_noWorkers_removeAllWorkers()` |
+| T2 | A1| B2| `test_hasWorkers_removeAllWorkers()` |
+
+---
+
 **Method:** `hashCode()_isp`
 
 | Variable | Characteristic | Partition | Value               |
