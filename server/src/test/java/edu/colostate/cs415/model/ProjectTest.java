@@ -489,4 +489,59 @@ public class ProjectTest {
 		p.addQualification(null);
 	}
 
+	@Test
+	public void test_helpfulWorker_isHelpful() {
+		Set<Qualification> projectQs = new HashSet<>();
+		Qualification q1 = new Qualification("Java");
+		Qualification q2 = new Qualification("SQL");
+		projectQs.add(q1);
+		projectQs.add(q2);
+
+		Project p = new Project("Project Runway", projectQs, ProjectSize.MEDIUM);
+
+		Set<Qualification> workerQs = new HashSet<>();
+		workerQs.add(q1);
+		Worker w = new Worker("Bob", workerQs, 1000.0);
+
+		assertTrue(p.isHelpful(w));
+	}
+
+	@Test
+	public void test_notHelpfulWorker_isHelpful() {
+		Set<Qualification> projectQs = new HashSet<>();
+		Qualification q1 = new Qualification("Java");
+		Qualification q2 = new Qualification("SQL");
+		Qualification q3 = new Qualification("AWS");
+		projectQs.add(q1);
+		projectQs.add(q2);
+
+		Project p = new Project("Project Runway", projectQs, ProjectSize.MEDIUM);
+
+		Set<Qualification> workerQs = new HashSet<>();
+		workerQs.add(q3);
+		Worker w = new Worker("Bob", workerQs, 1000.0);
+
+		assertFalse(p.isHelpful(w));
+	}
+
+	@Test
+	public void test_noMissingQualifications_isHelpful() {
+		Set<Qualification> projectQs = new HashSet<>();
+		Qualification q1 = new Qualification("Java");
+		projectQs.add(q1);
+
+		Project p = new Project("Project Runway", projectQs, ProjectSize.MEDIUM);
+
+		Set<Qualification> assignedQs = new HashSet<>();
+		assignedQs.add(q1);
+		Worker assigned = new Worker("Alice", assignedQs, 1000.0);
+		p.addWorker(assigned);
+
+		Set<Qualification> candidateQs = new HashSet<>();
+		candidateQs.add(q1);
+		Worker candidate = new Worker("Bob", candidateQs, 1000.0);
+
+		assertFalse(p.isHelpful(candidate));
+	}
+
 }
