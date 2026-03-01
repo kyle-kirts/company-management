@@ -510,38 +510,28 @@ public class ProjectTest {
 	}
 
 	@Test
-	public void test_helpfulWorker_isHelpful() {
-		Set<Qualification> projectQs = new HashSet<>();
-		Qualification q1 = new Qualification("Java");
-		Qualification q2 = new Qualification("SQL");
-		projectQs.add(q1);
-		projectQs.add(q2);
+	public void test_duplicateQualification_addQualification() {
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q1 = new Qualification("Sean Kelley");
+		qs.add(q1);
 
-		Project p = new Project("Project Runway", projectQs, ProjectSize.MEDIUM);
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
 
-		Set<Qualification> workerQs = new HashSet<>();
-		workerQs.add(q1);
-		Worker w = new Worker("Bob", workerQs, 1000.0);
+		p.addQualification(q1);
 
-		assertTrue(p.isHelpful(w));
+		assertEquals(1, p.getRequiredQualifications().size());
+		assertTrue(p.getRequiredQualifications().contains(q1));
 	}
 
-	@Test
-	public void test_notHelpfulWorker_isHelpful() {
-		Set<Qualification> projectQs = new HashSet<>();
-		Qualification q1 = new Qualification("Java");
-		Qualification q2 = new Qualification("SQL");
-		Qualification q3 = new Qualification("AWS");
-		projectQs.add(q1);
-		projectQs.add(q2);
+	@Test(expected = IllegalArgumentException.class)
+	public void test_nullQualification_addQualification() {
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Sean Kelley"));
 
-		Project p = new Project("Project Runway", projectQs, ProjectSize.MEDIUM);
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
 
-		Set<Qualification> workerQs = new HashSet<>();
-		workerQs.add(q3);
-		Worker w = new Worker("Bob", workerQs, 1000.0);
-
-		assertFalse(p.isHelpful(w));
+		p.addQualification(null);
 	}
+
 
 }
