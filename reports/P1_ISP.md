@@ -496,24 +496,6 @@
 
 ---
 
-**Method:** `isHelpful()_isp`
-| Variable | Characteristic | Partition | Value |
-|-----------|--------------------|------------|--------|
-| worker | validity| A1: valid worker| `w`|
-| overlap between worker qualifications and project's missing qualifications | amount of overlap| B1: no overlap| worker has no missing qualifications|
-| overlap between worker qualifications and project's missing qualifications | amount of overlap| B2: some overlap| worker has at least one missing qualification|
-| project's missing qualifications | availability| C1: missing qualifications exist| project still missing at least one qualification|
-| project's missing qualifications | availability| C2: no missing qualifications exist| project is missing no qualifications|
-
-**Method:** `isHelpful()_bcc`
-| Test | A | B | C | JUnit Test Name |
-|------|-----|-----|-----|----------------------------------|
-| T1(base) | A1| B2| C1| `test_helpfulWorker_isHelpful()` |
-| T2 | A1| B1| C1| `test_notHelpfulWorker_isHelpful()` |
-| T3 | A1| B1| C2| `test_noMissingQualifications_isHelpful()` |
-
----
-
 **Method:** `hashCode()_isp`
 
 | Variable | Characteristic | Partition | Value               |
@@ -557,6 +539,24 @@
 | T2 | A1 | B1 | `test_nullO_equalNames_equals()` |
 | T3 | A2 | B1 | `test_nonprojectO_equalNames_equals()` |
 | T4 | A3 | B2 | `test_projecto_nonEqualNames_equals()` |
+
+---
+
+**Method:** `isHelpful()_isp`
+| Variable | Characteristic | Partition | Value |
+|-----------|--------------------|------------|--------|
+| worker | validity| A1: valid worker| `w`|
+| overlap between worker qualifications and project's missing qualifications | amount of overlap| B1: no overlap| worker has no missing qualifications|
+| overlap between worker qualifications and project's missing qualifications | amount of overlap| B2: some overlap| worker has at least one missing qualification|
+| project's missing qualifications | availability| C1: missing qualifications exist| project still missing at least one qualification|
+| project's missing qualifications | availability| C2: no missing qualifications exist| project is missing no qualifications|
+
+**Method:** `isHelpful()_bcc`
+| Test | A | B | C | JUnit Test Name |
+|------|-----|-----|-----|----------------------------------|
+| T1(base) | A1| B2| C1| `test_helpfulWorker_isHelpful()` |
+| T2 | A1| B1| C1| `test_notHelpfulWorker_isHelpful()` |
+| T3 | A1| B1| C2| `test_noMissingQualifications_isHelpful()` |
 
 ---
 
