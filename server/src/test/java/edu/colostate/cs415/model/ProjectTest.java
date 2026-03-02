@@ -420,7 +420,6 @@ public class ProjectTest {
 		assertEquals("Project Runway:2:PLANNED", p.toString());
 	}
 
-
 	@Test
 	public void test_notHelpfulWorker_isHelpful() {
 		Set<Qualification> projectQs = new HashSet<>();
