@@ -339,6 +339,69 @@ public class ProjectTest {
 	}
 
 	@Test
+	public void test_noWorkers_getMissingQualifications() {
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q1 = new Qualification("Sean Kelley");
+		Qualification q2 = new Qualification("Bob Stewart");
+		qs.add(q1);
+		qs.add(q2);
+
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+
+		Set<Qualification> missing = p.getMissingQualifications();
+
+		assertEquals(2, missing.size());
+		assertTrue(missing.contains(q1));
+		assertTrue(missing.contains(q2));
+	}
+
+	@Test
+	public void test_someCovered_getMissingQualifications() {
+		Set<Qualification> projectQs = new HashSet<>();
+		Qualification q1 = new Qualification("Sean Kelley");
+		Qualification q2 = new Qualification("Grace Kelsey");
+		projectQs.add(q1);
+		projectQs.add(q2);
+
+		Project p = new Project("Project Runway", projectQs, ProjectSize.MEDIUM);
+
+		Set<Qualification> workerQs = new HashSet<>();
+		workerQs.add(q1);
+		Worker w = new Worker("Bob b", workerQs, 100000.0);
+
+		p.addWorker(w);
+
+		Set<Qualification> missing = p.getMissingQualifications();
+
+		assertEquals(1, missing.size());
+		assertTrue(missing.contains(q2));
+		assertFalse(missing.contains(q1));
+	}
+
+	@Test
+	public void test_allCovered_getMissingQualifications() {
+		Set<Qualification> projectQs = new HashSet<>();
+		Qualification q1 = new Qualification("Sean Kelley");
+		Qualification q2 = new Qualification("Grace Kelsey");
+		projectQs.add(q1);
+		projectQs.add(q2);
+
+		Project p = new Project("Project Runway", projectQs, ProjectSize.MEDIUM);
+
+		Set<Qualification> workerQs = new HashSet<>();
+		workerQs.add(q1);
+		workerQs.add(q2);
+		Worker w = new Worker("Bob b", workerQs, 100000.0);
+
+		p.addWorker(w);
+
+		Set<Qualification> missing = p.getMissingQualifications();
+
+		assertNotNull(missing);
+		assertEquals(0, missing.size());
+	}
+
+	@Test
 	public void test_noWorkers_planned_toString() {
 		Set<Qualification> qs = new HashSet<>();
 		qs.add(new Qualification("Java"));
@@ -445,6 +508,26 @@ public class ProjectTest {
 		assertEquals(0, p.getRequiredQualifications().size());
 	}
 
+
+		@Test
+		public void test_newQualification_addQualification() {
+			Set<Qualification> qs = new HashSet<>();
+			Qualification q1 = new Qualification("Sean Kelley");
+			Qualification q2 = new Qualification("Grace Kelsey");
+			qs.add(q1);
+
+			Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+
+			assertEquals(1, p.getRequiredQualifications().size());
+			assertTrue(p.getRequiredQualifications().contains(q1));
+
+			p.addQualification(q2);
+
+			assertEquals(2, p.getRequiredQualifications().size());
+			assertTrue(p.getRequiredQualifications().contains(q1));
+			assertTrue(p.getRequiredQualifications().contains(q2));
+		}
+
 	@Test
 	public void test_duplicateQualification_addQualification() {
 		Set<Qualification> qs = new HashSet<>();
@@ -503,67 +586,6 @@ public class ProjectTest {
 		assertEquals(0, p.getWorkers().size());
 	}
 
-	@Test
-	public void test_noWorkers_getMissingQualifications() {
-		Set<Qualification> qs = new HashSet<>();
-		Qualification q1 = new Qualification("Sean Kelley");
-		Qualification q2 = new Qualification("Bob Stewart");
-		qs.add(q1);
-		qs.add(q2);
 
-		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
-
-		Set<Qualification> missing = p.getMissingQualifications();
-
-		assertEquals(2, missing.size());
-		assertTrue(missing.contains(q1));
-		assertTrue(missing.contains(q2));
-	}
-
-	@Test
-	public void test_someCovered_getMissingQualifications() {
-		Set<Qualification> projectQs = new HashSet<>();
-		Qualification q1 = new Qualification("Sean Kelley");
-		Qualification q2 = new Qualification("Peter Griffin");
-		projectQs.add(q1);
-		projectQs.add(q2);
-
-		Project p = new Project("Project Runway", projectQs, ProjectSize.MEDIUM);
-
-		Set<Qualification> workerQs = new HashSet<>();
-		workerQs.add(q1);
-		Worker w = new Worker("Bob b", workerQs, 100000.0);
-
-		p.addWorker(w);
-
-		Set<Qualification> missing = p.getMissingQualifications();
-
-		assertEquals(1, missing.size());
-		assertTrue(missing.contains(q2));
-		assertFalse(missing.contains(q1));
-	}
-
-	@Test
-	public void test_allCovered_getMissingQualifications() {
-		Set<Qualification> projectQs = new HashSet<>();
-		Qualification q1 = new Qualification("Sean Kelley");
-		Qualification q2 = new Qualification("Grace Kelsey");
-		projectQs.add(q1);
-		projectQs.add(q2);
-
-		Project p = new Project("Project Runway", projectQs, ProjectSize.MEDIUM);
-
-		Set<Qualification> workerQs = new HashSet<>();
-		workerQs.add(q1);
-		workerQs.add(q2);
-		Worker w = new Worker("Bob b", workerQs, 100000.0);
-
-		p.addWorker(w);
-
-		Set<Qualification> missing = p.getMissingQualifications();
-
-		assertNotNull(missing);
-		assertEquals(0, missing.size());
-	}
 
 }
