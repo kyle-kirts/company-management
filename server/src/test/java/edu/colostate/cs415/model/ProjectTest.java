@@ -533,5 +533,39 @@ public class ProjectTest {
 		p.addQualification(null);
 	}
 
+	@Test
+	public void test_hasWorkers_removeAllWorkers() {
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q = new Qualification("Java");
+		qs.add(q);
+
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+		Worker w1 = new Worker("Bob", qs, 1000.0);
+		Worker w2 = new Worker("Susan", qs, 2000.0);
+
+		p.addWorker(w1);
+		p.addWorker(w2);
+
+		assertEquals(2, p.getWorkers().size());
+
+		p.removeAllWorkers();
+
+		assertEquals(0, p.getWorkers().size());
+	}
+
+	@Test
+	public void test_noWorkers_removeAllWorkers() {
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
+
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+
+		assertEquals(0, p.getWorkers().size());
+
+		p.removeAllWorkers();
+
+		assertEquals(0, p.getWorkers().size());
+	}
+
 
 }
