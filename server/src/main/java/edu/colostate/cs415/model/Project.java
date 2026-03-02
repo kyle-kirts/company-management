@@ -87,6 +87,7 @@ public class Project {
 	}
 
 	public void removeAllWorkers() {
+		this.workers.clear();
 	}
 
 	public Set<Qualification> getRequiredQualifications() {

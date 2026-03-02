@@ -372,7 +372,6 @@ public class ProjectTest {
 		Worker w = new Worker("Bob b", qs, 100000.0);
 		Worker w2 = new Worker("Susan s", qs, 100000.0);
 
-
 		p.addWorker(w);
 		p.addWorker(w2);
 		p.setStatus(ProjectStatus.ACTIVE);
@@ -445,25 +444,24 @@ public class ProjectTest {
 		assertEquals(0, p.getRequiredQualifications().size());
 	}
 
+	@Test
+	public void test_newQualification_addQualification() {
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q1 = new Qualification("Sean Kelley");
+		Qualification q2 = new Qualification("Grace Kelsey");
+		qs.add(q1);
 
-		@Test
-		public void test_newQualification_addQualification() {
-			Set<Qualification> qs = new HashSet<>();
-			Qualification q1 = new Qualification("Sean Kelley");
-			Qualification q2 = new Qualification("Grace Kelsey");
-			qs.add(q1);
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
 
-			Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+		assertEquals(1, p.getRequiredQualifications().size());
+		assertTrue(p.getRequiredQualifications().contains(q1));
 
-			assertEquals(1, p.getRequiredQualifications().size());
-			assertTrue(p.getRequiredQualifications().contains(q1));
+		p.addQualification(q2);
 
-			p.addQualification(q2);
-
-			assertEquals(2, p.getRequiredQualifications().size());
-			assertTrue(p.getRequiredQualifications().contains(q1));
-			assertTrue(p.getRequiredQualifications().contains(q2));
-		}
+		assertEquals(2, p.getRequiredQualifications().size());
+		assertTrue(p.getRequiredQualifications().contains(q1));
+		assertTrue(p.getRequiredQualifications().contains(q2));
+	}
 
 	@Test
 	public void test_duplicateQualification_addQualification() {
@@ -585,5 +583,4 @@ public class ProjectTest {
 		assertNotNull(missing);
 		assertEquals(0, missing.size());
 	}
-
 }
