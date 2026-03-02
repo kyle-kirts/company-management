@@ -511,23 +511,6 @@
 
 ---
 
-**Method:** `getMissingQualifications()_isp`
-| Variable | Characteristic | Partition | Value |
-|-----------|--------------------|------------|--------|
-| required qualifications | validity(checked on construction)| A1: valid set| `projectQs`|
-| coverage of required qualifications by project workers | amount covered| B1: none covered| no required qualifications covered|
-| coverage of required qualifications by project workers | amount covered| B2: some covered| some but not all required qualifications covered|
-| coverage of required qualifications by project workers | amount covered| B3: all covered| all required qualifications covered|
-
-**Method:** `getMissingQualifications()_bcc`
-| Test | A | B | JUnit Test Name |
-|------|-----|-----|----------------------------------|
-| T1(base) | A1| B1| `test_noWorkers_getMissingQualifications()` |
-| T2 | A1| B2| `test_someCovered_getMissingQualifications()` |
-| T3 | A1| B3| `test_allCovered_getMissingQualifications()` |
-
----
-
 **Method:** `hashCode()_isp`
 
 | Variable | Characteristic | Partition | Value               |
@@ -597,6 +580,26 @@
 | Test | A | JUnit Test Name |
 | -------------- | --- | ------------------------------ |
 | T1(Base) | A1 | `testValidEnumgetStatus()` |
+
+---
+
+**Method:** `getMissingQualifications()_isp`
+| Variable | Characteristic | Partition | Value |
+|-----------|--------------------|------------|--------|
+| required qualifications | validity(checked on construction)| A1: valid set| `projectQs`|
+| coverage of required qualifications by project workers | amount covered| B1: none covered| no required qualifications covered|
+| coverage of required qualifications by project workers | amount covered| B2: some covered| some but not all required qualifications covered|
+| coverage of required qualifications by project workers | amount covered| B3: all covered| all required qualifications covered|
+
+**Method:** `getMissingQualifications()_bcc`
+| Test | A | B | JUnit Test Name |
+|------|-----|-----|----------------------------------|
+| T1(base) | A1| B1| `test_noWorkers_getMissingQualifications()` |
+| T2 | A1| B2| `test_someCovered_getMissingQualifications()` |
+| T3 | A1| B3| `test_allCovered_getMissingQualifications()` |
+
+---
+
 
 ---
 
