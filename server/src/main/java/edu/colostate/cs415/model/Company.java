@@ -34,7 +34,7 @@ public class Company {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.name);
+		return this.name.hashCode();
 	}
 
 	@Override
