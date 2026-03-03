@@ -39,7 +39,7 @@ public class Company {
 	}
 
 	public String getName() {
-		return null;
+		return this.name;
 	}
 
 	public Set<Worker> getEmployedWorkers() {

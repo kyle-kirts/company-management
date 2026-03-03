@@ -675,3 +675,14 @@
 ---
 
 ## Class: Company
+
+**Method:** `getName()_isp`
+| Variable | Characteristic | Partition | Value |
+|-----------|--------------------|------------|--------|
+| name | validity(checked on construction)| A1: valid name| `"ABC"`|
+
+**Method:** `getName()_bcc`
+| Test | A | JUnit Test Name |
+|------|-----|----------------------------------|
+| T1(base) | A1| `test_validName_getName()` |
+| T2 | A1| `test_anotherValidName_getName()` |
