@@ -117,6 +117,15 @@ public class Worker {
 	}
 
 	public WorkerDTO toDTO() {
-		return null;
+		String[] projectsDTO = this.projects.stream()
+										.map(Project::getName)
+										.toArray(String[]::new);
+
+		String[] qualificationsDTO = this.qualifications.stream()
+										.map(Qualification::toString)
+										.toArray(String[]::new);
+
+		WorkerDTO dto = new WorkerDTO(this.name, this.salary, getWorkload(), projectsDTO, qualificationsDTO);
+		return dto;
 	}
 }
