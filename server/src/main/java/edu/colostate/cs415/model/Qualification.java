@@ -41,7 +41,7 @@ public class Qualification {
 	}
 
 	public Set<Worker> getWorkers() {
-		return workers;
+		return this.workers;
 	}
 
 	public void addWorker(Worker worker) {

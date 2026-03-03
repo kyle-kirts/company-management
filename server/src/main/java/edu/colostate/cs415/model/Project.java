@@ -112,6 +112,18 @@ public class Project {
 	}
 
 	public boolean isHelpful(Worker worker) {
+		if (worker == null) {
+			return false;
+		}
+
+		Set<Qualification> missing = this.getMissingQualifications();
+
+		for (Qualification q : worker.getQualifications()) {
+			if (missing.contains(q)) {
+				return true;
+			}
+		}
+
 		return false;
 	}
 
