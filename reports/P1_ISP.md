@@ -792,3 +792,17 @@
 | T2       | A1  | B2  | `test_nullCompany_notequalCompanies_equals()` |
 | T3       | A2  | B2  | `test_notCompany_notequalCompanies_equals()`  |
 | T4       | A3  | B1  | `test_isCompany_equalCompanies_equals()`      |
+
+**Method:** `getEmployedWorkers()_isp`
+| Variable | Characteristic | Partition | Value |
+|-----------|--------------------|------------|--------|
+| employees | validity(checked on construction)| A1: valid set| `employees`|
+| employees.size() | number of employed workers| B1: no workers| `0`|
+| employees.size() | number of employed workers| B2: has workers| `1`|
+| returned set | copy behavior| C1: defensive copy returned| modifying returned set does not change internal set|
+ 
+**Method:** `getEmployedWorkers()_bcc`
+| Test | A | B | C | JUnit Test Name |
+|------|-----|-----|-----|----------------------------------|
+| T1(base) | A1| B1| --| `test_getEmployedWorkers_emptyAtStart()` |
+| T2 | A1| B2| C1| `test_getEmployedWorkers_defensiveCopy()` |
