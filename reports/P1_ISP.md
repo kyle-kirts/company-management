@@ -691,6 +691,20 @@
 
 ---
 
+**Method:** `hashCode()_isp`
+| Variable | Characteristic | Partition | Value |
+|-----------|--------------------|------------|--------|
+| name | validity(checked on construction)| A1: valid name| `"ABC"`|
+| compared object names | equality of names| B1: same name| `"ABC"` and `"ABC"`|
+
+**Method:** `hashCode()_bcc`
+| Test | A | B | JUnit Test Name |
+|------|-----|-----|----------------------------------|
+| T1(base) | A1| B1| `test_sameName_hashCode()` |
+| T2 | A1| B1| `test_validName_hashCode()` |
+
+---
+
 **Method:** `getQualifications()_isp`
 | Variable | Characteristic | Partition | Value |
 |-----------|--------------------|------------|--------|
@@ -721,6 +735,8 @@
 | T1(base) | A1| `test_validDescription_createQualification()` |
 | T2 | A2| `test_nullDescription_createQualification()` |
 | T3 | A3| `test_emptyDescription_createQualification()` |
+
+---
 
 **Method:** `equals()_isp`
 

@@ -96,6 +96,21 @@ public class CompanyTest {
 	}
 
 	@Test
+	public void test_sameName_hashCode() {
+		Company c1 = new Company("ABC");
+		Company c2 = new Company("ABC");
+
+		assertEquals(c1.hashCode(), c2.hashCode());
+	}
+
+	@Test
+	public void test_validName_hashCode() {
+		Company c = new Company("ABC");
+
+		assertEquals("ABC".hashCode(), c.hashCode());
+	}
+
+	@Test
 	public void test_validName_getName() {
 		Company c = new Company("ABC");
 
