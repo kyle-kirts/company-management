@@ -479,6 +479,13 @@ public class ProjectTest {
 	}
 
 	@Test
+	public void test_nullWorker_isHelpful() {
+		Set<Qualification> qs = new HashSet<>();
+		Project p = new Project("Project", qs, ProjectSize.BIG);
+		assertFalse(p.isHelpful(null));
+	}
+
+	@Test
 	public void test_someQualifications_getRequiredQualifications() {
 		Set<Qualification> qs = new HashSet<>();
 		Qualification q1 = new Qualification("Sean Kelley");
