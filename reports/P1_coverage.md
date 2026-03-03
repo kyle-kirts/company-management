@@ -63,3 +63,8 @@
 ## Class: Company
 | Method                          | Statement Coverage   | Branch Coverage |
 | ------------------------------- | -------------------- | --------------- |
+
+
+# Reflection
+
+For our fully implemented Project, Worker and Qualification classes, we achieved 100% coverage over our methods, statements and branches. Our test suites did a good job for handling inputs that would simulate normal and abnormal behaviors. Such as invalid inputs into constructors or void methods which we verified would return false or throw an exception.
