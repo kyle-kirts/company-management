@@ -26,7 +26,6 @@ public class CompanyTest {
 		new Company(" ");
 	}
 
-	
 	@Test
 	public void test_validDescription_createQualification() {
 		Company c = new Company("ABC");
@@ -95,7 +94,6 @@ public class CompanyTest {
 		assertTrue(c.getQualifications().contains(q2));
 	}
 
-	
 	@Test
 	public void test_validName_getName() {
 		Company c = new Company("ABC");
