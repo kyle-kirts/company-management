@@ -3,6 +3,8 @@ package edu.colostate.cs415.model;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import java.util.Set;
+import java.util.Collections;
 
 public class CompanyTest {
 
@@ -153,4 +155,39 @@ public class CompanyTest {
 
 		assertTrue(c.equals(f));
 	}
+	@Test
+public void test_getEmployedWorkers_emptyAtStart() {
+    Company c = new Company("TestCo");
+
+    assertNotNull(c.getEmployedWorkers());
+    assertEquals(0, c.getEmployedWorkers().size());
+    assertTrue(c.getEmployedWorkers().isEmpty());
+}
+
+@Test
+public void test_getEmployedWorkers_defensiveCopy() {
+    Company c = new Company("TestCo");
+
+    try {
+        java.lang.reflect.Field f = Company.class.getDeclaredField("employees");
+        f.setAccessible(true);
+
+        @SuppressWarnings("unchecked")
+        Set<Worker> employees = (Set<Worker>) f.get(c);
+
+        Worker w = new Worker("Alice", Collections.emptySet(), 50000);
+        employees.add(w);
+
+        Set<Worker> copy = c.getEmployedWorkers();
+        assertEquals(1, copy.size());
+
+        
+        copy.clear();
+
+        assertEquals(1, c.getEmployedWorkers().size());
+
+    } catch (Exception e) {
+        fail("Reflection failed: " + e.getMessage());
+    }
+ }
 }

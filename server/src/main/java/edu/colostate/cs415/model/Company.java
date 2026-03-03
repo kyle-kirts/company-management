@@ -47,8 +47,8 @@ public class Company {
 	}
 
 	public Set<Worker> getEmployedWorkers() {
-		return null;
-	}
+    return new HashSet<>(employees); 
+}
 
 	public Set<Worker> getAvailableWorkers() {
 		return null;
@@ -75,8 +75,8 @@ public class Company {
 	}
 
 	public Worker createWorker(String name, Set<Qualification> qualifications, double salary) {
-		return null;
-	}
+    return null;
+}
 
 	public Qualification createQualification(String description) {
 		if (description == null || description.trim().length() == 0) {
