@@ -67,7 +67,7 @@ public class Company {
 	}
 
 	public Set<Qualification> getQualifications() {
-		return null;
+		return this.qualifications;
 	}
 
 	public Worker createWorker(String name, Set<Qualification> qualifications, double salary) {
@@ -75,7 +75,12 @@ public class Company {
 	}
 
 	public Qualification createQualification(String description) {
+		if (description == null || description.trim().length() == 0) {
 		return null;
+	}
+		Qualification q = new Qualification(description);
+		this.qualifications.add(q);
+		return q;
 	}
 
 	public Project createProject(String name, Set<Qualification> qualifications, ProjectSize size) {
