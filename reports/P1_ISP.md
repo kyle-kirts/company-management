@@ -681,6 +681,8 @@
 |-----------|--------------------|------------|--------|
 | name | validity(checked on construction)| A1: valid name| `"ABC"`|
 
+---
+
 **Method:** `getName()_bcc`
 | Test | A | JUnit Test Name |
 |------|-----|----------------------------------|
