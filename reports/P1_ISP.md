@@ -395,6 +395,21 @@
 | T3             | A1  | B2  | `test_overTwelve_isAvailable()`                |
 | T4             | A1  | B1  | `test_atTwelve_FinishedProjects_isAvailable()` |
 
+**Method:** `toDTO()_isp`
+
+| Variable    | Characteristic     | Partition     | Value               |
+| ----------- | ------------------ | ------------- | ------------------- |
+| description | A\) null           | A1: Valid     | "valid description" |
+| workers     | B\) Set of workers | B1: Valid Set | [worker1]           |
+
+
+**Method:** `toDTO()_bcc`
+
+| Test           | A   | B   | JUnit Test Name                                   |
+| -------------- | --- | --- | ------------------------------------------------- |
+| T1 (base test) | A1  | B1  | `test_validDescription_workerSetNotEmpty_toDTO()` |
+| T2             | A1  | B2  | `test_validDescription_workerSetEmpty_toDTO()`    |
+
 ---
 
 ## Class: Project

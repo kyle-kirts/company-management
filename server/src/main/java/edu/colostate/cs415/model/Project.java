@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import edu.colostate.cs415.dto.ProjectDTO;
+import edu.colostate.cs415.dto.QualificationDTO;
 
 public class Project {
 
@@ -128,6 +129,23 @@ public class Project {
 	}
 
 	public ProjectDTO toDTO() {
-		return null;
+		String[] workerStrings = workers.stream()
+										.map(Worker::getName)
+										.toArray(String[]::new);
+
+		String[] qualificationsDTO = this.qualifications.stream()
+										.map(Qualification::toString)
+										.toArray(String[]::new);
+
+		Set<Qualification> missingQualifications = new HashSet<>();
+		missingQualifications = getMissingQualifications();
+
+		String[] missingQualificationsString = missingQualifications.stream()
+										.map(Qualification::toString)
+										.toArray(String[]::new);
+
+		ProjectDTO dto = new ProjectDTO(name, size, status, workerStrings, qualificationsDTO, missingQualificationsString);
+
+		return dto;
 	}
 }
