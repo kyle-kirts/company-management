@@ -47,8 +47,8 @@ public class Company {
 	}
 
 	public Set<Worker> getEmployedWorkers() {
-		return null;
-	}
+    return new HashSet<>(employees); 
+}
 
 	public Set<Worker> getAvailableWorkers() {
 		return null;
@@ -75,8 +75,23 @@ public class Company {
 	}
 
 	public Worker createWorker(String name, Set<Qualification> qualifications, double salary) {
-		return null;
-	}
+    if (name == null || name.trim().isEmpty()) {
+        throw new IllegalArgumentException();
+    }
+    if (qualifications == null) {
+        throw new IllegalArgumentException();
+    }
+    if (salary <= 0) {
+        throw new IllegalArgumentException();
+    }
+
+    Worker w = new Worker(name, qualifications, salary);
+
+    employees.add(w);   
+    available.add(w);   
+
+    return w;
+}
 
 	public Qualification createQualification(String description) {
 		if (description == null || description.trim().length() == 0) {

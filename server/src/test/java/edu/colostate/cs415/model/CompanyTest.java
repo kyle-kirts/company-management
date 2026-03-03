@@ -153,4 +153,66 @@ public class CompanyTest {
 
 		assertTrue(c.equals(f));
 	}
+	@Test
+    public void test_getEmployedWorkers_emptyAtStart() {
+        Company c = new Company("TestCo");
+        assertEquals(0, c.getEmployedWorkers().size());
+    }
+
+    @Test
+    public void test_createWorker_addsToEmployedWorkers() {
+        Company c = new Company("TestCo");
+
+        Set<Qualification> qs = new HashSet<>();
+        // We are not testing qualifications behavior here, so keep it empty.
+
+        Worker w1 = c.createWorker("Alice", qs, 50000);
+        Worker w2 = c.createWorker("Bob", qs, 60000);
+
+        assertNotNull(w1);
+        assertNotNull(w2);
+        assertEquals(2, c.getEmployedWorkers().size());
+        assertTrue(c.getEmployedWorkers().contains(w1));
+        assertTrue(c.getEmployedWorkers().contains(w2));
+    }
+
+    @Test
+    public void test_getEmployedWorkers_defensiveCopy() {
+        Company c = new Company("TestCo");
+
+        Worker w = c.createWorker("Alice", Collections.emptySet(), 50000);
+
+        Set<Worker> employed = c.getEmployedWorkers();
+        assertEquals(1, employed.size());
+
+        // Mutate returned set
+        employed.clear();
+
+        // Company should still have the worker
+        assertEquals(1, c.getEmployedWorkers().size());
+        assertTrue(c.getEmployedWorkers().contains(w));
+    }
+
+    @Test
+    public void test_createWorker_invalidName() {
+        Company c = new Company("TestCo");
+        assertThrows(IllegalArgumentException.class,
+                () -> c.createWorker("   ", Collections.emptySet(), 50000));
+    }
+
+    @Test
+    public void test_createWorker_nullQualificationsSet() {
+        Company c = new Company("TestCo");
+        assertThrows(IllegalArgumentException.class,
+                () -> c.createWorker("Alice", null, 50000));
+    }
+
+    @Test
+    public void test_createWorker_invalidSalary() {
+        Company c = new Company("TestCo");
+        assertThrows(IllegalArgumentException.class,
+                () -> c.createWorker("Alice", Collections.emptySet(), 0));
+        assertThrows(IllegalArgumentException.class,
+                () -> c.createWorker("Alice", Collections.emptySet(), -10));
+    }
 }
