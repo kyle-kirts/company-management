@@ -1,5 +1,6 @@
 package edu.colostate.cs415.model;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class Company {
@@ -33,7 +34,7 @@ public class Company {
 
 	@Override
 	public int hashCode() {
-		return 0;
+		return Objects.hash(this.name);
 	}
 
 	@Override
