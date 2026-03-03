@@ -7,6 +7,9 @@ import java.util.Set;
 
 import org.junit.Test;
 
+import edu.colostate.cs415.dto.ProjectDTO;
+import edu.colostate.cs415.dto.WorkerDTO;
+
 public class ProjectTest {
 	@Test
 	public void test_nonNullName_someQualifications_mediumProject() {
@@ -638,4 +641,27 @@ public class ProjectTest {
 		assertNotNull(missing);
 		assertEquals(0, missing.size());
 	}
+
+	@Test
+	public void test_expectedState_toDTO() {
+		Set<Qualification> projectQs = new HashSet<>();
+		Qualification q1 = new Qualification("Bob B.");
+		projectQs.add(q1);
+
+		Project p = new Project("Project Runway", projectQs, ProjectSize.MEDIUM);
+
+		Set<Qualification> workerQs = new HashSet<>();
+		workerQs.add(q1);
+		Worker w = new Worker("Bob b", workerQs, 100000.0);
+
+		p.addWorker(w);
+
+		ProjectDTO actualDTO = p.toDTO();
+		
+		assertEquals("Project Runway", actualDTO.getName());
+		assertTrue(actualDTO.getMissingQualifications().length == 0);
+		assertTrue(actualDTO.getQualifications().length == 1);
+
+	}
+
 }
