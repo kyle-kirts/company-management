@@ -12,6 +12,15 @@ public class Company {
 	private Set<Qualification> qualifications;
 
 	public Company(String name) {
+		if (name == null || name.trim().length() == 0) {
+			throw new IllegalArgumentException();
+		}
+		this.name = name;
+		this.employees = new HashSet<>();
+		this.available = new HashSet<>();
+		this.assigned = new HashSet<>();
+		this.projects = new HashSet<>();
+		this.qualifications = new HashSet<>();
 	}
 
 	@Override
