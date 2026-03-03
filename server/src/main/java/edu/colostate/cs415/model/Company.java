@@ -25,6 +25,9 @@ public class Company {
 
 	@Override
 	public boolean equals(Object other) {
+		if(!(other instanceof Company)) return false;
+		Company otherC = (Company) other;
+		if(this.name.equals(otherC.getName())) return true;
 		return false;
 	}
 

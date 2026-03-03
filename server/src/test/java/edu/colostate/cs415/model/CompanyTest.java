@@ -1,6 +1,7 @@
 package edu.colostate.cs415.model;
 
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 public class CompanyTest {
@@ -106,5 +107,35 @@ public class CompanyTest {
 		Company c = new Company("XYZ");
 
 		assertEquals("XYZ", c.getName());
+	}
+
+	@Test
+	public void test_isCompany_notequalCompanies_equals(){
+		Company c = new Company("Nvidia");
+		Company f = new Company("AMD");
+
+		assertFalse(c.equals(f));
+	}
+
+	@Test
+	public void test_nullCompany_notequalCompanies_equals(){
+		Company c = new Company("Nvidia");
+
+		assertFalse(c.equals(null));
+	}
+
+	@Test
+	public void test_notCompany_notequalCompanies_equals(){
+		Company c = new Company("Nvidia");
+
+		assertFalse(c.equals("notaCompany"));
+	}
+
+	@Test
+	public void test_isCompany_equalCompanies_equals(){
+		Company c = new Company("Nvidia");
+		Company f = new Company("Nvidia");
+
+		assertTrue(c.equals(f));
 	}
 }

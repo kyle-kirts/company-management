@@ -721,3 +721,22 @@
 | T1(base) | A1| `test_validDescription_createQualification()` |
 | T2 | A2| `test_nullDescription_createQualification()` |
 | T3 | A3| `test_emptyDescription_createQualification()` |
+
+**Method:** `equals()_isp`
+
+| Variable | Characteristic | Partition      | Value                               |
+| -------- | -------------- | -------------- | ----------------------------------- |
+| Object O | Object type    | A1: null       | null                                |
+|          |                | A2: not Company| "notaCompany"                       |
+|          |                | A3: Company    | new Company("Nvidia")               |
+|          | equality       | B1: O = this   | new Company("Nvidia")               |
+|          |                | B2: O != this  | new Company("AMD")                  |
+
+**Method:** `equals()_bcc`
+
+| Test     | A   | B   | JUnit Test Name                               |
+| -------- | --- | --- | --------------------------------------------- |
+| T1(Base) | A3  | B2  | `test_isCompany_notequalCompanies_equals()`   |
+| T2       | A1  | B2  | `test_nullCompany_notequalCompanies_equals()` |
+| T3       | A2  | B2  | `test_notCompany_notequalCompanies_equals()`  |
+| T4       | A3  | B1  | `test_isCompany_equalCompanies_equals()`      |
