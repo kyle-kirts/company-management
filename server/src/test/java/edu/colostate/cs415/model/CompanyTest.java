@@ -1,8 +1,11 @@
 package edu.colostate.cs415.model;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
+
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Collections;
 
 public class CompanyTest {
 
@@ -193,26 +196,43 @@ public class CompanyTest {
         assertTrue(c.getEmployedWorkers().contains(w));
     }
 
-    @Test
-    public void test_createWorker_invalidName() {
-        Company c = new Company("TestCo");
-        assertThrows(IllegalArgumentException.class,
-                () -> c.createWorker("   ", Collections.emptySet(), 50000));
+   @Test
+public void test_createWorker_invalidName() {
+    Company c = new Company("TestCo");
+    try {
+        c.createWorker("   ", Collections.emptySet(), 50000);
+        fail("Expected IllegalArgumentException");
+    } catch (IllegalArgumentException e) {
+        // expected
+    }
+}
+
+@Test
+public void test_createWorker_nullQualificationsSet() {
+    Company c = new Company("TestCo");
+    try {
+        c.createWorker("Alice", null, 50000);
+        fail("Expected IllegalArgumentException");
+    } catch (IllegalArgumentException e) {
+        // expected
+    }
+}
+
+@Test
+public void test_createWorker_invalidSalary() {
+    Company c = new Company("TestCo");
+
+    try {
+        c.createWorker("Alice", Collections.emptySet(), 0);
+        fail("Expected IllegalArgumentException");
+    } catch (IllegalArgumentException e) {
+        // expected
     }
 
-    @Test
-    public void test_createWorker_nullQualificationsSet() {
-        Company c = new Company("TestCo");
-        assertThrows(IllegalArgumentException.class,
-                () -> c.createWorker("Alice", null, 50000));
-    }
-
-    @Test
-    public void test_createWorker_invalidSalary() {
-        Company c = new Company("TestCo");
-        assertThrows(IllegalArgumentException.class,
-                () -> c.createWorker("Alice", Collections.emptySet(), 0));
-        assertThrows(IllegalArgumentException.class,
-                () -> c.createWorker("Alice", Collections.emptySet(), -10));
+    try {
+        c.createWorker("Alice", Collections.emptySet(), -10);
+        fail("Expected IllegalArgumentException");
+    } catch (IllegalArgumentException e) {
+        
     }
 }
