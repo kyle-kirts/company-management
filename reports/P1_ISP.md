@@ -675,3 +675,47 @@
 ---
 
 ## Class: Company
+
+**Method:** `getName()_isp`
+| Variable | Characteristic | Partition | Value |
+|-----------|--------------------|------------|--------|
+| name | validity(checked on construction)| A1: valid name| `"ABC"`|
+
+**Method:** `getName()_bcc`
+| Test | A | JUnit Test Name |
+|------|-----|----------------------------------|
+| T1(base) | A1| `test_validName_getName()` |
+| T2 | A1| `test_anotherValidName_getName()` |
+
+---
+
+**Method:** `getQualifications()_isp`
+| Variable | Characteristic | Partition | Value |
+|-----------|--------------------|------------|--------|
+| qualifications | validity(checked on construction)| A1: non-null set| `qualifications`|
+| qualifications.size() | number of qualifications| B1: no qualifications| `0`|
+| qualifications.size() | number of qualifications| B2: one qualification| `1`|
+| qualifications.size() | number of qualifications| B3: multiple qualifications| `2`|
+
+**Method:** `getQualifications()_bcc`
+| Test | A | B | JUnit Test Name |
+|------|-----|-----|----------------------------------|
+| T1(base) | A1| B1| `test_noQualifications_getQualifications()` |
+| T2 | A1| B2| `test_oneQualification_getQualifications()` |
+| T3 | A1| B3| `test_multipleQualifications_getQualifications()` |
+
+--- 
+
+**Method:** `createQualification()_isp`
+| Variable | Characteristic | Partition | Value |
+|-----------|--------------------|------------|--------|
+| description | validity| A1: valid description| `"Java"`|
+| description | validity| A2: null description| `null`|
+| description | validity| A3: empty description| `""`|
+
+**Method:** `createQualification()_bcc`
+| Test | A | JUnit Test Name |
+|------|-----|----------------------------------|
+| T1(base) | A1| `test_validDescription_createQualification()` |
+| T2 | A2| `test_nullDescription_createQualification()` |
+| T3 | A3| `test_emptyDescription_createQualification()` |
