@@ -75,22 +75,7 @@ public class Company {
 	}
 
 	public Worker createWorker(String name, Set<Qualification> qualifications, double salary) {
-    if (name == null || name.trim().isEmpty()) {
-        throw new IllegalArgumentException();
-    }
-    if (qualifications == null) {
-        throw new IllegalArgumentException();
-    }
-    if (salary <= 0) {
-        throw new IllegalArgumentException();
-    }
-
-    Worker w = new Worker(name, qualifications, salary);
-
-    employees.add(w);   
-    available.add(w);   
-
-    return w;
+    return null;
 }
 
 	public Qualification createQualification(String description) {
