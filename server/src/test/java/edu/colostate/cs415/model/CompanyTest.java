@@ -235,4 +235,5 @@ public void test_createWorker_invalidSalary() {
     } catch (IllegalArgumentException e) {
         
     }
+ }
 }
