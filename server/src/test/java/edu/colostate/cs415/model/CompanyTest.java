@@ -25,4 +25,18 @@ public class CompanyTest {
 	public void test_whitespaceName_Constructor() {
 		new Company(" ");
 	}
+	
+	@Test
+	public void test_validName_getName() {
+		Company c = new Company("ABC");
+
+		assertEquals("ABC", c.getName());
+	}
+
+	@Test
+	public void test_anotherValidName_getName() {
+		Company c = new Company("XYZ");
+
+		assertEquals("XYZ", c.getName());
+	}
 }
