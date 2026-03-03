@@ -84,6 +84,7 @@ public class Project {
 	}
 
 	public void removeAllWorkers() {
+		this.workers.clear();
 	}
 
 	public Set<Qualification> getRequiredQualifications() {
@@ -98,7 +99,13 @@ public class Project {
 	}
 
 	public Set<Qualification> getMissingQualifications() {
-		return null;
+		Set<Qualification> missingQ = new HashSet<>(this.qualifications);
+
+		for (Worker worker : this.workers) {
+			missingQ.removeAll(worker.getQualifications());
+		}
+
+		return missingQ;
 	}
 
 	public boolean isHelpful(Worker worker) {
