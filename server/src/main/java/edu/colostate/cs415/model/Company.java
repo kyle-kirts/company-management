@@ -63,8 +63,10 @@ public class Company {
     }
 
 	public Set<Worker> getUnassignedWorkers() {
-	return new HashSet<>(employees);
-    }
+	Set<Worker> result = new HashSet<>(employees);
+	result.removeAll(assigned);
+	return result;
+}
 
 	public Set<Project> getProjects() {
 		return this.projects;
