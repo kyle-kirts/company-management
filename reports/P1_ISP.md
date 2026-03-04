@@ -806,8 +806,44 @@
 **Method:** `getEmployedWorkers()_bcc`
 | Test | A | B | C | JUnit Test Name |
 |------|-----|-----|-----|----------------------------------|
-| T1(base) | A1 | B1 | -- | `test_getEmployedWorkers_emptyAtStart()` |
-| T2 | A1 | B2 | C1 | `test_getEmployedWorkers_defensiveCopy()` |
+| T1(base) | A1| B1| --| `test_getEmployedWorkers_emptyAtStart()` |
+| T2 | A1| B2| C1| `test_getEmployedWorkers_defensiveCopy()` |
+
+**Method:** `createProject()_isp`
+
+| Variable       | Characteristic | Partition          | Value                                      |
+| -------------- | -------------- | ------------------ | ------------------------------------------ |
+| String name    | null/emptiness | A1: null           | null                                       |
+|                |                | A2: empty          | ""                                         |
+|                |                | A3: not empty      | "Project Runway"                           |
+| qualifications | size           | B1: not empty      | "design", "walking"                        |
+|                |                | B2: empty          | ""                                         |
+| size           | exists in enum | C1: null           | null                                       |
+|                |                | C2: valid enum     | ProjectSize.Medium                         |
+
+**Method:** `createProject()_bcc`
+
+| Test           | A   | B   | C   | JUnit Test Name                                                         |
+| -------------- | --- | --- | --- | ----------------------------------------------------------------------- |
+| T1(Base)       | A3  | B1  | C2  | `test_nonEmptyName_hasQualifications_validEnum_createProject()`         |
+| T2             | A1  | B1  | C2  | `test_nullName_hasQualifications_validEnum_createProject()`             |
+| T3             | A2  | B1  | C2  | `test_emptyName_hasQualifications_validEnum_createProject()`            |
+| T4             | A3  | B2  | C2  | `test_nonEmptyName_noQualifications_validEnum_createProject()`          |
+| T5             | A3  | B1  | C1  | `test_nonEmptyName_hasQualifications_nullEnum_createProject()`          |
+
+**Method:** `getProjects()_isp`
+
+| Variable       | Characteristic | Partition          | Value                                      |
+| -------------- | -------------- | ------------------ | ------------------------------------------ |
+| this.projects  | emptiness      | A1: not empty      | "Project Runway", "Project Hail Mary"      |
+|                |                | A2: empty          | ""                                         |
+
+
+**Method:** `getProjects()_bcc`
+| Test           | A   | JUnit Test Name                   |
+| -------------- | --- | --------------------------------- |
+| T1(Base)       | A1  | `test_notEmpty_getProjects()`     |
+| T2             | A2  | `test_empty_getProjects()`        |
 
 ---
 

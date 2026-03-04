@@ -348,4 +348,89 @@ public class CompanyTest {
 			fail("Reflection failed: " + e.getMessage());
 		}
 	}
+
+	@Test 
+	public void test_nonEmptyName_hasQualifications_validEnum_createProject(){
+		Company c = new Company("AMD");
+		c.createQualification("design");
+		c.createQualification("walking");
+
+		Set<Qualification> qs = new HashSet<Qualification>();
+		qs.add(new Qualification("design"));
+
+		assertEquals(0, c.getProjects().size());
+
+		c.createProject("Project Runway", qs, ProjectSize.MEDIUM);
+		
+		assertEquals(1, c.getProjects().size());
+	}
+
+	@Test (expected = IllegalArgumentException.class)
+	public void test_nullName_hasQualifications_validEnum_createProject(){
+		Company c = new Company("AMD");
+		c.createQualification("design");
+		c.createQualification("walking");
+
+		Set<Qualification> qs = new HashSet<Qualification>();
+		qs.add(new Qualification("design"));
+
+		c.createProject(null, qs, ProjectSize.MEDIUM);
+	} 
+
+	@Test (expected = IllegalArgumentException.class)
+	public void test_emptyName_hasQualifications_validEnum_createProject(){
+		Company c = new Company("AMD");
+		c.createQualification("design");
+		c.createQualification("walking");
+
+		Set<Qualification> qs = new HashSet<Qualification>();
+		qs.add(new Qualification("design"));
+
+		c.createProject("", qs, ProjectSize.MEDIUM);
+	} 
+
+	@Test
+	public void test_nonEmptyName_noQualifications_validEnum_createProject(){
+		Company c = new Company("AMD");
+		c.createQualification("design");
+		c.createQualification("walking");
+
+		assertEquals(0, c.getProjects().size());
+		
+		Set<Qualification> qs = new HashSet<Qualification>();
+		c.createProject("Project Runway", qs, ProjectSize.MEDIUM);
+		
+		assertEquals(1, c.getProjects().size());
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void test_nonEmptyName_hasQualifications_nullEnum_createProject(){
+		Company c = new Company("AMD");
+		c.createQualification("design");
+		c.createQualification("walking");
+
+		Set<Qualification> qs = new HashSet<Qualification>();
+		qs.add(new Qualification("design"));
+
+		c.createProject("Project Runway", qs, null);
+	}
+
+	@Test
+	public void test_notEmpty_getProjects(){
+		Company c = new Company("AMD");
+
+		Set<Qualification> qs = new HashSet<Qualification>();
+		qs.add(new Qualification("design"));
+
+		c.createProject("Project Runway", qs, ProjectSize.MEDIUM);
+
+		assertEquals(1, c.getProjects().size());
+	}
+
+	@Test
+	public void test_empty_getProjects(){
+		Company c = new Company("AMD");
+
+		assertEquals(0, c.getProjects().size());
+}
 }

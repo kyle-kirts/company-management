@@ -67,7 +67,7 @@ public class Company {
 	}
 
 	public Set<Project> getProjects() {
-		return null;
+		return this.projects;
 	}
 
 	public Set<Qualification> getQualifications() {
@@ -109,7 +109,10 @@ public class Company {
 	}
 
 	public Project createProject(String name, Set<Qualification> qualifications, ProjectSize size) {
-		return null;
+		//All integrity constraints for variables are caught using the Project constructor
+		Project p = new Project(name, qualifications, size);
+		this.projects.add(p);
+		return p;
 	}
 
 	public void start(Project project) {
