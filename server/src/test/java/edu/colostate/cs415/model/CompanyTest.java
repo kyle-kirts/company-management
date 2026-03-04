@@ -509,4 +509,47 @@ public class CompanyTest {
 		c.start(p);
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void test_nullWorker_unassign() {
+		Company c = new Company("ABC");
+
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(c.createQualification("Java"));
+		Project p = c.createProject("Project Runway", qs, ProjectSize.MEDIUM);
+
+		c.unassign(null, p);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void test_nullProject_unassign() {
+		Company c = new Company("ABC");
+
+		Qualification q = c.createQualification("Java");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(q);
+		Worker w = c.createWorker("Bob", qs, 1000.0);
+
+		c.unassign(w, null);
+	}
+
+	@Test
+	public void test_removesWorkerFromProjectAndWorker_unassign() {
+		Company c = new Company("ABC");
+
+		Qualification q = c.createQualification("Java");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(q);
+
+		Worker w = c.createWorker("Bob", qs, 1000.0);
+		Project p = c.createProject("Project Runway", qs, ProjectSize.MEDIUM);
+
+		p.addWorker(w);
+		w.addProject(p);
+
+		c.unassign(w, p);
+
+		assertFalse(p.getWorkers().contains(w));
+		assertFalse(w.getProjects().contains(p));
+	}
+
 }
