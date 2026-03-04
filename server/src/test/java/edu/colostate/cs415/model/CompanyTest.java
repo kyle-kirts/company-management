@@ -432,5 +432,81 @@ public class CompanyTest {
 		Company c = new Company("AMD");
 
 		assertEquals(0, c.getProjects().size());
-}
+	}
+	@Test
+	public void test_plannedNoMissing_start() {
+		Company c = new Company("ABC");
+
+		Qualification q = c.createQualification("Java");
+		Set<Qualification> projectQs = new HashSet<>();
+		projectQs.add(q);
+
+		Project p = c.createProject("Project Runway", projectQs, ProjectSize.MEDIUM);
+
+		Set<Qualification> workerQs = new HashSet<>();
+		workerQs.add(q);
+		Worker w = c.createWorker("Bob", workerQs, 1000.0);
+
+		p.addWorker(w);
+
+		c.start(p);
+
+		assertEquals(ProjectStatus.ACTIVE, p.getStatus());
+	}
+
+	@Test
+	public void test_plannedMissingQualifications_start() {
+		Company c = new Company("ABC");
+
+		Qualification q = c.createQualification("Java");
+		Set<Qualification> projectQs = new HashSet<>();
+		projectQs.add(q);
+
+		Project p = c.createProject("Project Runway", projectQs, ProjectSize.MEDIUM);
+
+		c.start(p);
+
+		assertEquals(ProjectStatus.PLANNED, p.getStatus());
+	}
+
+	@Test
+	public void test_suspendedNoMissing_start() {
+		Company c = new Company("ABC");
+
+		Qualification q = c.createQualification("Java");
+		Set<Qualification> projectQs = new HashSet<>();
+		projectQs.add(q);
+
+		Project p = c.createProject("Project Runway", projectQs, ProjectSize.MEDIUM);
+		p.setStatus(ProjectStatus.SUSPENDED);
+
+		Set<Qualification> workerQs = new HashSet<>();
+		workerQs.add(q);
+		Worker w = c.createWorker("Bob", workerQs, 1000.0);
+
+		p.addWorker(w);
+
+		c.start(p);
+
+		assertEquals(ProjectStatus.ACTIVE, p.getStatus());
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void test_nullProject_start() {
+		Company c = new Company("ABC");
+
+		c.start(null);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void test_projectNotInCompany_start() {
+		Company c = new Company("ABC");
+
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+
+		c.start(p);
+	}
+
 }
