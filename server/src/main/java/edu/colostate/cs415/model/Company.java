@@ -166,5 +166,24 @@ public class Company {
 	}
 
 	public void unassignAll(Worker worker) {
+		if (worker == null || !this.employees.contains(worker)) {
+		throw new IllegalArgumentException();
+		}
+
+		Set<Project> workerProjects = new HashSet<>(worker.getProjects());
+
+		for (Project project : workerProjects) {
+			if (this.projects.contains(project)) {
+				this.unassign(worker, project);
+			}
+		}
+
+		this.assigned.remove(worker);
+
+		if (worker.isAvailable()) {
+			this.available.add(worker);
+		} else {
+			this.available.remove(worker);
+		}
 	}
 }
