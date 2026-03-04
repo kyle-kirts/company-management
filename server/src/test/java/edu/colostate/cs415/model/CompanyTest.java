@@ -3,6 +3,7 @@ package edu.colostate.cs415.model;
 import static org.junit.Assert.*;
 
 import java.util.Collections;
+ main
 import java.util.HashSet;
 import java.util.Set;
 
@@ -61,6 +62,101 @@ public class CompanyTest {
 
 		assertNull(q);
 		assertEquals(0, c.getQualifications().size());
+	}
+
+	@Test
+	public void test_validWorker_createWorker() {
+		Company c = new Company("ABC");
+
+		Qualification q = c.createQualification("Java");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(q);
+
+		Worker w = c.createWorker("Bob", qs, 1000.0);
+
+		assertNotNull(w);
+		assertEquals("Bob", w.getName());
+		assertEquals(1000.0, w.getSalary(), 0.0);
+
+		assertEquals(1, c.getEmployedWorkers().size());
+		assertEquals(1, c.getAvailableWorkers().size());
+		assertTrue(c.getEmployedWorkers().contains(w));
+		assertTrue(c.getAvailableWorkers().contains(w));
+
+		assertTrue(q.getWorkers().contains(w));
+	}
+
+	@Test
+	public void test_nullName_createWorker() {
+		Company c = new Company("ABC");
+
+		Qualification q = c.createQualification("Java");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(q);
+
+		Worker w = c.createWorker(null, qs, 1000.0);
+
+		assertNull(w);
+		assertEquals(0, c.getEmployedWorkers().size());
+		assertEquals(0, c.getAvailableWorkers().size());
+	}
+
+	@Test
+	public void test_emptyQualifications_createWorker() {
+		Company c = new Company("ABC");
+
+		Set<Qualification> qs = new HashSet<>();
+
+		Worker w = c.createWorker("Bob", qs, 1000.0);
+
+		assertNull(w);
+		assertEquals(0, c.getEmployedWorkers().size());
+		assertEquals(0, c.getAvailableWorkers().size());
+	}
+
+	@Test
+	public void test_nonCompanyQualification_createWorker() {
+		Company c = new Company("ABC");
+
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
+
+		Worker w = c.createWorker("Bob", qs, 1000.0);
+
+		assertNull(w);
+		assertEquals(0, c.getEmployedWorkers().size());
+		assertEquals(0, c.getAvailableWorkers().size());
+	}
+
+	@Test
+	public void test_negativeSalary_createWorker() {
+		Company c = new Company("ABC");
+
+		Qualification q = c.createQualification("Java");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(q);
+
+		Worker w = c.createWorker("Bob", qs, -1.0);
+
+		assertNull(w);
+		assertEquals(0, c.getEmployedWorkers().size());
+		assertEquals(0, c.getAvailableWorkers().size());
+		assertFalse(q.getWorkers().contains(w));
+	}
+
+	@Test
+	public void test_nanSalary_createWorker() {
+		Company c = new Company("ABC");
+
+		Qualification q = c.createQualification("Java");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(q);
+
+		Worker w = c.createWorker("Bob", qs, Double.NaN);
+
+		assertNull(w);
+		assertEquals(0, c.getEmployedWorkers().size());
+		assertEquals(0, c.getAvailableWorkers().size());
 	}
 
 	@Test
@@ -129,7 +225,7 @@ public class CompanyTest {
 	}
 
 	@Test
-	public void test_isCompany_notequalCompanies_equals(){
+	public void test_isCompany_notequalCompanies_equals() {
 		Company c = new Company("Nvidia");
 		Company f = new Company("AMD");
 
@@ -137,61 +233,123 @@ public class CompanyTest {
 	}
 
 	@Test
-	public void test_nullCompany_notequalCompanies_equals(){
+	public void test_nullCompany_notequalCompanies_equals() {
 		Company c = new Company("Nvidia");
 
 		assertFalse(c.equals(null));
 	}
 
 	@Test
-	public void test_notCompany_notequalCompanies_equals(){
+	public void test_notCompany_notequalCompanies_equals() {
 		Company c = new Company("Nvidia");
 
 		assertFalse(c.equals("notaCompany"));
 	}
 
 	@Test
-	public void test_isCompany_equalCompanies_equals(){
+	public void test_isCompany_equalCompanies_equals() {
 		Company c = new Company("Nvidia");
 		Company f = new Company("Nvidia");
 
 		assertTrue(c.equals(f));
 	}
+
 	@Test
-public void test_getEmployedWorkers_emptyAtStart() {
-    Company c = new Company("TestCo");
+	public void test_noWorkers_getAvailableWorkers() {
+		Company c = new Company("ABC");
 
-    assertNotNull(c.getEmployedWorkers());
-    assertEquals(0, c.getEmployedWorkers().size());
-    assertTrue(c.getEmployedWorkers().isEmpty());
-}
+		assertNotNull(c.getAvailableWorkers());
+		assertEquals(0, c.getAvailableWorkers().size());
+		assertTrue(c.getAvailableWorkers().isEmpty());
+	}
 
-@Test
-public void test_getEmployedWorkers_defensiveCopy() {
-    Company c = new Company("TestCo");
+	@Test
+	public void test_oneWorker_getAvailableWorkers() {
+		Company c = new Company("ABC");
 
-    try {
-        java.lang.reflect.Field f = Company.class.getDeclaredField("employees");
-        f.setAccessible(true);
+		Qualification q = c.createQualification("Java");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(q);
 
-        @SuppressWarnings("unchecked")
-        Set<Worker> employees = (Set<Worker>) f.get(c);
+		Worker w = c.createWorker("Bob", qs, 1000.0);
 
-        Worker w = new Worker("Alice", Collections.emptySet(), 50000);
-        employees.add(w);
+		assertNotNull(w);
+		assertEquals(1, c.getAvailableWorkers().size());
+		assertTrue(c.getAvailableWorkers().contains(w));
+	}
 
-        Set<Worker> copy = c.getEmployedWorkers();
-        assertEquals(1, copy.size());
+	@Test
+	public void test_twoWorkers_getAvailableWorkers() {
+		Company c = new Company("ABC");
 
-        
-        copy.clear();
+		Qualification q = c.createQualification("Java");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(q);
 
-        assertEquals(1, c.getEmployedWorkers().size());
+		Worker w1 = c.createWorker("Bob", qs, 1000.0);
+		Worker w2 = c.createWorker("Susan", qs, 2000.0);
 
-    } catch (Exception e) {
-        fail("Reflection failed: " + e.getMessage());
-    }
- }
+		assertNotNull(w1);
+		assertNotNull(w2);
+		assertEquals(2, c.getAvailableWorkers().size());
+		assertTrue(c.getAvailableWorkers().contains(w1));
+		assertTrue(c.getAvailableWorkers().contains(w2));
+	}
+
+	@Test
+	public void test_getEmployedWorkers_emptyAtStart() {
+		Company c = new Company("TestCo");
+
+		assertNotNull(c.getEmployedWorkers());
+		assertEquals(0, c.getEmployedWorkers().size());
+		assertTrue(c.getEmployedWorkers().isEmpty());
+	}
+
+	@Test
+	public void test_twoWorkers_getEmployedWorkers() {
+		Company c = new Company("ABC");
+
+		Qualification q = c.createQualification("Java");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(q);
+
+		Worker w1 = c.createWorker("Bob", qs, 1000.0);
+		Worker w2 = c.createWorker("Susan", qs, 2000.0);
+
+		assertNotNull(w1);
+		assertNotNull(w2);
+		assertEquals(2, c.getEmployedWorkers().size());
+		assertTrue(c.getEmployedWorkers().contains(w1));
+		assertTrue(c.getEmployedWorkers().contains(w2));
+	}
+
+	@Test
+	public void test_getEmployedWorkers_defensiveCopy() {
+		Company c = new Company("TestCo");
+
+		try {
+			java.lang.reflect.Field f = Company.class.getDeclaredField("employees");
+			f.setAccessible(true);
+
+			@SuppressWarnings("unchecked")
+			Set<Worker> employees = (Set<Worker>) f.get(c);
+
+			Set<Qualification> qs = new HashSet<>();
+			qs.add(new Qualification("Java"));
+			Worker w = new Worker("Alice", qs, 50000);
+			employees.add(w);
+
+			Set<Worker> copy = c.getEmployedWorkers();
+			assertEquals(1, copy.size());
+
+			copy.clear();
+
+			assertEquals(1, c.getEmployedWorkers().size());
+
+		} catch (Exception e) {
+			fail("Reflection failed: " + e.getMessage());
+		}
+	}
 
 	@Test 
 	public void test_nonEmptyName_hasQualifications_validEnum_createProject(){
@@ -276,5 +434,4 @@ public void test_getEmployedWorkers_defensiveCopy() {
 		Company c = new Company("AMD");
 
 		assertEquals(0, c.getProjects().size());
-	}
 }

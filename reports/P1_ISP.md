@@ -715,74 +715,74 @@
 **Method:** `getName()_isp`
 | Variable | Characteristic | Partition | Value |
 |-----------|--------------------|------------|--------|
-| name | validity(checked on construction)| A1: valid name| `"ABC"`|
+| name | validity(checked on construction) | A1: valid name | `"ABC"` |
 
 ---
 
 **Method:** `getName()_bcc`
 | Test | A | JUnit Test Name |
 |------|-----|----------------------------------|
-| T1(base) | A1| `test_validName_getName()` |
-| T2 | A1| `test_anotherValidName_getName()` |
+| T1(base) | A1 | `test_validName_getName()` |
+| T2 | A1 | `test_anotherValidName_getName()` |
 
 ---
 
 **Method:** `hashCode()_isp`
 | Variable | Characteristic | Partition | Value |
 |-----------|--------------------|------------|--------|
-| name | validity(checked on construction)| A1: valid name| `"ABC"`|
-| compared object names | equality of names| B1: same name| `"ABC"` and `"ABC"`|
+| name | validity(checked on construction) | A1: valid name | `"ABC"` |
+| compared object names | equality of names | B1: same name | `"ABC"` and `"ABC"` |
 
 **Method:** `hashCode()_bcc`
 | Test | A | B | JUnit Test Name |
 |------|-----|-----|----------------------------------|
-| T1(base) | A1| B1| `test_sameName_hashCode()` |
-| T2 | A1| B1| `test_validName_hashCode()` |
+| T1(base) | A1 | B1 | `test_sameName_hashCode()` |
+| T2 | A1 | B1 | `test_validName_hashCode()` |
 
 ---
 
 **Method:** `getQualifications()_isp`
 | Variable | Characteristic | Partition | Value |
 |-----------|--------------------|------------|--------|
-| qualifications | validity(checked on construction)| A1: non-null set| `qualifications`|
-| qualifications.size() | number of qualifications| B1: no qualifications| `0`|
-| qualifications.size() | number of qualifications| B2: one qualification| `1`|
-| qualifications.size() | number of qualifications| B3: multiple qualifications| `2`|
+| qualifications | validity(checked on construction) | A1: non-null set | `qualifications` |
+| qualifications.size() | number of qualifications | B1: no qualifications | `0` |
+| qualifications.size() | number of qualifications | B2: one qualification | `1` |
+| qualifications.size() | number of qualifications | B3: multiple qualifications | `2` |
 
 **Method:** `getQualifications()_bcc`
 | Test | A | B | JUnit Test Name |
 |------|-----|-----|----------------------------------|
-| T1(base) | A1| B1| `test_noQualifications_getQualifications()` |
-| T2 | A1| B2| `test_oneQualification_getQualifications()` |
-| T3 | A1| B3| `test_multipleQualifications_getQualifications()` |
+| T1(base) | A1 | B1 | `test_noQualifications_getQualifications()` |
+| T2 | A1 | B2 | `test_oneQualification_getQualifications()` |
+| T3 | A1 | B3 | `test_multipleQualifications_getQualifications()` |
 
 --- 
 
 **Method:** `createQualification()_isp`
 | Variable | Characteristic | Partition | Value |
 |-----------|--------------------|------------|--------|
-| description | validity| A1: valid description| `"Java"`|
-| description | validity| A2: null description| `null`|
-| description | validity| A3: empty description| `""`|
+| description | validity | A1: valid description | `"Java"` |
+|             |          | A2: null description | `null` |
+|             |          | A3: empty description | `""` |
 
 **Method:** `createQualification()_bcc`
 | Test | A | JUnit Test Name |
 |------|-----|----------------------------------|
-| T1(base) | A1| `test_validDescription_createQualification()` |
-| T2 | A2| `test_nullDescription_createQualification()` |
-| T3 | A3| `test_emptyDescription_createQualification()` |
+| T1(base) | A1 | `test_validDescription_createQualification()` |
+| T2 | A2 | `test_nullDescription_createQualification()` |
+| T3 | A3 | `test_emptyDescription_createQualification()` |
 
 ---
 
 **Method:** `equals()_isp`
 
-| Variable | Characteristic | Partition      | Value                               |
-| -------- | -------------- | -------------- | ----------------------------------- |
-| Object O | Object type    | A1: null       | null                                |
-|          |                | A2: not Company| "notaCompany"                       |
-|          |                | A3: Company    | new Company("Nvidia")               |
-|          | equality       | B1: O = this   | new Company("Nvidia")               |
-|          |                | B2: O != this  | new Company("AMD")                  |
+| Variable | Characteristic | Partition      | Value                 |
+| -------- | -------------- | -------------- | --------------------- |
+| Object O | Object type    | A1: null       | null                  |
+|          |                | A2: not Company| `"notaCompany"`       |
+|          |                | A3: Company    | `new Company("Nvidia")` |
+|          | equality       | B1: O = this   | `new Company("Nvidia")` |
+|          |                | B2: O != this  | `new Company("AMD")`    |
 
 **Method:** `equals()_bcc`
 
@@ -793,14 +793,16 @@
 | T3       | A2  | B2  | `test_notCompany_notequalCompanies_equals()`  |
 | T4       | A3  | B1  | `test_isCompany_equalCompanies_equals()`      |
 
+---
+
 **Method:** `getEmployedWorkers()_isp`
 | Variable | Characteristic | Partition | Value |
 |-----------|--------------------|------------|--------|
-| employees | validity(checked on construction)| A1: valid set| `employees`|
-| employees.size() | number of employed workers| B1: no workers| `0`|
-| employees.size() | number of employed workers| B2: has workers| `1`|
-| returned set | copy behavior| C1: defensive copy returned| modifying returned set does not change internal set|
- 
+| employees | validity(checked on construction) | A1: valid set | `employees` |
+| employees.size() | number of employed workers | B1: no workers | `0` |
+| employees.size() | number of employed workers | B2: has workers | `1` |
+| returned set | copy behavior | C1: defensive copy returned | modifying returned set does not change internal set |
+
 **Method:** `getEmployedWorkers()_bcc`
 | Test | A | B | C | JUnit Test Name |
 |------|-----|-----|-----|----------------------------------|
@@ -842,3 +844,42 @@
 | -------------- | --- | --------------------------------- |
 | T1(Base)       | A1  | `test_notEmpty_getProjects()`     |
 | T2             | A2  | `test_empty_getProjects()`        |
+
+---
+
+**Method:** `createWorker()_isp`
+| Variable | Characteristic | Partition | Value |
+|-----------|--------------------|------------|--------|
+| name | validity| A1: valid name| `"Bob"`|
+| name | validity| A2: null name| `null`|
+| qualifications | validity| B1: non-empty qualifications set| `qs` containing `q`|
+| qualifications | validity| B2: empty qualifications set| empty `qs`|
+| salary | validity| C1: valid salary| `1000.0`|
+| salary | validity| C2: negative salary| `-1.0`|
+| salary | validity| C3: NaN salary| `Double.NaN`|
+
+**Method:** `createWorker()_bcc`
+| Test | A | B | C | JUnit Test Name |
+|------|-----|-----|-----|----------------------------------|
+| T1(base) | A1| B1| C1| `test_validWorker_createWorker()` |
+| T2 | A2| B1| C1| `test_nullName_createWorker()` |
+| T3 | A1| B2| C1| `test_emptyQualifications_createWorker()` |
+| T4 | A1| B1| C2| `test_negativeSalary_createWorker()` |
+| T5 | A1| B1| C3| `test_nanSalary_createWorker()` |
+
+---
+
+**Method:** `getAvailableWorkers()_isp`
+| Variable | Characteristic | Partition | Value |
+|-----------|--------------------|------------|--------|
+| available | validity(checked on construction) | A1: valid set | `available` |
+| available.size() | number of available workers | B1: no workers | `0` |
+| available.size() | number of available workers | B2: one worker | `1` |
+| available.size() | number of available workers | B3: multiple workers | `2` |
+
+**Method:** `getAvailableWorkers()_bcc`
+| Test | A | B | JUnit Test Name |
+|------|-----|-----|----------------------------------|
+| T1(base) | A1 | B1 | `test_noWorkers_getAvailableWorkers()` |
+| T2 | A1 | B2 | `test_oneWorker_getAvailableWorkers()` |
+| T3 | A1 | B3 | `test_twoWorkers_getAvailableWorkers()` |

@@ -1,4 +1,5 @@
 package edu.colostate.cs415.model;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,9 +26,9 @@ public class Company {
 
 	@Override
 	public boolean equals(Object other) {
-		if(!(other instanceof Company)) return false;
+		if (!(other instanceof Company)) return false;
 		Company otherC = (Company) other;
-		if(this.name.equals(otherC.getName())) return true;
+		if (this.name.equals(otherC.getName())) return true;
 		return false;
 	}
 
@@ -46,11 +47,11 @@ public class Company {
 	}
 
 	public Set<Worker> getEmployedWorkers() {
-    return new HashSet<>(employees); 
-}
+		return new HashSet<>(employees);
+	}
 
 	public Set<Worker> getAvailableWorkers() {
-		return null;
+		return new HashSet<>(available);
 	}
 
 	public Set<Worker> getUnavailableWorkers() {
@@ -74,13 +75,34 @@ public class Company {
 	}
 
 	public Worker createWorker(String name, Set<Qualification> qualifications, double salary) {
-    return null;
-}
+		if (name == null || name.trim().length() == 0) {
+			return null;
+		}
+		if (qualifications == null || qualifications.isEmpty()) {
+			return null;
+		}
+		if (salary < 0 || Double.isNaN(salary)) {
+			return null;
+		}
+		if (!this.qualifications.containsAll(qualifications)) {
+			return null;
+		}
+
+		Worker w = new Worker(name, new HashSet<>(qualifications), salary);
+		this.employees.add(w);
+		this.available.add(w);
+
+		for (Qualification q : qualifications) {
+			q.addWorker(w);
+		}
+
+		return w;
+	}
 
 	public Qualification createQualification(String description) {
 		if (description == null || description.trim().length() == 0) {
-		return null;
-	}
+			return null;
+		}
 		Qualification q = new Qualification(description);
 		this.qualifications.add(q);
 		return q;
