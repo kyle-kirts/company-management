@@ -1,58 +1,70 @@
-**Class: Project**
+# Coverage Report
+
+## Class: Project
+| Element | Missed Instructions | Instruction Cov. | Missed Branches | Branch Cov. | Missed Cxty | Cxty | Missed Lines | Lines | Missed Methods | Methods |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Project(String, Set, ProjectSize) | 53 | 100% | 8 | 100% | 0 | 5 | 0 | 15 | 0 | 1 |
+| toDTO() | 48 | 100% | n/a | n/a | 0 | 1 | 0 | 13 | 0 | 1 |
+| isHelpful(Worker) | 27 | 100% | 6 | 100% | 0 | 4 | 0 | 7 | 0 | 1 |
+| getMissingQualifications() | 25 | 100% | 2 | 100% | 0 | 2 | 0 | 4 | 0 | 1 |
+| toString() | 19 | 100% | n/a | n/a | 0 | 1 | 0 | 1 | 0 | 1 |
+| equals(Object) | 18 | 100% | 4 | 100% | 0 | 3 | 0 | 4 | 0 | 1 |
+| addWorker(Worker) | 13 | 100% | 2 | 100% | 0 | 2 | 0 | 3 | 0 | 1 |
+| removeWorker(Worker) | 13 | 100% | 2 | 100% | 0 | 2 | 0 | 3 | 0 | 1 |
+| addQualification(Qualification) | 13 | 100% | 2 | 100% | 0 | 2 | 0 | 4 | 0 | 1 |
+| setStatus(ProjectStatus) | 11 | 100% | 2 | 100% | 0 | 2 | 0 | 3 | 0 | 1 |
+| hashCode() | 9 | 100% | n/a | n/a | 0 | 1 | 0 | 1 | 0 | 1 |
+| removeAllWorkers() | 4 | 100% | n/a | n/a | 0 | 1 | 0 | 2 | 0 | 1 |
+| getName() | 3 | 100% | n/a | n/a | 0 | 1 | 0 | 1 | 0 | 1 |
+| getSize() | 3 | 100% | n/a | n/a | 0 | 1 | 0 | 1 | 0 | 1 |
+| getStatus() | 3 | 100% | n/a | n/a | 0 | 1 | 0 | 1 | 0 | 1 |
+| getWorkers() | 3 | 100% | n/a | n/a | 0 | 1 | 0 | 1 | 0 | 1 |
+| getRequiredQualifications() | 3 | 100% | n/a | n/a | 0 | 1 | 0 | 1 | 0 | 1 |
+| lambda$1(int) | 3 | 100% | n/a | n/a | 0 | 1 | 0 | 1 | 0 | 1 |
+| **Total** | **0 of 271** | **100%** | **0 of 28** | **100%** | **0** | **32** | **0** | **66** | **0** | **18** |
+
+## Class: Qualification
+| Element | Missed Instructions | Instruction Cov. | Missed Branches | Branch Cov. | Missed Cxty | Cxty | Missed Lines | Lines | Missed Methods | Methods |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Qualification(String) | 20 | 100% | 2 | 100% | 0 | 2 | 0 | 6 | 0 | 1 |
+| toDTO() | 18 | 100% | 0 | n/a | 0 | 1 | 0 | 5 | 0 | 1 |
+| equals(Object) | 14 | 100% | 2 | 100% | 0 | 2 | 0 | 4 | 0 | 1 |
+| validateDescription(String) | 12 | 100% | 4 | 100% | 0 | 3 | 0 | 5 | 0 | 1 |
+| removeWorker(Worker) | 10 | 100% | 2 | 100% | 0 | 2 | 0 | 3 | 0 | 1 |
+| hashCode() | 9 | 100% | 0 | n/a | 0 | 1 | 0 | 1 | 0 | 1 |
+| addWorker(Worker) | 6 | 100% | 0 | n/a | 0 | 1 | 0 | 2 | 0 | 1 |
+| toString() | 3 | 100% | 0 | n/a | 0 | 1 | 0 | 1 | 0 | 1 |
+| getWorkers() | 3 | 100% | 0 | n/a | 0 | 1 | 0 | 1 | 0 | 1 |
+| lambda$1(int) | 3 | 100% | 0 | n/a | 0 | 1 | 0 | 1 | 0 | 1 |
+| **Total** | **0 of 98** | **100%** | **0 of 10** | **100%** | **0** | **15** | **0** | **29** | **0** | **10** |
+
+## Class: Worker 
+| Element | Missed Instructions | Cov. | Missed Branches | Cov. | Missed Cxty | Missed Lines | Missed Methods |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Worker(String, Set, double) | 52 | 100% | 10 | 100% | 6 | 14 | 1 |
+| toDTO() | 32 | 100% | 0 | n/a | 1 | 8 | 1 |
+| toString() | 30 | 100% | 0 | n/a | 1 | 2 | 1 |
+| getWorkload() | 27 | 100% | 4 | 100% | 3 | 6 | 1 |
+| equals(Object) | 18 | 100% | 4 | 100% | 3 | 4 | 1 |
+| setSalary(double) | 16 | 100% | 4 | 100% | 3 | 4 | 1 |
+| willOverload(Project) | 16 | 100% | 2 | 100% | 2 | 5 | 1 |
+| hashCode() | 9 | 100% | 0 | n/a | 1 | 1 | 1 |
+| isAvailable() | 8 | 100% | 2 | 100% | 2 | 3 | 1 |
+| addQualification(Qualification) | 6 | 100% | 0 | n/a | 1 | 2 | 1 |
+| addProject(Project) | 6 | 100% | 0 | n/a | 1 | 2 | 1 |
+| removeProject(Project) | 6 | 100% | 0 | n/a | 1 | 2 | 1 |
+| getName() | 3 | 100% | 0 | n/a | 1 | 1 | 1 |
+| getSalary() | 3 | 100% | 0 | n/a | 1 | 1 | 1 |
+| getQualifications() | 3 | 100% | 0 | n/a | 1 | 1 | 1 |
+| getProjects() | 3 | 100% | 0 | n/a | 1 | 1 | 1 |
+| lambda$1(int) | 3 | 100% | 0 | n/a | 1 | 1 | 1 |
+| **Total** | **0 of 241** | **100%** | **0 of 26** | **100%** | **30** | **58** | **17** |
+
+## Class: Company
 | Method                          | Statement Coverage   | Branch Coverage |
 | ------------------------------- | -------------------- | --------------- |
-|isHelpful(Worker)                | 92%                  | 83%             |
-|toDTO()                          | 0%                   | 0%              |
-|Project(String, Set, ProjectSize)| 100%                 | 100%            |
-|getMissingQualifications()       | 100%                 | 100%            |
-|toString()                       | 100%                 | 100%            |
-|equals(Object)                   | 100%                 | 100%            |
-|addWorker(Worker)                | 100%                 | 100%            |
-|removeWorker(Worker)             | 100%                 | 100%            |
-|addQualification(Qualification)  | 100%                 | 100%            |
-|setStatus(ProjectStatus)         | 100%                 | 100%            |
-|hashcode()                       | 100%                 | n/a             |
-|removeAllWorkers()               | 100%                 | n/a             |
-|getName()                        | 100%                 | n/a             |
-|getSize()                        | 100%                 | n/a             |
-|getStatus()                      | 100%                 | n/a             |
-|getWorkers()                     | 100%                 | n/a             |
-|getRequiredQualifications        | 100%                 | n/a             |
 
 
-**Class: Qualification**
-| Method                          | Statement Coverage   | Branch Coverage |
-| ------------------------------- | -------------------- | --------------- |
-|Qualification(String)            | 100%                 | 100%            |
-|toDTO()                          | 100%                 | n/a             |
-|equals(Object)                   | 100%                 | 100%            |
-|validateDescription(String)      | 100%                 | 100%            |
-|removeWorker(Worker)             | 100%                 | 100%            |
-|hashCode()                       | 100%                 | n/a             |
-|addWorker(Worker)                | 100%                 | n/a             |
-|toString()                       | 100%                 | n/a             |
-|getWorkers()                     | 100%                 | n/a             |
+# Reflection
 
-**Class: Worker**
-| Method                          | Statement Coverage   | Branch Coverage |
-| ------------------------------- | -------------------- | --------------- |
-|toDTO()                          | 0%                   | n/a             |
-|Worker(String, Set, double)      | 100%                 | 100%            |
-|toString()                       | 100%                 | n/a             |
-|getWorkload()                    | 100%                 | 100%            |
-|equals(Object)                   | 100%                 | 100%            |
-|setSalary(double)                | 100%                 | 100%            |
-|willOverload(Project)            | 100%                 | 100%            |
-|hashCode()                       | 100%                 | n/a             |
-|isAvailable()                    | 100%                 | 100%            |
-|addQualification(Qualification)  | 100%                 | n/a             |
-|addProject(Project)              | 100%                 | n/a             |
-|removeProject(Project)           | 100%                 | n/a             |
-|getName()                        | 100%                 | n/a             |
-|getSalary()                      | 100%                 | n/a             |
-|getQualifications()              | 100%                 | n/a             |
-|getProjects()                    | 100%                 | n/a             |
-
-**Company**
-| Method                          | Statement Coverage   | Branch Coverage |
-| ------------------------------- | -------------------- | --------------- |
+For our fully implemented Project, Worker and Qualification classes, we achieved 100% coverage over our methods, statements and branches. Our test suites did a good job for handling inputs that would simulate normal and abnormal behaviors. Such as invalid inputs into constructors or void methods which we verified would return false or throw an exception.
