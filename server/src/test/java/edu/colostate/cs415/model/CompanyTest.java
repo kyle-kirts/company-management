@@ -433,7 +433,7 @@ public class CompanyTest {
 
 		assertEquals(0, c.getProjects().size());
 	}
-
+	
 	@Test
 	public void test_normalString_hasWorkers_hasProjects_toString() {
 		Company c = new Company("Nvidia");
@@ -586,4 +586,4 @@ public class CompanyTest {
 		assertFalse(p.getWorkers().contains(w));
 		assertFalse(w.getProjects().contains(p));
 	}
-}
+}	
