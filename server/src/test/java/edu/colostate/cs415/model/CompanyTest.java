@@ -2,8 +2,6 @@ package edu.colostate.cs415.model;
 
 import static org.junit.Assert.*;
 
-import java.util.Collections;
- main
 import java.util.HashSet;
 import java.util.Set;
 
@@ -434,4 +432,5 @@ public class CompanyTest {
 		Company c = new Company("AMD");
 
 		assertEquals(0, c.getProjects().size());
+}
 }
