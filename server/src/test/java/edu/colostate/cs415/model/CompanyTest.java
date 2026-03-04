@@ -546,4 +546,41 @@ public class CompanyTest {
 
 		c.start(p);
 	}
+
+	@Test 
+	public void test_hasEmployed_underLoaded_getUnavailableWorkers(){
+		Company c = new Company("Nvidia");
+		c.createQualification("useless");
+		Set<Qualification> qs = new HashSet<Qualification>();
+		qs.add(new Qualification("useless"));
+		c.createWorker("Bob b", qs, 10450.5);
+
+		assertEquals(0, c.getUnavailableWorkers().size());
+	}
+
+	@Test 
+	public void test_noEmployed_underLoaded_getUnavailableWorkers(){
+		Company c = new Company("Nvidia");
+
+		assertEquals(0, c.getUnavailableWorkers().size());
+	}
+
+	@Test
+	public void test_hasEmployed_overLoaded_getUnavailableWorkers(){
+		Company c = new Company("Nvidia");
+		c.createQualification("useless");
+		c.createQualification("useful");
+		c.createQualification("goner");
+		c.createQualification("blah");
+		c.createQualification("gotcha");
+		Set<Qualification> qs = new HashSet<Qualification>();
+		qs.add(new Qualification("useless"));
+		qs.add(new Qualification("useful"));
+		qs.add(new Qualification("goner"));
+		qs.add(new Qualification("blah"));
+		qs.add(new Qualification("gotcha"));
+		c.createWorker("Bob b", qs, 10450.5);
+
+		
+	}
 }

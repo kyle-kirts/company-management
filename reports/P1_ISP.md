@@ -922,3 +922,19 @@
 | T1(base) | A1 | B1 | `test_noWorkers_getAvailableWorkers()` |
 | T2 | A1 | B2 | `test_oneWorker_getAvailableWorkers()` |
 | T3 | A1 | B3 | `test_twoWorkers_getAvailableWorkers()` |
+
+
+**Method:** `getUnavailableWorkers()_isp`
+| Variable         | Characteristic | Partition                | Value                            |
+| ---------------- | -------------- | ------------------------ | -------------------------------- |
+| employed         | emptiness      | A1: empty                | empty hashset                    |
+|                  |                | A2: not empty            | Worker w, worker b               |
+| worker.getWorkload()        | load| B1: load < 12            | 0                                |
+|                  |                | B2: load >= 12           | 14                               |
+
+**Method:** `getUnavailableWorkers()_isp`
+| Test           | A   | B   | JUnit Test Name                                                |
+| -------------- | --- | --- | -------------------------------------------------------------- |
+| T1(Base)       | A2  | B1  | `test_hasEmployed_underLoaded_getUnavailableWorkers()`         |
+| T2             | A1  | B1  | `test_noEmployed_underLoaded_getUnavailableWorkers()`          |
+| T3             | A2  | B2  | `test_hasEmployed_overLoaded_getUnavailableWorkers()`          |
