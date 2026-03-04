@@ -707,4 +707,50 @@ public class CompanyTest {
 		assertFalse(p2.getWorkers().contains(w));
 		assertTrue(c.getAvailableWorkers().contains(w));
 	}
+	@Test
+public void test_getAssignedWorkers_emptyAtStart() {
+	Company c = new Company("ABC");
+	assertNotNull(c.getAssignedWorkers());
+	assertTrue(c.getAssignedWorkers().isEmpty());
+	assertEquals(0, c.getAssignedWorkers().size());
+}
+
+@Test
+public void test_getAssignedWorkers_returnsCopy_notSameReference() {
+	Company c = new Company("ABC");
+	Set<Worker> first = c.getAssignedWorkers();
+	Set<Worker> second = c.getAssignedWorkers();
+	assertNotSame(first, second);
+}
+
+@Test
+public void test_getAssignedWorkers_defensiveCopy_clearingDoesNotAffectCompany() {
+	Company c = new Company("ABC");
+
+	try {
+		java.lang.reflect.Field f = Company.class.getDeclaredField("assigned");
+		f.setAccessible(true);
+
+		@SuppressWarnings("unchecked")
+		Set<Worker> assigned = (Set<Worker>) f.get(c);
+
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
+		Worker w = new Worker("Alice", qs, 50000);
+
+		assigned.add(w);
+
+		Set<Worker> copy = c.getAssignedWorkers();
+		assertEquals(1, copy.size());
+		assertTrue(copy.contains(w));
+
+		copy.clear();
+
+		assertEquals(1, c.getAssignedWorkers().size());
+		assertTrue(c.getAssignedWorkers().contains(w));
+
+	} catch (Exception e) {
+		fail("Reflection failed: " + e.getMessage());
+	}
+ }
 }
