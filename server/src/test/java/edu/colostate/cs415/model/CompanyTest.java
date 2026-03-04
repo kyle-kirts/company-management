@@ -491,4 +491,22 @@ public class CompanyTest {
 		assertEquals(ProjectStatus.ACTIVE, p.getStatus());
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void test_nullProject_start() {
+		Company c = new Company("ABC");
+
+		c.start(null);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void test_projectNotInCompany_start() {
+		Company c = new Company("ABC");
+
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
+
+		c.start(p);
+	}
+
 }
