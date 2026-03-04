@@ -116,6 +116,16 @@ public class Company {
 	}
 
 	public void start(Project project) {
+		if (project == null || !this.projects.contains(project)) {
+			throw new IllegalArgumentException();
+		}
+
+		ProjectStatus status = project.getStatus();
+
+		if ((status == ProjectStatus.PLANNED || status == ProjectStatus.SUSPENDED)
+				&& project.getMissingQualifications().isEmpty()) {
+			project.setStatus(ProjectStatus.ACTIVE);
+		}
 	}
 
 	public void finish(Project project) {
