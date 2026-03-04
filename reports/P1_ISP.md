@@ -863,6 +863,29 @@
 | T3             | A1  | B2  | C1  | `test_normalString_hasWorkers_noProjects_toString()`           |
 
 
+**Method:** `start()_isp`
+
+| Variable | Characteristic | Partition | Value |
+|-----------|--------------------|------------|--------|
+| project | reference validity| A1: valid project in company| `p` created by `c.createProject(...)`|
+| project | reference validity| A2: null project| `null`|
+| project | reference validity| A3: project not in company| `p` created outside company|
+| project status before start | current status| B1: PLANNED| `ProjectStatus.PLANNED`|
+| project status before start | current status| B2: SUSPENDED| `ProjectStatus.SUSPENDED`|
+| missing qualifications | availability| C1: no missing qualifications| all required qualifications covered|
+| missing qualifications | availability| C2: missing qualifications exist| project still missing at least one qualification|
+
+**Method:** `start()_bcc`
+| Test | A | B | C | JUnit Test Name |
+|------|-----|-----|-----|----------------------------------|
+| T1(base) | A1| B1| C1| `test_plannedNoMissing_start()` |
+| T2 | A1| B1| C2| `test_plannedMissingQualifications_start()` |
+| T3 | A1| B2| C1| `test_suspendedNoMissing_start()` |
+| T4 | A2| --| --| `test_nullProject_start()` |
+| T5 | A3| --| --| `test_projectNotInCompany_start()` |
+
+---
+
 **Method:** `createWorker()_isp`
 | Variable | Characteristic | Partition | Value |
 |-----------|--------------------|------------|--------|
