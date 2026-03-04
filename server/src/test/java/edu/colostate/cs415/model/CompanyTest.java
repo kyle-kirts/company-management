@@ -349,8 +349,8 @@ public class CompanyTest {
 		}
 	}
 
-	@Test 
-	public void test_nonEmptyName_hasQualifications_validEnum_createProject(){
+	@Test
+	public void test_nonEmptyName_hasQualifications_validEnum_createProject() {
 		Company c = new Company("AMD");
 		c.createQualification("design");
 		c.createQualification("walking");
@@ -361,12 +361,12 @@ public class CompanyTest {
 		assertEquals(0, c.getProjects().size());
 
 		c.createProject("Project Runway", qs, ProjectSize.MEDIUM);
-		
+
 		assertEquals(1, c.getProjects().size());
 	}
 
-	@Test (expected = IllegalArgumentException.class)
-	public void test_nullName_hasQualifications_validEnum_createProject(){
+	@Test(expected = IllegalArgumentException.class)
+	public void test_nullName_hasQualifications_validEnum_createProject() {
 		Company c = new Company("AMD");
 		c.createQualification("design");
 		c.createQualification("walking");
@@ -375,10 +375,10 @@ public class CompanyTest {
 		qs.add(new Qualification("design"));
 
 		c.createProject(null, qs, ProjectSize.MEDIUM);
-	} 
+	}
 
-	@Test (expected = IllegalArgumentException.class)
-	public void test_emptyName_hasQualifications_validEnum_createProject(){
+	@Test(expected = IllegalArgumentException.class)
+	public void test_emptyName_hasQualifications_validEnum_createProject() {
 		Company c = new Company("AMD");
 		c.createQualification("design");
 		c.createQualification("walking");
@@ -387,24 +387,24 @@ public class CompanyTest {
 		qs.add(new Qualification("design"));
 
 		c.createProject("", qs, ProjectSize.MEDIUM);
-	} 
+	}
 
 	@Test
-	public void test_nonEmptyName_noQualifications_validEnum_createProject(){
+	public void test_nonEmptyName_noQualifications_validEnum_createProject() {
 		Company c = new Company("AMD");
 		c.createQualification("design");
 		c.createQualification("walking");
 
 		assertEquals(0, c.getProjects().size());
-		
+
 		Set<Qualification> qs = new HashSet<Qualification>();
 		c.createProject("Project Runway", qs, ProjectSize.MEDIUM);
-		
+
 		assertEquals(1, c.getProjects().size());
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void test_nonEmptyName_hasQualifications_nullEnum_createProject(){
+	public void test_nonEmptyName_hasQualifications_nullEnum_createProject() {
 		Company c = new Company("AMD");
 		c.createQualification("design");
 		c.createQualification("walking");
@@ -416,7 +416,7 @@ public class CompanyTest {
 	}
 
 	@Test
-	public void test_notEmpty_getProjects(){
+	public void test_notEmpty_getProjects() {
 		Company c = new Company("AMD");
 
 		Set<Qualification> qs = new HashSet<Qualification>();
@@ -428,11 +428,46 @@ public class CompanyTest {
 	}
 
 	@Test
-	public void test_empty_getProjects(){
+	public void test_empty_getProjects() {
 		Company c = new Company("AMD");
 
 		assertEquals(0, c.getProjects().size());
 	}
+
+	@Test
+	public void test_normalString_hasWorkers_hasProjects_toString() {
+		Company c = new Company("Nvidia");
+		c.createQualification("useless");
+		Set<Qualification> qs = new HashSet<Qualification>();
+		qs.add(new Qualification("useless"));
+		c.createWorker("Bob b", qs, 10450.5);
+		c.createWorker("Bettie Boop", qs, 79050.5);
+		c.createProject("Project Runway", qs, ProjectSize.MEDIUM);
+
+		assertEquals("Nvidia:2:1", c.toString());
+	}
+
+	@Test
+	public void test_normalString_noWorkers_hasProjects_toString() {
+		Company c = new Company("Nvidia");
+		Set<Qualification> qs = new HashSet<Qualification>();
+		c.createProject("Project Runway", qs, ProjectSize.MEDIUM);
+
+		assertEquals("Nvidia:0:1", c.toString());
+	}
+
+	@Test
+	public void test_normalString_hasWorkers_noProjects_toString() {
+		Company c = new Company("Nvidia");
+		c.createQualification("useless");
+		Set<Qualification> qs = new HashSet<Qualification>();
+		qs.add(new Qualification("useless"));
+		c.createWorker("Bob b", qs, 10450.5);
+		c.createWorker("Bettie Boop", qs, 79050.5);
+
+		assertEquals("Nvidia:2:0", c.toString());
+	}
+
 	@Test
 	public void test_plannedNoMissing_start() {
 		Company c = new Company("ABC");
@@ -551,5 +586,4 @@ public class CompanyTest {
 		assertFalse(p.getWorkers().contains(w));
 		assertFalse(w.getProjects().contains(p));
 	}
-
 }

@@ -39,7 +39,7 @@ public class Company {
 
 	@Override
 	public String toString() {
-		return null;
+		return this.name + ":" + this.available.size() + ":" + this.projects.size();
 	}
 
 	public String getName() {
@@ -109,7 +109,7 @@ public class Company {
 	}
 
 	public Project createProject(String name, Set<Qualification> qualifications, ProjectSize size) {
-		//All integrity constraints for variables are caught using the Project constructor
+		// All integrity constraints for variables are caught using the Project constructor
 		Project p = new Project(name, qualifications, size);
 		this.projects.add(p);
 		return p;
@@ -136,7 +136,7 @@ public class Company {
 
 	public void unassign(Worker worker, Project project) {
 		if (worker == null || project == null) {
-		throw new IllegalArgumentException();
+			throw new IllegalArgumentException();
 		}
 		if (!this.employees.contains(worker) || !this.projects.contains(project)) {
 			throw new IllegalArgumentException();
