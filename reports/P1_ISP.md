@@ -980,3 +980,20 @@
 | T1(base) | A1 | B1 | `test_getAssignedWorkers_emptyAtStart()` |
 | T2 | A1 | B2 | `test_getAssignedWorkers_oneAssignedWorker()` |
 | T3 | A1 | B3 | `test_getAssignedWorkers_multipleAssignedWorkers()` |
+
+**Method:** `getUnassignedWorkers()_isp`
+| Variable | Characteristic | Partition | Value |
+|----------|----------------|-----------|-------|
+| employees | validity(constructed) | A1: valid set | `employees` |
+| assigned | validity(constructed) | A2: valid set | `assigned` |
+| unassigned count | number of employed but not assigned | B1: none | `0` |
+| unassigned count | number of employed but not assigned | B2: one | `1` |
+| unassigned count | number of employed but not assigned | B3: multiple | `2` |
+
+**Method:** `getUnassignedWorkers()_bcc`
+| Test | A | B | JUnit Test Name |
+|------|---|---|------------------|
+| T1(base) | A1,A2 | B1 | `test_getUnassignedWorkers_emptyAtStart()` |
+| T2 | A1,A2 | B2 | `test_getUnassignedWorkers_oneEmployedNoneAssigned()` |
+| T3 | A1,A2 | B2 | `test_getUnassignedWorkers_twoEmployed_oneAssigned()` |
+| T4 | A1,A2 | B2 | `test_getUnassignedWorkers_defensiveCopy()` |

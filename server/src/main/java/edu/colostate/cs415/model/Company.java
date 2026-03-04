@@ -60,11 +60,11 @@ public class Company {
 
 	public Set<Worker> getAssignedWorkers() {
     return new HashSet<>(assigned);
-}
+    }
 
 	public Set<Worker> getUnassignedWorkers() {
-		return null;
-	}
+	return new HashSet<>(employees);
+    }
 
 	public Set<Project> getProjects() {
 		return this.projects;
