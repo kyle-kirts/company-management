@@ -75,15 +75,6 @@ public class Company {
 	}
 
 	public Worker createWorker(String name, Set<Qualification> qualifications, double salary) {
-		if (name == null || name.trim().length() == 0) {
-			return null;
-		}
-		if (qualifications == null || qualifications.isEmpty()) {
-			return null;
-		}
-		if (salary < 0 || Double.isNaN(salary)) {
-			return null;
-		}
 		if (!this.qualifications.containsAll(qualifications)) {
 			return null;
 		}
