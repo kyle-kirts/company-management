@@ -904,6 +904,31 @@
 
 ---
 
+**Method:** `unassignAll()_isp`
+| Variable | Characteristic | Partition | Value |
+|-----------|--------------------|------------|--------|
+| worker | reference validity| A1: valid employee worker| `w` created by `c.createWorker(...)`|
+| worker | reference validity| A2: null worker| `null`|
+| worker | reference validity| A3: non-employee worker| `w` created outside company|
+| worker projects in company | number of company projects assigned| B1: no company projects| `0`|
+| worker projects in company | number of company projects assigned| B2: one company project| `1`|
+| worker projects in company | number of company projects assigned| B3: multiple company projects| `2`|
+| worker projects outside company | presence of non-company projects| C1: no non-company projects| worker only has company projects|
+| worker projects outside company | presence of non-company projects| C2: has non-company projects| worker has projects not owned by company|
+| status of affected company projects | project status effect| D1: active company project becomes suspended if unassigned| `ProjectStatus.ACTIVE -> ProjectStatus.SUSPENDED`|
+
+**Method:** `unassignAll()_bcc`
+| Test | A | B | C | D | JUnit Test Name |
+|------|-----|-----|-----|-----|----------------------------------|
+| T1(base) | A1| B1| C1| --| `test_noProjects_unassignAll()` |
+| T2 | A2| --| --| --| `test_nullWorker_unassignAll()` |
+| T3 | A3| --| --| --| `test_nonEmployee_unassignAll()` |
+| T4 | A1| B2| C1| D1| `test_companyProjectRemovedAndActiveProjectSuspended_unassignAll()` |
+| T5 | A1| B1| C2| --| `test_nonCompanyProjectsSkippedAndWorkerBecomesUnavailable_unassignAll()` |
+| T6 | A1| B3| C1| --| `test_multipleCompanyProjects_unassignAll()` |
+
+---
+
 **Method:** `createWorker()_isp`
 | Variable | Characteristic | Partition | Value |
 |-----------|--------------------|------------|--------|
