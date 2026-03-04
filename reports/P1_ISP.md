@@ -845,7 +845,18 @@
 | T1(Base)       | A1  | `test_notEmpty_getProjects()`     |
 | T2             | A2  | `test_empty_getProjects()`        |
 
----
+**Method:** `toString()_isp`
+| Variable         | Characteristic | Partition                          | Value                                      |
+| ---------------- | -------------- | ---------------------------------- | ------------------------------------------ |
+| name             | String Length  | A1: length > 0                     | "Nvidia"                                   |
+| available workers| List Length    | B1: length = 0                     | new HashSet()                              |
+|                  |                | B2: length > 0                     | new HashSet("Bob B", "Bettie Boop")        |
+| Projects         | List Length    | C1: length = 0                     | new HashSet()                              |
+|                  |                | C2: length > 0                     | new HashSet("Project Runway")              |
+
+**Method:** `toString()_bcc`
+
+
 
 **Method:** `createWorker()_isp`
 | Variable | Characteristic | Partition | Value |
