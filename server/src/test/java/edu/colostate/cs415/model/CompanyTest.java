@@ -433,6 +433,44 @@ public class CompanyTest {
 
 		assertEquals(0, c.getProjects().size());
 	}
+
+
+	@Test 
+	public void test_normalString_hasWorkers_hasProjects_toString(){
+		Company c = new Company("Nvidia");
+		c.createQualification("useless");
+		Set<Qualification> qs = new HashSet<Qualification>();
+		qs.add(new Qualification("useless"));
+		c.createWorker("Bob b", qs, 10450.5);
+		c.createWorker("Bettie Boop", qs, 79050.5);
+		c.createProject("Project Runway", qs, ProjectSize.MEDIUM);
+		
+		assertEquals("Nvidia:2:1", c.toString());
+	}
+
+	
+	@Test 
+	public void test_normalString_noWorkers_hasProjects_toString(){
+		Company c = new Company("Nvidia");
+		Set<Qualification> qs = new HashSet<Qualification>();
+		c.createProject("Project Runway", qs, ProjectSize.MEDIUM);
+		
+		assertEquals("Nvidia:0:1", c.toString());
+	}
+
+	
+	@Test 
+	public void test_normalString_hasWorkers_noProjects_toString(){
+		Company c = new Company("Nvidia");
+		c.createQualification("useless");
+		Set<Qualification> qs = new HashSet<Qualification>();
+		qs.add(new Qualification("useless"));
+		c.createWorker("Bob b", qs, 10450.5);
+		c.createWorker("Bettie Boop", qs, 79050.5);
+		
+		assertEquals("Nvidia:2:0", c.toString());
+	}
+
 	@Test
 	public void test_plannedNoMissing_start() {
 		Company c = new Company("ABC");
@@ -508,5 +546,4 @@ public class CompanyTest {
 
 		c.start(p);
 	}
-
 }

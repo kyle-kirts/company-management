@@ -845,7 +845,23 @@
 | T1(Base)       | A1  | `test_notEmpty_getProjects()`     |
 | T2             | A2  | `test_empty_getProjects()`        |
 
----
+**Method:** `toString()_isp`
+| Variable         | Characteristic | Partition                          | Value                                      |
+| ---------------- | -------------- | ---------------------------------- | ------------------------------------------ |
+| name             | String Length  | A1: length > 0                     | "Nvidia"                                   |
+| available workers| List Length    | B1: length = 0                     | new HashSet()                              |
+|                  |                | B2: length > 0                     | new HashSet("Bob B", "Bettie Boop")        |
+| Projects         | List Length    | C1: length = 0                     | new HashSet()                              |
+|                  |                | C2: length > 0                     | new HashSet("Project Runway")              |
+
+**Method:** `toString()_bcc`
+
+| Test           | A   | B   | C   | JUnit Test Name                                                |
+| -------------- | --- | --- | --- | -------------------------------------------------------------- |
+| T1(Base)       | A1  | B2  | C2  | `test_normalString_hasWorkers_hasProjects_toString()`          |
+| T2             | A1  | B1  | C2  | `test_normalString_noWorkers_hasProjects_toString()`           |
+| T3             | A1  | B2  | C1  | `test_normalString_hasWorkers_noProjects_toString()`           |
+
 
 **Method:** `start()_isp`
 
