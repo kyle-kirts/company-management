@@ -63,7 +63,29 @@
 ## Class: Company
 | Method                          | Statement Coverage   | Branch Coverage |
 | ------------------------------- | -------------------- | --------------- |
-
+| Element | Missed Instructions | Cov. | Missed Branches | Cov. | Missed Cxty | Missed Lines | Missed Methods |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| unassign(Worker, Project) | 17 | 77% | 9 | 55% | 8 | 5 | 0 |
+| getUnavailableWorkers() | 2 | 0% | 0 | n/a | 1 | 1 | 1 |
+| getAssignedWorkers() | 2 | 0% | 0 | n/a | 1 | 1 | 1 |
+| getUnassignedWorkers() | 2 | 0% | 0 | n/a | 1 | 1 | 1 |
+| finish(Project) | 1 | 0% | 0 | n/a | 1 | 1 | 1 |
+| assign(Worker, Project) | 1 | 0% | 0 | n/a | 1 | 1 | 1 |
+| unassignAll(Worker) | 1 | 0% | 0 | n/a | 1 | 1 | 1 |
+| createWorker(String, Set, double) | 0 | 100% | 2 | 87% | 2 | 0 | 0 |
+| Company(String) | 0 | 100% | 0 | 100% | 0 | 0 | 0 |
+| start(Project) | 0 | 100% | 1 | 90% | 1 | 0 | 0 |
+| toString() | 0 | 100% | 0 | n/a | 0 | 0 | 0 |
+| createQualification(String) | 0 | 100% | 0 | 100% | 0 | 0 | 0 |
+| equals(Object) | 0 | 100% | 0 | 100% | 0 | 0 | 0 |
+| createProject(String, Set, ProjectSize) | 0 | 100% | 0 | n/a | 0 | 0 | 0 |
+| getEmployedWorkers() | 0 | 100% | 0 | n/a | 0 | 0 | 0 |
+| getAvailableWorkers() | 0 | 100% | 0 | n/a | 0 | 0 | 0 |
+| hashCode() | 0 | 100% | 0 | n/a | 0 | 0 | 0 |
+| getName() | 0 | 100% | 0 | n/a | 0 | 0 | 0 |
+| getProjects() | 0 | 100% | 0 | n/a | 0 | 0 | 0 |
+| getQualifications() | 0 | 100% | 0 | n/a | 0 | 0 | 0 |
+| **Total** | **26 of 316** | **91%** | **12 of 58** | **79%** | **17** | **11** | **6** |
 
 # Reflection
 
