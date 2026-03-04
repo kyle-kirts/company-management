@@ -886,6 +886,24 @@
 
 ---
 
+**Method:** `unassign()_isp`
+| Variable | Characteristic | Partition | Value |
+|-----------|--------------------|------------|--------|
+| worker | reference validity| A1: valid worker| `w`|
+| worker | reference validity| A2: null worker| `null`|
+| project | reference validity| B1: valid project| `p`|
+| project | reference validity| B2: null project| `null`|
+| assignment relationship | membership| C1: worker is assigned to project| `w` is in `p.getWorkers()` and `p` is in `w.getProjects()`|
+
+**Method:** `unassign()_bcc`
+| Test | A | B | C | JUnit Test Name |
+|------|-----|-----|-----|----------------------------------|
+| T1(base) | A1| B1| C1| `test_removesWorkerFromProjectAndWorker_unassign()` |
+| T2 | A2| B1| --| `test_nullWorker_unassign()` |
+| T3 | A1| B2| --| `test_nullProject_unassign()` |
+
+---
+
 **Method:** `createWorker()_isp`
 | Variable | Characteristic | Partition | Value |
 |-----------|--------------------|------------|--------|

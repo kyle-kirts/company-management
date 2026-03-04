@@ -109,7 +109,7 @@ public class Company {
 	}
 
 	public Project createProject(String name, Set<Qualification> qualifications, ProjectSize size) {
-		//All integrity constraints for variables are caught using the Project constructor
+		// All integrity constraints for variables are caught using the Project constructor
 		Project p = new Project(name, qualifications, size);
 		this.projects.add(p);
 		return p;
@@ -135,6 +135,34 @@ public class Company {
 	}
 
 	public void unassign(Worker worker, Project project) {
+		if (worker == null || project == null) {
+			throw new IllegalArgumentException();
+		}
+		if (!this.employees.contains(worker) || !this.projects.contains(project)) {
+			throw new IllegalArgumentException();
+		}
+
+		if (!project.getWorkers().contains(worker) || !worker.getProjects().contains(project)) {
+			return;
+		}
+
+		project.removeWorker(worker);
+		worker.removeProject(project);
+
+		if (worker.getProjects().isEmpty()) {
+			this.assigned.remove(worker);
+		}
+
+		if (worker.isAvailable()) {
+			this.available.add(worker);
+		} else {
+			this.available.remove(worker);
+		}
+
+		if (project.getStatus() == ProjectStatus.ACTIVE
+				&& !project.getMissingQualifications().isEmpty()) {
+			project.setStatus(ProjectStatus.SUSPENDED);
+		}
 	}
 
 	public void unassignAll(Worker worker) {
