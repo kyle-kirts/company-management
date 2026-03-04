@@ -814,18 +814,22 @@
 **Method:** `createWorker()_isp`
 | Variable | Characteristic | Partition | Value |
 |-----------|--------------------|------------|--------|
-| name | validity | A1: valid name | `"Bob"` |
-|      |          | A2: null name | `null` |
-| qualifications | validity | B1: non-empty qualifications set | `qs` containing `q` |
-|                |          | B2: empty qualifications set | empty `qs` |
-| salary | validity | C1: valid salary | `1000.0` |
+| name | validity| A1: valid name| `"Bob"`|
+| name | validity| A2: null name| `null`|
+| qualifications | validity| B1: non-empty qualifications set| `qs` containing `q`|
+| qualifications | validity| B2: empty qualifications set| empty `qs`|
+| salary | validity| C1: valid salary| `1000.0`|
+| salary | validity| C2: negative salary| `-1.0`|
+| salary | validity| C3: NaN salary| `Double.NaN`|
 
 **Method:** `createWorker()_bcc`
 | Test | A | B | C | JUnit Test Name |
 |------|-----|-----|-----|----------------------------------|
-| T1(base) | A1 | B1 | C1 | `test_validWorker_createWorker()` |
-| T2 | A2 | B1 | C1 | `test_nullName_createWorker()` |
-| T3 | A1 | B2 | C1 | `test_emptyQualifications_createWorker()` |
+| T1(base) | A1| B1| C1| `test_validWorker_createWorker()` |
+| T2 | A2| B1| C1| `test_nullName_createWorker()` |
+| T3 | A1| B2| C1| `test_emptyQualifications_createWorker()` |
+| T4 | A1| B1| C2| `test_negativeSalary_createWorker()` |
+| T5 | A1| B1| C3| `test_nanSalary_createWorker()` |
 
 ---
 

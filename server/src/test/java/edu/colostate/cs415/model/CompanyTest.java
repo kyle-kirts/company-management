@@ -127,6 +127,37 @@ public class CompanyTest {
 	}
 
 	@Test
+	public void test_negativeSalary_createWorker() {
+		Company c = new Company("ABC");
+
+		Qualification q = c.createQualification("Java");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(q);
+
+		Worker w = c.createWorker("Bob", qs, -1.0);
+
+		assertNull(w);
+		assertEquals(0, c.getEmployedWorkers().size());
+		assertEquals(0, c.getAvailableWorkers().size());
+		assertFalse(q.getWorkers().contains(w));
+	}
+
+	@Test
+	public void test_nanSalary_createWorker() {
+		Company c = new Company("ABC");
+
+		Qualification q = c.createQualification("Java");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(q);
+
+		Worker w = c.createWorker("Bob", qs, Double.NaN);
+
+		assertNull(w);
+		assertEquals(0, c.getEmployedWorkers().size());
+		assertEquals(0, c.getAvailableWorkers().size());
+	}
+
+	@Test
 	public void test_noQualifications_getQualifications() {
 		Company c = new Company("ABC");
 
