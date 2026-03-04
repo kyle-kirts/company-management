@@ -59,8 +59,8 @@ public class Company {
 	}
 
 	public Set<Worker> getAssignedWorkers() {
-		return null;
-	}
+    return new HashSet<>(assigned);
+}
 
 	public Set<Worker> getUnassignedWorkers() {
 		return null;

@@ -965,3 +965,18 @@
 | T1(base) | A1 | B1 | `test_noWorkers_getAvailableWorkers()` |
 | T2 | A1 | B2 | `test_oneWorker_getAvailableWorkers()` |
 | T3 | A1 | B3 | `test_twoWorkers_getAvailableWorkers()` |
+
+**Method:** `getAssignedWorkers()_isp`
+| Variable | Characteristic | Partition | Value |
+|-----------|--------------------|------------|--------|
+| assigned | validity(checked on construction) | A1: valid set | `assigned` |
+| assigned.size() | number of assigned workers | B1: none | `0` |
+| assigned.size() | number of assigned workers | B2: one | `1` |
+| assigned.size() | number of assigned workers | B3: multiple | `2` |
+
+**Method:** `getAssignedWorkers()_bcc`
+| Test | A | B | JUnit Test Name |
+|------|-----|-----|----------------------------------|
+| T1(base) | A1 | B1 | `test_getAssignedWorkers_emptyAtStart()` |
+| T2 | A1 | B2 | `test_getAssignedWorkers_oneAssignedWorker()` |
+| T3 | A1 | B3 | `test_getAssignedWorkers_multipleAssignedWorkers()` |
