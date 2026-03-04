@@ -856,6 +856,11 @@
 
 **Method:** `toString()_bcc`
 
+| Test           | A   | B   | C   | JUnit Test Name                                                |
+| -------------- | --- | --- | --- | -------------------------------------------------------------- |
+| T1(Base)       | A1  | B2  | C2  | `test_normalString_hasWorkers_hasProjects_toString()`          |
+| T2             | A1  | B1  | C2  | `test_normalString_noWorkers_hasProjects_toString()`           |
+| T3             | A1  | B2  | C1  | `test_normalString_hasWorkers_noProjects_toString()`           |
 
 
 **Method:** `createWorker()_isp`
