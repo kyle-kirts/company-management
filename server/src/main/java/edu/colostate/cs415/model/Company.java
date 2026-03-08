@@ -136,12 +136,16 @@ public class Company {
 	}
 
 	public void assign(Worker worker, Project project) {
-		if(project.getStatus() != ProjectStatus.ACTIVE && project.getStatus() != ProjectStatus.FINISHED){
-			if(!worker.willOverload(project) && project.isHelpful(worker)){
-				this.assigned.add(worker);
-				project.addWorker(worker);
-				if(worker.getWorkload() == 12)this.available.remove(worker);
-
+		if(this.available.contains(worker) && !project.getWorkers().contains(worker)){
+			if(project.getStatus() != ProjectStatus.ACTIVE && project.getStatus() != ProjectStatus.FINISHED){
+				if(!worker.willOverload(project) && project.isHelpful(worker)){
+					this.assigned.add(worker);
+					project.addWorker(worker);
+					worker.addProject(project);
+					if(worker.getWorkload() == 12){
+						this.available.remove(worker);
+					}
+				}
 			}
 		}
 	}

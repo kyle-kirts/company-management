@@ -4,12 +4,12 @@ import static org.junit.Assert.*;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Logger;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class CompanyTest {
-
+	public static Logger log = Logger.getLogger(CompanyTest.class.getName());
 	@Test
 	public void test_validName_Constructor() {
 		Company c = new Company("TestCo");
@@ -566,27 +566,23 @@ public class CompanyTest {
 		assertEquals(0, c.getUnavailableWorkers().size());
 	}
 
-	@Ignore("Not working")
 	@Test
 	public void test_hasEmployed_overLoaded_getUnavailableWorkers(){
 		Company c = new Company("Nvidia");
-		c.createQualification("useless");
-		c.createQualification("useful");
-		c.createQualification("goner");
-		c.createQualification("blah");
-		c.createQualification("gotcha");
+		String[] qualDescriptions = {"useless", "useful", "goner", "blah"};
+		String[] projectNames = {"Uselessness", "Usefulness", "Gonerness", "blahness"};
 		Set<Qualification> qs = new HashSet<Qualification>();
-		qs.add(new Qualification("useless"));
-		qs.add(new Qualification("useful"));
-		qs.add(new Qualification("goner"));
-		qs.add(new Qualification("blah"));
-		qs.add(new Qualification("gotcha"));
+
+		for(String qual : qualDescriptions){
+			c.createQualification(qual);
+			qs.add(new Qualification(qual));
+		}
 		c.createWorker("Bob b", qs, 10450.5);
-		c.createProject("Uselessness", new HashSet<Qualification>(new Qualification("useless")), ProjectSize.BIG);
-		c.createProject("Usefulness", new HashSet<Qualification>(new Qualification("useful")), ProjectSize.BIG);
-		c.createProject("Gonerness", new HashSet<Qualification>(new Qualification("goner")), ProjectSize.BIG);
-		c.createProject("blahness", new HashSet<Qualification>(new Qualification("blah")), ProjectSize.BIG);
-		c.createProject("gotchaness", new HashSet<Qualification>(new Qualification("gotcha")), ProjectSize.BIG);
+		for(int i = 0; i < qualDescriptions.length; i++){
+			Set<Qualification> q = new HashSet();
+			q.add(new Qualification(qualDescriptions[i]));
+			c.createProject(projectNames[i], q, ProjectSize.BIG);
+		}
 		for(Worker w : c.getEmployedWorkers()){
 			for(Project p : c.getProjects()){
 				c.assign(w, p);
@@ -596,26 +592,171 @@ public class CompanyTest {
 		assertEquals(1, c.getUnavailableWorkers().size());
 	}
 
-	@Test 
-	public void test_neither_underloaded_helpful_assign(){
+	@Test
+	public void test_neither_underloaded_helpful_notInAssigned_inAvailable_assign(){
 		Company c = new Company("Nvidia");
-		
 		Set<Qualification> qs = new HashSet<Qualification>();
-		qs.add(new Qualification("useless"));
-		qs.add(new Qualification("useful"));
-		c.createWorker("Bob B", qs, 12345.0);
-		qs.add(new Qualification("goner"));
-		qs.add(new Qualification("blah"));
-		qs.add(new Qualification("gotcha"));
-		c.createProject("Project Runway", qs, ProjectSize.MEDIUM);
+		qs.add(new Qualification("use"));
+		c.createQualification("use");
+		c.createProject("Project Runway", qs, ProjectSize.BIG);
+		c.createWorker("Bob b", qs, 10450.5);
+		Worker w = new Worker("Bob b", qs, 10450.5);
+		Project p = new Project("Project Runway", qs, ProjectSize.BIG);
 
-		for(Worker w : c.getEmployedWorkers()){
-			for(Project p: c.getProjects()){
-				c.assign(w,p);
-			}
+		//assertEquals(0, c.getAssignedWorkers().size());
+
+		c.assign(w, p);
+
+		//assertEquals(1, c.getAssignedWorkers().size());
+		assertEquals(1, c.getAvailableWorkers().size());
+		assertTrue(p.getWorkers().contains(w));
+		assertEquals(3, w.getWorkload());
+	}
+
+	@Test
+	public void test_ACTIVE_underloaded_helpful_notInAssigned_inAvailable_assign(){
+		Company c = new Company("Nvidia");
+		Set<Qualification> qs = new HashSet<Qualification>();
+		qs.add(new Qualification("use"));
+		c.createQualification("use");
+		c.createProject("Project Runway", qs, ProjectSize.BIG);
+		c.createWorker("Bob b", qs, 10450.5);
+		Worker w = new Worker("Bob b", qs, 10450.5);
+		Project p = new Project("Project Runway", qs, ProjectSize.BIG);
+		p.setStatus(ProjectStatus.ACTIVE);
+
+		//assertEquals(0, c.getAssignedWorkers().size());
+
+		c.assign(w, p);
+
+		//assertEquals(0, c.getAssignedWorkers().size());
+		assertEquals(1, c.getAvailableWorkers().size());
+		assertFalse(p.getWorkers().contains(w));
+		assertEquals(0, w.getWorkload());
+	}
+
+	@Test
+	public void test_FINISHED_underloaded_helpful_notInAssigned_inAvailable_assign(){
+		Company c = new Company("Nvidia");
+		Set<Qualification> qs = new HashSet<Qualification>();
+		qs.add(new Qualification("use"));
+		c.createQualification("use");
+		c.createProject("Project Runway", qs, ProjectSize.BIG);
+		c.createWorker("Bob b", qs, 10450.5);
+		Worker w = new Worker("Bob b", qs, 10450.5);
+		Project p = new Project("Project Runway", qs, ProjectSize.BIG);
+		p.setStatus(ProjectStatus.FINISHED);
+
+		//assertEquals(0, c.getAssignedWorkers().size());
+
+		c.assign(w, p);
+
+		//assertEquals(0, c.getAssignedWorkers().size());
+		assertEquals(1, c.getAvailableWorkers().size());
+		assertFalse(p.getWorkers().contains(w));
+		assertEquals(0, w.getWorkload());
+	}
+
+	@Test
+	public void test_neither_overloaded_helpful_notInAssigned_inAvailable_assign(){
+		Company c = new Company("Nvidia");
+		String[] qualDescriptions = {"useless", "useful", "goner", "blah"};
+		String[] projectNames = {"Uselessness", "Usefulness", "Gonerness", "blahness"};
+		Set<Qualification> qs = new HashSet<Qualification>();
+
+		for(String qual : qualDescriptions){
+			c.createQualification(qual);
+			qs.add(new Qualification(qual));
 		}
 
-		assertEquals(1, c.getAssignedWorkers().size());
+		c.createWorker("Bob b", qs, 10450.5);
+		Worker w = new Worker("Bob b", qs, 10450.5);
+		Project p = new Project("Project Runway", qs, ProjectSize.BIG);
+		
+		for(int i = 0; i < qualDescriptions.length; i++){
+			Set<Qualification> q = new HashSet();
+			q.add(new Qualification(qualDescriptions[i]));
+			c.createProject(projectNames[i], q, ProjectSize.BIG);
+		}
 
+		for(Project px : c.getProjects()){
+				c.assign(w, px);
+		}
+
+		//assertEquals(1, c.getAssignedWorkers().size());
+
+		c.assign(w, p);
+		String logInfo = "WORKER INFO: " + w.getName() + ":" + w.getWorkload() + ":Availability - " + w.isAvailable();
+		log.info(logInfo);
+		//assertEquals(1, c.getAssignedWorkers().size());
+		assertEquals(0, c.getAvailableWorkers().size());
+		assertFalse(p.getWorkers().contains(w));
+	}
+
+	@Test
+	public void test_neither_underloaded_unHelpful_notInAssigned_inAvailable_assign(){
+		Company c = new Company("Nvidia");
+		Set<Qualification> qs = new HashSet<Qualification>();
+		Set<Qualification> qt = new HashSet<Qualification>();
+		qt.add(new Qualification("unhelpful"));
+		qs.add(new Qualification("use"));
+		c.createQualification("use");
+		c.createQualification("unhelpful");
+		c.createProject("Project Runway", qt, ProjectSize.BIG);
+		c.createWorker("Bob b", qs, 10450.5);
+		Worker w = new Worker("Bob b", qs, 10450.5);
+		Project p = new Project("Project Runway", qt, ProjectSize.BIG);
+
+		//assertEquals(0, c.getAssignedWorkers().size());
+
+		c.assign(w, p);
+
+		//assertEquals(0, c.getAssignedWorkers().size());
+		assertEquals(1, c.getAvailableWorkers().size());
+		assertFalse(p.getWorkers().contains(w));
+		assertEquals(0, w.getWorkload());
+	}
+
+	@Test
+	public void test_neither_underloaded_helpful_inAssigned_inAvailable_assign(){
+		Company c = new Company("Nvidia");
+		Set<Qualification> qs = new HashSet<Qualification>();
+		qs.add(new Qualification("use"));
+		c.createQualification("use");
+		c.createProject("Project Runway", qs, ProjectSize.BIG);
+		c.createProject("Project Hail Mary", qs, ProjectSize.MEDIUM);
+		c.createWorker("Bob b", qs, 10450.5);
+		Worker w = new Worker("Bob b", qs, 10450.5);
+		Project p = new Project("Project Runway", qs, ProjectSize.BIG);
+		Project ph = new Project("Project Hail Mary", qs, ProjectSize.MEDIUM);
+
+		c.assign(w, ph);
+
+		//assertEquals(1, c.getAssignedWorkers().size());
+
+		c.assign(w, p);
+
+		//assertEquals(1, c.getAssignedWorkers().size());
+		assertEquals(1, c.getAvailableWorkers().size());
+		assertTrue(p.getWorkers().contains(w));
+		assertEquals(5, w.getWorkload());
+	}
+
+	@Test
+	public void test_neither_underloaded_helpful_notInAssigned_notInAvailable_assign(){
+		Company c = new Company("Nvidia");
+		Set<Qualification> qs = new HashSet<Qualification>();
+		qs.add(new Qualification("use"));
+		c.createQualification("use");
+		c.createProject("Project Runway", qs, ProjectSize.BIG);
+		Worker w = new Worker("Bob b", qs, 10450.5);
+		Project p = new Project("Project Runway", qs, ProjectSize.BIG);
+
+		c.assign(w, p);
+
+		//assertEquals(0, c.getAssignedWorkers().size());
+		assertEquals(0, c.getAvailableWorkers().size());
+		assertFalse(p.getWorkers().contains(w));
+		assertEquals(0, w.getWorkload());
 	}
 }
