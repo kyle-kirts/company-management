@@ -950,12 +950,18 @@
 |                  |                        | B2: workload will be >= 12| 10, ProjectSize.MEDIUM           |
 | Worker.qualifications | is helpful        | C1: helpful              | has at least 1 project requirement |
 |                  |                        | C2: not helpful          | does not meet helpfulness criteria |
+|company.assigned  | worker in assigned     | D1: Worker not yet assigned | worker added to company.assigned | 
+|                  |                        | D2: worker already assigned | assigned.size() = 1           |
+| company.available| worker in available    | E1: worker in available  | worker("Bob b", qs, 10450.5)     |
+|                  |                        | E2: Worker in available  | worker("Bettie boop", qs, 75080.5) |
 
-**Method:** `getUnavailableWorkers()_bcc`
-| Test           | A   | B   | C   | JUnit Test Name                                                |
-| -------------- | --- | --- | --- | -------------------------------------------------------------- |
-| T1(Base)       | A3  | B1  | C1  | `test_neither_underloaded_helpful_assign()`                    |
-| T2             | A1  | B1  | C1  | `test_ACTIVE_underloaded_helpful_assign()`                     |
-| T3             | A2  | B1  | C1  | `test_FINISHED_underloaded_helpful_assign()`                   |
-| T4             | A3  | B2  | C1  | `test_neither_overloaded_helpful_assign()`                     |
-| T5             | A3  | B2  | C2  | `test_neither_underloaded_unHelpful_assign()`                  |
+**Method:** `assign()_bcc`
+| Test           | A   | B   | C   | D   | E   | JUnit Test Name                                                           |
+| -------------- | --- | --- | --- | --- | --- | ------------------------------------------------------------------------- |
+| T1(Base)       | A3  | B1  | C1  | D1  | E1  | `test_neither_underloaded_helpful_notInAssigned_inAvailabe_assign()`      |
+| T2             | A1  | B1  | C1  | D1  | E1  | `test_ACTIVE_underloaded_helpful_notInAssigned_inAvailabe_assign()`       |
+| T3             | A2  | B1  | C1  | D1  | E1  | `test_FINISHED_underloaded_helpful_notInAssigned_inAvailabe_assign()`     |
+| T4             | A3  | B2  | C1  | D1  | E1  | `test_neither_overloaded_helpful_notInAssigned_inAvailable_assign()`      |
+| T5             | A3  | B1  | C2  | D1  | E1  | `test_neither_underloaded_unHelpful_notInAssigned_inAvailabe_assign()`    |
+| T6             | A3  | B1  | C1  | D2  | E1  | `test_neither_underloaded_helpful_inAssigned_inAvailable_assign()`        |
+| T7             | A3  | B1  | C1  | D1  | E2  | `test_neither_underloaded_helpful_notinAssigned_notInAvailable_assign()`  |
