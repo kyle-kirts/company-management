@@ -1112,32 +1112,138 @@ public class CompanyTest {
 	@Test
 	public void test_active_nonemptyWorkers_finish() {
 		Company company = new Company("Company");
-		
+		Qualification q1 = company.createQualification("Java");
+		Qualification q2 = company.createQualification("SQL");
+
+		Set<Qualification> qs1 = new HashSet<>();
+		qs1.add(q1);
+		Set<Qualification> qs2 = new HashSet<>();
+		qs2.add(q2);
+		Set<Qualification> projectQs = new HashSet<>();
+		projectQs.add(q1);
+		projectQs.add(q2);
+
+		Worker w1 = company.createWorker("Alice", qs1, 1000.00);
+		Worker w2 = company.createWorker("Bob", qs2, 1000.00);
+		Project project = company.createProject("Project1", projectQs, ProjectSize.SMALL);
+
+		company.assign(w1, project);
+		company.assign(w2, project);
+		company.start(project);
+
+		company.finish(project);
+
+		assertEquals(ProjectStatus.FINISHED, project.getStatus());
+		assertTrue(project.getWorkers().isEmpty());
+		assertFalse(w1.getProjects().contains(project));
+		assertFalse(w2.getProjects().contains(project));
 	}
 
 	@Test
-	public void test_active_emptyWorkers_finish() {
+	public void test_suspendedFrom_emptyWorkers_finish() {
+		Company company = new Company("Company");
+		Qualification q1 = company.createQualification("Java");
+		Qualification q2 = company.createQualification("SQL");
 
+		Set<Qualification> projectQs = new HashSet<>();
+		projectQs.add(q1);
+		projectQs.add(q2);
+	
+		Project project = company.createProject("Project1", projectQs, ProjectSize.SMALL);
+
+		company.start(project);
+		company.finish(project);
+
+		assertEquals(ProjectStatus.PLANNED, project.getStatus());
+		assertTrue(project.getWorkers().isEmpty());
 	}
 
 	@Test
 	public void test_suspended_finish() {
+		Company company = new Company("Company");
+		Qualification q1 = company.createQualification("Java");
+		Qualification q2 = company.createQualification("SQL");
 
+		Set<Qualification> qs1 = new HashSet<>();
+		qs1.add(q1);
+		Set<Qualification> qs2 = new HashSet<>();
+		qs2.add(q2);
+		Set<Qualification> projectQs = new HashSet<>();
+		projectQs.add(q1);
+		projectQs.add(q2);
+
+		Worker w1 = company.createWorker("Alice", qs1, 1000.00);
+		Worker w2 = company.createWorker("Bob", qs2, 1000.00);
+		Project project = company.createProject("Project1", projectQs, ProjectSize.SMALL);
+
+		company.assign(w1, project);
+		company.assign(w2, project);
+		project.setStatus(ProjectStatus.SUSPENDED);
+		company.finish(project);
+
+		assertEquals(ProjectStatus.SUSPENDED, project.getStatus());
+		assertFalse(project.getWorkers().isEmpty());
+		assertTrue(w1.getProjects().contains(project));
+		assertTrue(w2.getProjects().contains(project));
 	}
 
 	@Test
 	public void test__planned_finish() {
+		Company company = new Company("Company");
+		Qualification q1 = company.createQualification("Java");
+		Qualification q2 = company.createQualification("SQL");
 
+		Set<Qualification> qs1 = new HashSet<>();
+		qs1.add(q1);
+		Set<Qualification> qs2 = new HashSet<>();
+		qs2.add(q2);
+		Set<Qualification> projectQs = new HashSet<>();
+		projectQs.add(q1);
+		projectQs.add(q2);
+
+		Worker w1 = company.createWorker("Alice", qs1, 1000.00);
+		Worker w2 = company.createWorker("Bob", qs2, 1000.00);
+		Project project = company.createProject("Project1", projectQs, ProjectSize.SMALL);
+
+		company.assign(w1, project);
+		company.assign(w2, project);
+		company.finish(project);
+
+		assertEquals(ProjectStatus.PLANNED, project.getStatus());
+		assertFalse(project.getWorkers().isEmpty());
+		assertTrue(w1.getProjects().contains(project));
+		assertTrue(w2.getProjects().contains(project));
 	}
 
 	@Test
 	public void test_finished_finish() {
+		Company company = new Company("Company");
+		Qualification q1 = company.createQualification("Java");
+		Qualification q2 = company.createQualification("SQL");
 
-	}
+		Set<Qualification> qs1 = new HashSet<>();
+		qs1.add(q1);
+		Set<Qualification> qs2 = new HashSet<>();
+		qs2.add(q2);
+		Set<Qualification> projectQs = new HashSet<>();
+		projectQs.add(q1);
+		projectQs.add(q2);
 
-	@Test
-	public void test_null_finish() {
+		Worker w1 = company.createWorker("Alice", qs1, 1000.00);
+		Worker w2 = company.createWorker("Bob", qs2, 1000.00);
+		Project project = company.createProject("Project1", projectQs, ProjectSize.SMALL);
 
+		company.assign(w1, project);
+		company.assign(w2, project);
+		company.start(project);
+
+		company.finish(project);
+		company.finish(project);
+
+		assertEquals(ProjectStatus.FINISHED, project.getStatus());
+		assertTrue(project.getWorkers().isEmpty());
+		assertFalse(w1.getProjects().contains(project));
+		assertFalse(w2.getProjects().contains(project));
 	}
 
 }
