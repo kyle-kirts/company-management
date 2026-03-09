@@ -5,7 +5,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import edu.colostate.cs415.dto.ProjectDTO;
-import edu.colostate.cs415.dto.QualificationDTO;
 
 public class Project {
 
