@@ -1051,21 +1051,17 @@
 |           |                 | A2: Suspended | ProjectStatus.SUSPENDED |
 |           |                 | A3: Active    | ProjectStatus.ACTIVE |
 |           |                 | A4: Finished  | ProjectStatus.FINISHED |
-|           | B\) null        | B1: True      | null |
-|           |                 | B2: False     | Project project |
-| workers   | C\) set size    | C1: 0 (empty) |       |
-|           |                 | C2: > 0       |       |
+| workers   | B\) set size    | B1: 0 (empty) |       |
+|           |                 | B2: > 0       |       |
 
 
 **Method:** `finish(Project project)`
 
-| Test           | A   | B   | C   | JUnit Test Name                 |
-| -------------- | --- | --- | --- | ------------------------------- |
-| T1 (base test) | A3  | B2  | C2  | `test_active_nonemptyWorkers_finish()`   |
-| T2             | A3  | B2  | C1  | `test_active_emptyWorkers_finish()`  |
-| T2             | A2  | B2  | C2  | `test_suspended_finish()`  |
-| T3             | A1  | B2  | C2  | `test__planned_finish()` |
-| T4             | A4  | B2  | C2  | `test_finished_finish()` |
-| T5             |     | B1  |     | `test_null_finish()` |
-
+| Test           | A   | C   | JUnit Test Name                 |
+| -------------- | --- | --- | ------------------------------- |
+| T1 (base test) | A3  | B2  | `test_active_nonemptyWorkers_finish()`   |
+| T2             | A2  | B1  | `test_suspendedFrom_emptyWorkers_finish()`  |
+| T2             | A2  | B2  | `test_suspended_finish()`  |
+| T3             | A1  | B2  | `test__planned_finish()` |
+| T4             | A4  | B2  | `test_finished_finish()` |
 ---
