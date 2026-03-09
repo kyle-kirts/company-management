@@ -966,6 +966,49 @@
 | T2 | A1 | B2 | `test_oneWorker_getAvailableWorkers()` |
 | T3 | A1 | B3 | `test_twoWorkers_getAvailableWorkers()` |
 
+
+**Method:** `getUnavailableWorkers()_isp`
+| Variable         | Characteristic | Partition                | Value                            |
+| ---------------- | -------------- | ------------------------ | -------------------------------- |
+| employed         | emptiness      | A1: empty                | empty hashset                    |
+|                  |                | A2: not empty            | Worker w, worker b               |
+| worker.getWorkload()        | load| B1: load < 12            | 0                                |
+|                  |                | B2: load >= 12           | 14                               |
+
+**Method:** `getUnavailableWorkers()_bcc`
+| Test           | A   | B   | JUnit Test Name                                                |
+| -------------- | --- | --- | -------------------------------------------------------------- |
+| T1(Base)       | A2  | B1  | `test_hasEmployed_underLoaded_getUnavailableWorkers()`         |
+| T2             | A1  | B1  | `test_noEmployed_underLoaded_getUnavailableWorkers()`          |
+| T3             | A2  | B2  | `test_hasEmployed_overLoaded_getUnavailableWorkers()`          |
+
+
+**Method:** `assign()_isp`
+| Variable         | Characteristic         | Partition                | Value                            |
+| ---------------- | ---------------------- | ------------------------ | -------------------------------- |
+| Project status   | not ACTIVE or FINISHED | A1: ACTIVE               | ProjectStatus.ACTIVE             |
+|                  |                        | A2: FINISHED             | ProjectStatus.FINISHED           |
+|                  |                        | A3: neither              | ProjectStatus.PLANNED            |
+| Worker Workload  | will overload          | B1: workload will be  < 12| 0                                |
+|                  |                        | B2: workload will be >= 12| 10, ProjectSize.MEDIUM           |
+| Worker.qualifications | is helpful        | C1: helpful              | has at least 1 project requirement |
+|                  |                        | C2: not helpful          | does not meet helpfulness criteria |
+|company.assigned  | worker in assigned     | D1: Worker not yet assigned | worker added to company.assigned | 
+|                  |                        | D2: worker already assigned | assigned.size() = 1           |
+| company.available| worker in available    | E1: worker in available  | worker("Bob b", qs, 10450.5)     |
+|                  |                        | E2: Worker in available  | worker("Bettie boop", qs, 75080.5) |
+
+**Method:** `assign()_bcc`
+| Test           | A   | B   | C   | D   | E   | JUnit Test Name                                                           |
+| -------------- | --- | --- | --- | --- | --- | ------------------------------------------------------------------------- |
+| T1(Base)       | A3  | B1  | C1  | D1  | E1  | `test_neither_underloaded_helpful_notInAssigned_inAvailabe_assign()`      |
+| T2             | A1  | B1  | C1  | D1  | E1  | `test_ACTIVE_underloaded_helpful_notInAssigned_inAvailabe_assign()`       |
+| T3             | A2  | B1  | C1  | D1  | E1  | `test_FINISHED_underloaded_helpful_notInAssigned_inAvailabe_assign()`     |
+| T4             | A3  | B2  | C1  | D1  | E1  | `test_neither_overloaded_helpful_notInAssigned_inAvailable_assign()`      |
+| T5             | A3  | B1  | C2  | D1  | E1  | `test_neither_underloaded_unHelpful_notInAssigned_inAvailabe_assign()`    |
+| T6             | A3  | B1  | C1  | D2  | E1  | `test_neither_underloaded_helpful_inAssigned_inAvailable_assign()`        |
+| T7             | A3  | B1  | C1  | D1  | E2  | `test_neither_underloaded_helpful_notinAssigned_notInAvailable_assign()`  |
+
 **Method:** `getAssignedWorkers()_isp`
 | Variable | Characteristic | Partition | Value |
 |-----------|--------------------|------------|--------|
@@ -997,3 +1040,4 @@
 | T2 | A1,A2 | B2 | `test_getUnassignedWorkers_oneEmployedNoneAssigned()` |
 | T3 | A1,A2 | B2 | `test_getUnassignedWorkers_twoEmployed_oneAssigned()` |
 | T4 | A1,A2 | B2 | `test_getUnassignedWorkers_defensiveCopy()` |
+
