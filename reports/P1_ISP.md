@@ -1041,3 +1041,27 @@
 | T3 | A1,A2 | B2 | `test_getUnassignedWorkers_twoEmployed_oneAssigned()` |
 | T4 | A1,A2 | B2 | `test_getUnassignedWorkers_defensiveCopy()` |
 
+---
+
+**Method:** `finish(Project project)`
+
+| Variable  | Characteristic  | Partition | Value |
+| --------- | --------------- | --------- | ----- |
+| project   | A\) status      | A1: Planned   | ProjectStatus.PLANNED |
+|           |                 | A2: Suspended | ProjectStatus.SUSPENDED |
+|           |                 | A3: Active    | ProjectStatus.ACTIVE |
+|           |                 | A4: Finished  | ProjectStatus.FINISHED |
+| workers   | B\) set size    | B1: 0 (empty) |   empty    |
+|           |                 | B2: > 0       |   2 workers |
+
+
+**Method:** `finish(Project project)`
+
+| Test           | A   | C   | JUnit Test Name                 |
+| -------------- | --- | --- | ------------------------------- |
+| T1 (base test) | A3  | B2  | `test_active_nonemptyWorkers_finish()`   |
+| T2             | A2  | B1  | `test_suspendedFrom_emptyWorkers_finish()`  |
+| T2             | A2  | B2  | `test_suspended_finish()`  |
+| T3             | A1  | B2  | `test__planned_finish()` |
+| T4             | A4  | B2  | `test_finished_finish()` |
+---

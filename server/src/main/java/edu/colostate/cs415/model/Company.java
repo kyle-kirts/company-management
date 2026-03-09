@@ -135,6 +135,13 @@ public class Company {
 	}
 
 	public void finish(Project project) {
+		if (project.getStatus() == ProjectStatus.ACTIVE) {
+			Set<Worker> assigned_workers = new HashSet<>(project.getWorkers());
+			for (Worker worker : assigned_workers) {
+				unassign(worker, project);
+			}
+			project.setStatus(ProjectStatus.FINISHED);
+		}
 	}
 
 	public void assign(Worker worker, Project project) {

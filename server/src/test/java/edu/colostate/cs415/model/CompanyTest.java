@@ -922,190 +922,328 @@ public class CompanyTest {
 		assertTrue(c.getAvailableWorkers().contains(w));
 	}
 	@Test
-public void test_getAssignedWorkers_emptyAtStart() {
-	Company c = new Company("ABC");
-	assertNotNull(c.getAssignedWorkers());
-	assertTrue(c.getAssignedWorkers().isEmpty());
-	assertEquals(0, c.getAssignedWorkers().size());
-}
-
-@Test
-public void test_getAssignedWorkers_returnsCopy_notSameReference() {
-	Company c = new Company("ABC");
-	Set<Worker> first = c.getAssignedWorkers();
-	Set<Worker> second = c.getAssignedWorkers();
-	assertNotSame(first, second);
-}
-
-@Test
-public void test_getAssignedWorkers_defensiveCopy_clearingDoesNotAffectCompany() {
-	Company c = new Company("ABC");
-
-	try {
-		java.lang.reflect.Field f = Company.class.getDeclaredField("assigned");
-		f.setAccessible(true);
-
-		@SuppressWarnings("unchecked")
-		Set<Worker> assigned = (Set<Worker>) f.get(c);
-
-		Set<Qualification> qs = new HashSet<>();
-		qs.add(new Qualification("Java"));
-		Worker w = new Worker("Alice", qs, 50000);
-
-		assigned.add(w);
-
-		Set<Worker> copy = c.getAssignedWorkers();
-		assertEquals(1, copy.size());
-		assertTrue(copy.contains(w));
-
-		copy.clear();
-
-		assertEquals(1, c.getAssignedWorkers().size());
-		assertTrue(c.getAssignedWorkers().contains(w));
-
-	} catch (Exception e) {
-		fail("Reflection failed: " + e.getMessage());
+	public void test_getAssignedWorkers_emptyAtStart() {
+		Company c = new Company("ABC");
+		assertNotNull(c.getAssignedWorkers());
+		assertTrue(c.getAssignedWorkers().isEmpty());
+		assertEquals(0, c.getAssignedWorkers().size());
 	}
- }
- @Test
-public void test_getAssignedWorkers_noAssignedWorkers_ISP() {
-	Company c = new Company("ABC");
 
-	Set<Worker> assigned = c.getAssignedWorkers();
-
-	assertNotNull(assigned);
-	assertTrue(assigned.isEmpty());
-}
-
-@Test
-public void test_getAssignedWorkers_oneAssignedWorker_ISP() {
-	Company c = new Company("ABC");
-
-	try {
-		java.lang.reflect.Field f = Company.class.getDeclaredField("assigned");
-		f.setAccessible(true);
-
-		@SuppressWarnings("unchecked")
-		Set<Worker> assigned = (Set<Worker>) f.get(c);
-
-		Set<Qualification> qs = new HashSet<>();
-		qs.add(new Qualification("Java"));
-		Worker w = new Worker("Bob", qs, 1000);
-
-		assigned.add(w);
-
-		Set<Worker> result = c.getAssignedWorkers();
-
-		assertEquals(1, result.size());
-		assertTrue(result.contains(w));
-
-	} catch (Exception e) {
-		fail("Reflection failed: " + e.getMessage());
+	@Test
+	public void test_getAssignedWorkers_returnsCopy_notSameReference() {
+		Company c = new Company("ABC");
+		Set<Worker> first = c.getAssignedWorkers();
+		Set<Worker> second = c.getAssignedWorkers();
+		assertNotSame(first, second);
 	}
-}
 
-@Test
-public void test_getAssignedWorkers_multipleAssignedWorkers_ISP() {
-	Company c = new Company("ABC");
+	@Test
+	public void test_getAssignedWorkers_defensiveCopy_clearingDoesNotAffectCompany() {
+		Company c = new Company("ABC");
 
-	try {
-		java.lang.reflect.Field f = Company.class.getDeclaredField("assigned");
-		f.setAccessible(true);
+		try {
+			java.lang.reflect.Field f = Company.class.getDeclaredField("assigned");
+			f.setAccessible(true);
 
-		@SuppressWarnings("unchecked")
-		Set<Worker> assigned = (Set<Worker>) f.get(c);
+			@SuppressWarnings("unchecked")
+			Set<Worker> assigned = (Set<Worker>) f.get(c);
 
-		Set<Qualification> qs = new HashSet<>();
-		qs.add(new Qualification("Java"));
+			Set<Qualification> qs = new HashSet<>();
+			qs.add(new Qualification("Java"));
+			Worker w = new Worker("Alice", qs, 50000);
 
-		Worker w1 = new Worker("Bob", qs, 1000);
-		Worker w2 = new Worker("Susan", qs, 2000);
+			assigned.add(w);
 
-		assigned.add(w1);
-		assigned.add(w2);
+			Set<Worker> copy = c.getAssignedWorkers();
+			assertEquals(1, copy.size());
+			assertTrue(copy.contains(w));
 
-		Set<Worker> result = c.getAssignedWorkers();
+			copy.clear();
 
-		assertEquals(2, result.size());
-		assertTrue(result.contains(w1));
-		assertTrue(result.contains(w2));
+			assertEquals(1, c.getAssignedWorkers().size());
+			assertTrue(c.getAssignedWorkers().contains(w));
 
-	} catch (Exception e) {
-		fail("Reflection failed: " + e.getMessage());
+		} catch (Exception e) {
+			fail("Reflection failed: " + e.getMessage());
+		}
 	}
- }
- @Test
-public void test_getUnassignedWorkers_emptyAtStart() {
-	Company c = new Company("ABC");
+	@Test
+	public void test_getAssignedWorkers_noAssignedWorkers_ISP() {
+		Company c = new Company("ABC");
 
-	Set<Worker> result = c.getUnassignedWorkers();
+		Set<Worker> assigned = c.getAssignedWorkers();
 
-	assertNotNull(result);
-	assertTrue(result.isEmpty());
-	assertEquals(0, result.size());
-}
+		assertNotNull(assigned);
+		assertTrue(assigned.isEmpty());
+	}
 
-@Test
-public void test_getUnassignedWorkers_oneEmployedNoneAssigned() {
-	Company c = new Company("ABC");
+	@Test
+	public void test_getAssignedWorkers_oneAssignedWorker_ISP() {
+		Company c = new Company("ABC");
 
-	Qualification q = c.createQualification("Java");
-	Set<Qualification> qs = new HashSet<>();
-	qs.add(q);
+		try {
+			java.lang.reflect.Field f = Company.class.getDeclaredField("assigned");
+			f.setAccessible(true);
 
-	Worker w = c.createWorker("Bob", qs, 1000.0);
+			@SuppressWarnings("unchecked")
+			Set<Worker> assigned = (Set<Worker>) f.get(c);
 
-	Set<Worker> result = c.getUnassignedWorkers();
+			Set<Qualification> qs = new HashSet<>();
+			qs.add(new Qualification("Java"));
+			Worker w = new Worker("Bob", qs, 1000);
 
-	assertEquals(1, result.size());
-	assertTrue(result.contains(w));
-}
+			assigned.add(w);
 
-@Test
-public void test_getUnassignedWorkers_twoEmployed_oneAssigned() {
-	Company c = new Company("ABC");
+			Set<Worker> result = c.getAssignedWorkers();
 
-	try {
-		java.lang.reflect.Field fa = Company.class.getDeclaredField("assigned");
-		fa.setAccessible(true);
-		@SuppressWarnings("unchecked")
-		Set<Worker> assigned = (Set<Worker>) fa.get(c);
+			assertEquals(1, result.size());
+			assertTrue(result.contains(w));
+
+		} catch (Exception e) {
+			fail("Reflection failed: " + e.getMessage());
+		}
+	}
+
+	@Test
+	public void test_getAssignedWorkers_multipleAssignedWorkers_ISP() {
+		Company c = new Company("ABC");
+
+		try {
+			java.lang.reflect.Field f = Company.class.getDeclaredField("assigned");
+			f.setAccessible(true);
+
+			@SuppressWarnings("unchecked")
+			Set<Worker> assigned = (Set<Worker>) f.get(c);
+
+			Set<Qualification> qs = new HashSet<>();
+			qs.add(new Qualification("Java"));
+
+			Worker w1 = new Worker("Bob", qs, 1000);
+			Worker w2 = new Worker("Susan", qs, 2000);
+
+			assigned.add(w1);
+			assigned.add(w2);
+
+			Set<Worker> result = c.getAssignedWorkers();
+
+			assertEquals(2, result.size());
+			assertTrue(result.contains(w1));
+			assertTrue(result.contains(w2));
+
+		} catch (Exception e) {
+			fail("Reflection failed: " + e.getMessage());
+		}
+	}
+	@Test
+	public void test_getUnassignedWorkers_emptyAtStart() {
+		Company c = new Company("ABC");
+
+		Set<Worker> result = c.getUnassignedWorkers();
+
+		assertNotNull(result);
+		assertTrue(result.isEmpty());
+		assertEquals(0, result.size());
+	}
+
+	@Test
+	public void test_getUnassignedWorkers_oneEmployedNoneAssigned() {
+		Company c = new Company("ABC");
 
 		Qualification q = c.createQualification("Java");
 		Set<Qualification> qs = new HashSet<>();
 		qs.add(q);
 
-		Worker w1 = c.createWorker("Bob", qs, 1000.0);
-		Worker w2 = c.createWorker("Susan", qs, 2000.0);
-
-		assigned.add(w2);
+		Worker w = c.createWorker("Bob", qs, 1000.0);
 
 		Set<Worker> result = c.getUnassignedWorkers();
 
 		assertEquals(1, result.size());
-		assertTrue(result.contains(w1));
-		assertFalse(result.contains(w2));
-
-	} catch (Exception e) {
-		fail("Reflection failed: " + e.getMessage());
+		assertTrue(result.contains(w));
 	}
-}
 
-@Test
-public void test_getUnassignedWorkers_defensiveCopy() {
-	Company c = new Company("ABC");
+	@Test
+	public void test_getUnassignedWorkers_twoEmployed_oneAssigned() {
+		Company c = new Company("ABC");
 
-	Qualification q = c.createQualification("Java");
-	Set<Qualification> qs = new HashSet<>();
-	qs.add(q);
+		try {
+			java.lang.reflect.Field fa = Company.class.getDeclaredField("assigned");
+			fa.setAccessible(true);
+			@SuppressWarnings("unchecked")
+			Set<Worker> assigned = (Set<Worker>) fa.get(c);
 
-	c.createWorker("Bob", qs, 1000.0);
+			Qualification q = c.createQualification("Java");
+			Set<Qualification> qs = new HashSet<>();
+			qs.add(q);
 
-	Set<Worker> copy = c.getUnassignedWorkers();
-	assertEquals(1, copy.size());
+			Worker w1 = c.createWorker("Bob", qs, 1000.0);
+			Worker w2 = c.createWorker("Susan", qs, 2000.0);
 
-	copy.clear();
+			assigned.add(w2);
 
-	assertEquals(1, c.getUnassignedWorkers().size());
- } 
+			Set<Worker> result = c.getUnassignedWorkers();
+
+			assertEquals(1, result.size());
+			assertTrue(result.contains(w1));
+			assertFalse(result.contains(w2));
+
+		} catch (Exception e) {
+			fail("Reflection failed: " + e.getMessage());
+		}
+	}
+
+	@Test
+	public void test_getUnassignedWorkers_defensiveCopy() {
+		Company c = new Company("ABC");
+
+		Qualification q = c.createQualification("Java");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(q);
+
+		c.createWorker("Bob", qs, 1000.0);
+
+		Set<Worker> copy = c.getUnassignedWorkers();
+		assertEquals(1, copy.size());
+
+		copy.clear();
+
+		assertEquals(1, c.getUnassignedWorkers().size());
+	}
+
+	@Test
+	public void test_active_nonemptyWorkers_finish() {
+		Company company = new Company("Company");
+		Qualification q1 = company.createQualification("Java");
+		Qualification q2 = company.createQualification("SQL");
+
+		Set<Qualification> qs1 = new HashSet<>();
+		qs1.add(q1);
+		Set<Qualification> qs2 = new HashSet<>();
+		qs2.add(q2);
+		Set<Qualification> projectQs = new HashSet<>();
+		projectQs.add(q1);
+		projectQs.add(q2);
+
+		Worker w1 = company.createWorker("Alice", qs1, 1000.00);
+		Worker w2 = company.createWorker("Bob", qs2, 1000.00);
+		Project project = company.createProject("Project1", projectQs, ProjectSize.SMALL);
+
+		company.assign(w1, project);
+		company.assign(w2, project);
+		company.start(project);
+
+		company.finish(project);
+
+		assertEquals(ProjectStatus.FINISHED, project.getStatus());
+		assertTrue(project.getWorkers().isEmpty());
+		assertFalse(w1.getProjects().contains(project));
+		assertFalse(w2.getProjects().contains(project));
+	}
+
+	@Test
+	public void test_suspendedFrom_emptyWorkers_finish() {
+		Company company = new Company("Company");
+		Qualification q1 = company.createQualification("Java");
+		Qualification q2 = company.createQualification("SQL");
+
+		Set<Qualification> projectQs = new HashSet<>();
+		projectQs.add(q1);
+		projectQs.add(q2);
+	
+		Project project = company.createProject("Project1", projectQs, ProjectSize.SMALL);
+
+		company.start(project);
+		company.finish(project);
+
+		assertEquals(ProjectStatus.PLANNED, project.getStatus());
+		assertTrue(project.getWorkers().isEmpty());
+	}
+
+	@Test
+	public void test_suspended_finish() {
+		Company company = new Company("Company");
+		Qualification q1 = company.createQualification("Java");
+		Qualification q2 = company.createQualification("SQL");
+
+		Set<Qualification> qs1 = new HashSet<>();
+		qs1.add(q1);
+		Set<Qualification> qs2 = new HashSet<>();
+		qs2.add(q2);
+		Set<Qualification> projectQs = new HashSet<>();
+		projectQs.add(q1);
+		projectQs.add(q2);
+
+		Worker w1 = company.createWorker("Alice", qs1, 1000.00);
+		Worker w2 = company.createWorker("Bob", qs2, 1000.00);
+		Project project = company.createProject("Project1", projectQs, ProjectSize.SMALL);
+
+		company.assign(w1, project);
+		company.assign(w2, project);
+		project.setStatus(ProjectStatus.SUSPENDED);
+		company.finish(project);
+
+		assertEquals(ProjectStatus.SUSPENDED, project.getStatus());
+		assertFalse(project.getWorkers().isEmpty());
+		assertTrue(w1.getProjects().contains(project));
+		assertTrue(w2.getProjects().contains(project));
+	}
+
+	@Test
+	public void test__planned_finish() {
+		Company company = new Company("Company");
+		Qualification q1 = company.createQualification("Java");
+		Qualification q2 = company.createQualification("SQL");
+
+		Set<Qualification> qs1 = new HashSet<>();
+		qs1.add(q1);
+		Set<Qualification> qs2 = new HashSet<>();
+		qs2.add(q2);
+		Set<Qualification> projectQs = new HashSet<>();
+		projectQs.add(q1);
+		projectQs.add(q2);
+
+		Worker w1 = company.createWorker("Alice", qs1, 1000.00);
+		Worker w2 = company.createWorker("Bob", qs2, 1000.00);
+		Project project = company.createProject("Project1", projectQs, ProjectSize.SMALL);
+
+		company.assign(w1, project);
+		company.assign(w2, project);
+		company.finish(project);
+
+		assertEquals(ProjectStatus.PLANNED, project.getStatus());
+		assertFalse(project.getWorkers().isEmpty());
+		assertTrue(w1.getProjects().contains(project));
+		assertTrue(w2.getProjects().contains(project));
+	}
+
+	@Test
+	public void test_finished_finish() {
+		Company company = new Company("Company");
+		Qualification q1 = company.createQualification("Java");
+		Qualification q2 = company.createQualification("SQL");
+
+		Set<Qualification> qs1 = new HashSet<>();
+		qs1.add(q1);
+		Set<Qualification> qs2 = new HashSet<>();
+		qs2.add(q2);
+		Set<Qualification> projectQs = new HashSet<>();
+		projectQs.add(q1);
+		projectQs.add(q2);
+
+		Worker w1 = company.createWorker("Alice", qs1, 1000.00);
+		Worker w2 = company.createWorker("Bob", qs2, 1000.00);
+		Project project = company.createProject("Project1", projectQs, ProjectSize.SMALL);
+
+		company.assign(w1, project);
+		company.assign(w2, project);
+		company.start(project);
+
+		company.finish(project);
+		company.finish(project);
+
+		assertEquals(ProjectStatus.FINISHED, project.getStatus());
+		assertTrue(project.getWorkers().isEmpty());
+		assertFalse(w1.getProjects().contains(project));
+		assertFalse(w2.getProjects().contains(project));
+	}
+
 }
