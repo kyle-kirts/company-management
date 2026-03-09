@@ -577,7 +577,7 @@ public class CompanyTest {
 		}
 		c.createWorker("Bob b", qs, 10450.5);
 		for(int i = 0; i < qualDescriptions.length; i++){
-			Set<Qualification> q = new HashSet();
+			Set<Qualification> q = new HashSet<Qualification>();
 			q.add(new Qualification(qualDescriptions[i]));
 			c.createProject(projectNames[i], q, ProjectSize.BIG);
 		}
@@ -601,11 +601,11 @@ public class CompanyTest {
 		Worker w = new Worker("Bob b", qs, 10450.5);
 		Project p = new Project("Project Runway", qs, ProjectSize.BIG);
 
-		//assertEquals(0, c.getAssignedWorkers().size());
+		assertEquals(0, c.getAssignedWorkers().size());
 
 		c.assign(w, p);
 
-		//assertEquals(1, c.getAssignedWorkers().size());
+		assertEquals(1, c.getAssignedWorkers().size());
 		assertEquals(1, c.getAvailableWorkers().size());
 		assertTrue(p.getWorkers().contains(w));
 		assertEquals(3, w.getWorkload());
@@ -623,11 +623,11 @@ public class CompanyTest {
 		Project p = new Project("Project Runway", qs, ProjectSize.BIG);
 		p.setStatus(ProjectStatus.ACTIVE);
 
-		//assertEquals(0, c.getAssignedWorkers().size());
+		assertEquals(0, c.getAssignedWorkers().size());
 
 		c.assign(w, p);
 
-		//assertEquals(0, c.getAssignedWorkers().size());
+		assertEquals(0, c.getAssignedWorkers().size());
 		assertEquals(1, c.getAvailableWorkers().size());
 		assertFalse(p.getWorkers().contains(w));
 		assertEquals(0, w.getWorkload());
@@ -645,11 +645,11 @@ public class CompanyTest {
 		Project p = new Project("Project Runway", qs, ProjectSize.BIG);
 		p.setStatus(ProjectStatus.FINISHED);
 
-		//assertEquals(0, c.getAssignedWorkers().size());
+		assertEquals(0, c.getAssignedWorkers().size());
 
 		c.assign(w, p);
 
-		//assertEquals(0, c.getAssignedWorkers().size());
+		assertEquals(0, c.getAssignedWorkers().size());
 		assertEquals(1, c.getAvailableWorkers().size());
 		assertFalse(p.getWorkers().contains(w));
 		assertEquals(0, w.getWorkload());
@@ -672,7 +672,7 @@ public class CompanyTest {
 		Project p = new Project("Project Runway", qs, ProjectSize.BIG);
 		
 		for(int i = 0; i < qualDescriptions.length; i++){
-			Set<Qualification> q = new HashSet();
+			Set<Qualification> q = new HashSet<Qualification>();
 			q.add(new Qualification(qualDescriptions[i]));
 			c.createProject(projectNames[i], q, ProjectSize.BIG);
 		}
@@ -681,12 +681,12 @@ public class CompanyTest {
 				c.assign(w, px);
 		}
 
-		//assertEquals(1, c.getAssignedWorkers().size());
+		assertEquals(1, c.getAssignedWorkers().size());
 
 		c.assign(w, p);
 		String logInfo = "WORKER INFO: " + w.getName() + ":" + w.getWorkload() + ":Availability - " + w.isAvailable();
 		log.info(logInfo);
-		//assertEquals(1, c.getAssignedWorkers().size());
+		assertEquals(1, c.getAssignedWorkers().size());
 		assertEquals(0, c.getAvailableWorkers().size());
 		assertFalse(p.getWorkers().contains(w));
 	}
@@ -752,7 +752,7 @@ public class CompanyTest {
 
 		c.assign(w, p);
 
-		//assertEquals(0, c.getAssignedWorkers().size());
+		assertEquals(0, c.getAssignedWorkers().size());
 		assertEquals(0, c.getAvailableWorkers().size());
 		assertFalse(p.getWorkers().contains(w));
 		assertEquals(0, w.getWorkload());
