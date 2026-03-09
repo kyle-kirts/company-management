@@ -1051,8 +1051,8 @@
 |           |                 | A2: Suspended | ProjectStatus.SUSPENDED |
 |           |                 | A3: Active    | ProjectStatus.ACTIVE |
 |           |                 | A4: Finished  | ProjectStatus.FINISHED |
-| workers   | B\) set size    | B1: 0 (empty) |       |
-|           |                 | B2: > 0       |       |
+| workers   | B\) set size    | B1: 0 (empty) |   empty    |
+|           |                 | B2: > 0       |   2 workers |
 
 
 **Method:** `finish(Project project)`
