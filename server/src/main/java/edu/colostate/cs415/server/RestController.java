@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 
 import edu.colostate.cs415.db.DBConnector;
 import edu.colostate.cs415.dto.QualificationDTO;
+import edu.colostate.cs415.dto.WorkerDTO;
 import edu.colostate.cs415.model.Company;
 import spark.Request;
 import spark.Response;
@@ -65,6 +66,13 @@ public class RestController {
 						gson::toJson);
 				post("/:description", (req, res) -> createQualification(req));
 			});
+
+			path("/workers", () -> {
+				get("", (req, res) -> getWorkers(), gson::toJson);
+				get("/:name", (req, res) -> getWorker(req.params("name")),
+						gson::toJson);
+				post("/:name", (req, res) -> createWorker(req));
+			});
 		});
 	}
 
@@ -92,6 +100,23 @@ public class RestController {
 			company.createQualification(assignmentDTO.getDescription());
 		} else
 			throw new RuntimeException("Qualification descriptions do not match.");
+		return OK;
+	}
+
+	private WorkerDTO[] getWorkers() {
+		return null;
+	}
+
+	private WorkerDTO getWorker(String name) {
+		return null;
+	}
+
+	private String createWorker(Request request) {
+		WorkerDTO assignmentDTO = gson.fromJson(request.body(), WorkerDTO.class);
+		if (request.) {
+			company.createWorker(assignmentDTO.getName(), assignmentDTO.getQualifications(), assignmentDTO.getSalary());
+		} else
+			throw new RunetimeException("Worker name, qualifications or salary do not match.");
 		return OK;
 	}
 
