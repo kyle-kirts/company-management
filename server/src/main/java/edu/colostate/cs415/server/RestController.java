@@ -11,7 +11,11 @@ import static spark.Spark.redirect;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Arrays;
+import java.util.Set;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.google.gson.Gson;
 
@@ -19,6 +23,8 @@ import edu.colostate.cs415.db.DBConnector;
 import edu.colostate.cs415.dto.QualificationDTO;
 import edu.colostate.cs415.dto.WorkerDTO;
 import edu.colostate.cs415.model.Company;
+import edu.colostate.cs415.model.Qualification;
+import edu.colostate.cs415.model.Worker;
 import spark.Request;
 import spark.Response;
 import spark.Spark;
@@ -104,19 +110,33 @@ public class RestController {
 	}
 
 	private WorkerDTO[] getWorkers() {
-		return null;
+		Set<Worker> workerSet = company.getEmployedWorkers();
+		WorkerDTO[] workers = workerSet.stream()
+		.map(Worker::toDTO)
+		.toArray(WorkerDTO[]::new);
+
+		return workers;
 	}
 
 	private WorkerDTO getWorker(String name) {
-		return null;
+		Set<Worker> workerSet = company.getEmployedWorkers();
+		WorkerDTO worker = workerSet.stream()
+									.filter(w -> w.getName().equals(name))
+									.map(Worker::toDTO)
+									.findFirst()
+									.orElse(null);
+		return worker;
 	}
 
 	private String createWorker(Request request) {
 		WorkerDTO assignmentDTO = gson.fromJson(request.body(), WorkerDTO.class);
-		if (request.) {
-			company.createWorker(assignmentDTO.getName(), assignmentDTO.getQualifications(), assignmentDTO.getSalary());
+		if (request.params("qualifications").equals(assignmentDTO.getQualifications()) 
+			&& request.params("salary").equals(assignmentDTO.getSalary())) {
+			Stream<String> stream = Arrays.stream(assignmentDTO.getQualifications());
+			Set<Qualification> qualifications = stream.map(Qualification::new).collect(Collectors.toSet());
+			company.createWorker(assignmentDTO.getName(), qualifications, assignmentDTO.getSalary());
 		} else
-			throw new RunetimeException("Worker name, qualifications or salary do not match.");
+			throw new RuntimeException("Worker name, qualifications or salary do not match.");
 		return OK;
 	}
 
