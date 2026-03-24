@@ -144,6 +144,27 @@ public class CompanyTest {
 	}
 
 	@Test
+	public void test_zeroSalary_createWorker() {
+		Company c = new Company("ABC");
+
+		Qualification q = c.createQualification("Java");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(q);
+
+		Worker w = c.createWorker("Bob", qs, 0);
+
+		assertNotNull(w);
+		assertEquals("Bob", w.getName());
+		assertEquals(0, w.getSalary(), 0.0);
+
+		assertEquals(1, c.getEmployedWorkers().size());
+		assertEquals(1, c.getAvailableWorkers().size());
+		assertTrue(c.getEmployedWorkers().contains(w));
+		assertTrue(c.getAvailableWorkers().contains(w));
+		assertTrue(q.getWorkers().contains(w));
+	}
+
+	@Test
 	public void test_nanSalary_createWorker() {
 		Company c = new Company("ABC");
 
@@ -800,6 +821,56 @@ public class CompanyTest {
 		assertFalse(p.getWorkers().contains(w));
 		assertFalse(w.getProjects().contains(p));
 	}
+
+	@Test
+	public void test_unavailable_worker_updates_available_set_unassign() {
+		Company c = new Company("Nvidia");
+		Qualification q = c.createQualification("use");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(q);
+		Worker w = c.createWorker("Bob", qs, 10450.5);
+
+		while (w.getWorkload() < 12) {
+			Project p = c.createProject("Extra " + w.getWorkload(), qs, ProjectSize.SMALL);
+			c.assign(w, p);
+		}
+
+		assertFalse(w.isAvailable());
+		assertFalse(c.getAvailableWorkers().contains(w));
+
+		Project toUnassign = w.getProjects().iterator().next();
+		c.unassign(w, toUnassign);
+
+		if (w.isAvailable()) {
+			assertTrue(c.getAvailableWorkers().contains(w));
+		} else {
+			assertFalse(c.getAvailableWorkers().contains(w));
+		}
+	}
+
+	@Test
+	public void test_worker_with_multiple_projects_stays_assigned_unassign() {
+		Company c = new Company("Nvidia");
+		Qualification q = c.createQualification("use");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(q);
+		Worker w = c.createWorker("Bob", qs, 10450.5);
+		Project p1 = c.createProject("Project One", qs, ProjectSize.BIG);
+		Project p2 = c.createProject("Project Two", qs, ProjectSize.BIG);
+
+		c.assign(w, p1);
+		c.assign(w, p2);
+
+		assertTrue(w.getProjects().size() > 1);
+		assertTrue(c.getAssignedWorkers().contains(w));
+
+		c.unassign(w, p1);
+		assertTrue(c.getAssignedWorkers().contains(w));
+
+		c.unassign(w, p2);
+		assertFalse(c.getAssignedWorkers().contains(w));
+	}
+
 	@Test(expected = IllegalArgumentException.class)
 	public void test_nullWorker_unassignAll() {
 		Company c = new Company("ABC");
