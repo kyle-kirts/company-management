@@ -22,8 +22,8 @@ public class Worker {
 		if (name.trim().length() == 0) {
 			throw new IllegalArgumentException("A Worker name cannot be empty or only whitespaces");
 		}
-		if (qualifications == null) {
-			throw new IllegalArgumentException("A Worker Qualification set cannot be null");
+		if (qualifications == null || qualifications.isEmpty()) {
+			throw new IllegalArgumentException("A Worker Qualification set cannot be null or empty");
 		}
 		if (salary < 0 || Double.isNaN(salary)) {
 			throw new IllegalArgumentException("A Worker salary cannot be negative or NaN value");
@@ -63,8 +63,8 @@ public class Worker {
 	}
 
 	public void setSalary(double salary) {
-		if (salary < 0 || Double.isNaN(salary)) {
-			throw new IllegalArgumentException("A Worker salary cannot be negative or NaN value");
+		if (Double.isNaN(salary)) {
+			return;
 		}
 		this.salary = salary;
 	}
@@ -74,6 +74,9 @@ public class Worker {
 	}
 
 	public void addQualification(Qualification qualification) {
+		if (qualification == null) {
+			throw new IllegalArgumentException("Worker cannot add a null qualification");
+		}
 		qualifications.add(qualification);
 	}
 
@@ -82,10 +85,16 @@ public class Worker {
 	}
 
 	public void addProject(Project project) {
+		if (project == null) {
+			throw new IllegalArgumentException("Worker cannot add a null project");
+		}
 		projects.add(project);
 	}
 
 	public void removeProject(Project project) {
+		if (project == null) {
+			throw new IllegalArgumentException("Worker cannot remove a null project");
+		}
 		projects.remove(project);
 	}
 
@@ -103,14 +112,16 @@ public class Worker {
 	public boolean willOverload(Project project) {
 		int workload = getWorkload();
 		int projectSize = project.getSize().getValue();
-		if ((workload + projectSize) > 12) {
-			return true;
+
+		if (this.projects.contains(project)) {
+			return workload > MAX_WORKLOAD;
 		}
-		return false;
+
+		return projectSize + workload > MAX_WORKLOAD;
 	}
 
 	public boolean isAvailable() {
-		if (getWorkload() < 12) {
+		if (getWorkload() < MAX_WORKLOAD) {
 			return true;
 		}
 		return false;

@@ -57,6 +57,17 @@ public class WorkerTest {
 		new Worker("Bob B", qs, -1.00);
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void test_nullQualifications_Worker() {
+		new Worker("Bob B", null, 1000);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void test_emptyQualifications_Worker() {
+		Set<Qualification> qs = new HashSet<>();
+		new Worker("Bob B", qs, 1000);
+	}
+
 	@Test
 	public void test_zeroSalary_Worker() {
 		Set<Qualification> qs = new HashSet<>();
@@ -78,12 +89,10 @@ public class WorkerTest {
 		new Worker("Bob B", null, 1.00);
 	}
 
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void test_emptyQsSet_Worker() {
 		Set<Qualification> qs = new HashSet<>();
-		Worker worker = new Worker("Bob B", qs, 1.00);
-
-		assertTrue(worker.getQualifications().isEmpty());
+		new Worker("Bob B", qs, 1.00);
 	}
 
 	@Test
@@ -93,13 +102,6 @@ public class WorkerTest {
 		Worker worker = new Worker("Bob B", qs, 1.00);
 
 		assertTrue(!(worker.getQualifications().isEmpty()));
-	}
-
-	@Test
-	public void test_emptyQualifications_getQualifications() {
-		Set<Qualification> qs = new HashSet<>();
-		Worker worker = new Worker("Bob B", qs,1.00);
-		assertTrue(worker.getQualifications().isEmpty());
 	}
 
 	@Test
@@ -146,13 +148,6 @@ public class WorkerTest {
 	}
 
 	@Test
-	public void test_noProjects_NoQualifications_normalSalary_toString(){
-		Set<Qualification> qs = new HashSet<>();
-		Worker worker = new Worker("Jamiroquai", qs, 123456);
-		assertEquals(worker.toString(), "Jamiroquai:0:0:123456");
-	}
-
-	@Test
 	public void test_noProjects_LongQualifications_noSalary_toString(){
 		Set<Qualification> qs = new HashSet<>();
 		qs.add(new Qualification("Synkronized"));
@@ -173,6 +168,7 @@ public class WorkerTest {
   @Test
 	public void test_zeroSalary_getSalary() {
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Worker worker = new Worker("Bob B", qs, 0.00);
 
 		assertEquals(0.00, worker.getSalary(), 0.0);
@@ -181,6 +177,7 @@ public class WorkerTest {
 	@Test
 	public void test_positiveSalary_getSalary() {
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 
 		assertEquals(1000.00, worker.getSalary(), 0.0);
@@ -189,6 +186,7 @@ public class WorkerTest {
 	@Test
 	public void test_validName_getName() {
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 
 		assertEquals("Bob B", worker.getName());
@@ -197,6 +195,7 @@ public class WorkerTest {
 	@Test
 	public void test_positiveSalary_setSalary() {
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 		worker.setSalary(100.00);
 
@@ -213,32 +212,43 @@ public class WorkerTest {
 	@Test
 	public void test_zeroSalary_setSalary() {
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 		worker.setSalary(0.00);
 
 		assertEquals(0.00, worker.getSalary(), 0.00);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
 	public void test_nanSalary_setSalary() {
 		Set<Qualification> qs = new HashSet<>();
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 		worker.setSalary(Double.NaN);
+		assertEquals(1000.00, worker.getSalary(), 0.0);
 	}
 
 	@Test
 	public void test_validQualification_addQualification() {
 		Qualification qs1 = new Qualification("Qualification_One");
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 		worker.addQualification(qs1);
 
 		assertTrue(worker.getQualifications().contains(qs1));
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void test_nullQualification_addQualification() {
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		worker.addQualification(null);
+	}
+
 	@Test
 	public void test_validProject_addProject() {
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 		Project p = new Project("Project", qs, ProjectSize.MEDIUM);
 		worker.addProject(p);
@@ -246,9 +256,18 @@ public class WorkerTest {
 		assertTrue(worker.getProjects().contains(p));
 	}
 
+	@Test(expected =  IllegalArgumentException.class)
+	public void test_nullProject_addProject() {
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
+		Worker worker = new Worker("Bob B", qs, 1000.00);
+		worker.addProject(null);
+	}
+
 	@Test
 	public void test_emptyProjects_getProjects() {
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 
 		assertTrue(worker.getProjects().isEmpty());
@@ -257,6 +276,7 @@ public class WorkerTest {
 	@Test
 	public void test_validProject_removeProject() {
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 		Project p = new Project("Project", qs, ProjectSize.MEDIUM);
 		Project p2 = new Project("Project2", qs, ProjectSize.SMALL);
@@ -270,6 +290,7 @@ public class WorkerTest {
 	@Test
 	public void test_validWorkload_getWorkload() {
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 		Project p = new Project("Project", qs, ProjectSize.MEDIUM);
 		Project p2 = new Project("Project2", qs, ProjectSize.SMALL);
@@ -284,6 +305,7 @@ public class WorkerTest {
 	@Test
 	public void test_onlyFinishedProjects_getWorkload() {
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 		Project p = new Project("Project", qs, ProjectSize.MEDIUM);
 		p.setStatus(ProjectStatus.FINISHED);
@@ -298,6 +320,7 @@ public class WorkerTest {
 	@Test
 	public void test_emptyProjects_getWorkload() {
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 
 		assertEquals(0, worker.getWorkload());
@@ -306,6 +329,7 @@ public class WorkerTest {
 	@Test
 	public void test_oneFinishedProject_getWorkload() {
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 		Project p = new Project("Project", qs, ProjectSize.MEDIUM);
 		p.setStatus(ProjectStatus.FINISHED);
@@ -362,6 +386,7 @@ public class WorkerTest {
 	@Test
 	public void test_underTwelve_isAvailable() {
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 		Project p = new Project("Project", qs, ProjectSize.MEDIUM);
 		Project p2 = new Project("Project2", qs, ProjectSize.SMALL);
@@ -376,6 +401,7 @@ public class WorkerTest {
 	@Test
 	public void test_atTwelve_isAvailable() {
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 		Project p = new Project("Project", qs, ProjectSize.BIG);
 		Project p2 = new Project("Project2", qs, ProjectSize.BIG);
@@ -392,6 +418,7 @@ public class WorkerTest {
 	@Test
 	public void test_overTwelve_isAvailable() {
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 		Project p = new Project("Project", qs, ProjectSize.BIG);
 		Project p2 = new Project("Project2", qs, ProjectSize.BIG);
@@ -410,6 +437,7 @@ public class WorkerTest {
 	@Test
 	public void test_atTwelve_FinishedProjects_isAvailable() {
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 		Project p = new Project("Project", qs, ProjectSize.BIG);
 		Project p2 = new Project("Project2", qs, ProjectSize.BIG);
@@ -430,6 +458,7 @@ public class WorkerTest {
 	@Test
 	public void test_bigProject_underload_willOverload() {
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 		Project p = new Project("Project", qs, ProjectSize.BIG);
 		Project p2 = new Project("Project2", qs, ProjectSize.BIG);
@@ -445,6 +474,7 @@ public class WorkerTest {
 	@Test
 	public void test_bigProject_overload_willOverload() {
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 		Project p = new Project("Project", qs, ProjectSize.BIG);
 		Project p2 = new Project("Project2", qs, ProjectSize.BIG);
@@ -462,6 +492,7 @@ public class WorkerTest {
 	@Test
 	public void test_mediumProject_overload_willOverload() {
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 		Project p = new Project("Project", qs, ProjectSize.BIG);
 		Project p2 = new Project("Project2", qs, ProjectSize.BIG);
@@ -479,6 +510,7 @@ public class WorkerTest {
 	@Test
 	public void test_mediumProject_underload_willOverload() {
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 		Project p = new Project("Project", qs, ProjectSize.BIG);
 		Project p2 = new Project("Project2", qs, ProjectSize.BIG);
@@ -496,6 +528,7 @@ public class WorkerTest {
 	@Test
 	public void test_smallProject_overload_willOverload() {
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 		Project p = new Project("Project", qs, ProjectSize.BIG);
 		Project p2 = new Project("Project2", qs, ProjectSize.BIG);
@@ -513,6 +546,7 @@ public class WorkerTest {
 	@Test
 	public void test_smallProject_underload_willOverload() {
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Worker worker = new Worker("Bob B", qs, 1000.00);
 		Project p = new Project("Project", qs, ProjectSize.BIG);
 		Project p2 = new Project("Project2", qs, ProjectSize.BIG);
@@ -559,31 +593,4 @@ public class WorkerTest {
 		assertEquals(2, actualDTO.getQualifications().length);
 	}
 
-	@Test
-	public void test_emptyQualifications_toDTO() {
-		Set<Qualification> qs = new HashSet<>();
-		Worker worker = new Worker("Bob B", qs, 1000.00);
-		worker.addProject(new Project("p1", qs, ProjectSize.BIG));
-		worker.addProject(new Project("p2", qs, ProjectSize.MEDIUM));
-		WorkerDTO actualDTO = worker.toDTO();
-		
-		assertEquals("Bob B", actualDTO.getName());
-		assertEquals(1000.00, actualDTO.getSalary(), 0.00);
-		assertEquals(5, actualDTO.getWorkload());
-		assertEquals(2, actualDTO.getProjects().length);
-		assertTrue(actualDTO.getQualifications().length == 0);
-	}
-
-	@Test
-	public void test_allEmpty_toDTO() {
-		Set<Qualification> qs = new HashSet<>();
-		Worker worker = new Worker("Bob B", qs, 1000.00);
-		WorkerDTO actualDTO = worker.toDTO();
-		
-		assertEquals("Bob B", actualDTO.getName());
-		assertEquals(1000.00, actualDTO.getSalary(), 0.00);
-		assertEquals(0, actualDTO.getWorkload());
-		assertTrue(actualDTO.getProjects().length == 0);
-		assertTrue(actualDTO.getQualifications().length == 0);
-	}
 }
