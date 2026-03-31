@@ -63,7 +63,7 @@ public class Worker {
 	}
 
 	public void setSalary(double salary) {
-		if (Double.isNaN(salary)) {
+		if (salary < 0 || Double.isNaN(salary)) {
 			return;
 		}
 		this.salary = salary;

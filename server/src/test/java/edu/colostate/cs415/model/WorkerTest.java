@@ -202,11 +202,13 @@ public class WorkerTest {
 		assertEquals(100.00, worker.getSalary(), 0.00);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void test_negativeSalary_setSalary() {
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Worker worker = new Worker("Bob B", qs, 0.00);
 		worker.setSalary(-100.00);
+		assertEquals(0.00, worker.getSalary(), 0.0);
 	}
 
 	@Test
