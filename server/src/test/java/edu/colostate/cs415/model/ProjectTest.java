@@ -8,7 +8,6 @@ import java.util.Set;
 import org.junit.Test;
 
 import edu.colostate.cs415.dto.ProjectDTO;
-import edu.colostate.cs415.dto.WorkerDTO;
 
 public class ProjectTest {
 	@Test
@@ -32,7 +31,7 @@ public class ProjectTest {
 		Set<Qualification> qs = new HashSet<>();
 		qs.add(new Qualification("Sean Kelley"));
 		qs.add(new Qualification("Grace Kelsey"));
-		Project p = new Project(null, qs, ProjectSize.MEDIUM);
+		new Project(null, qs, ProjectSize.MEDIUM);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -40,22 +39,18 @@ public class ProjectTest {
 		Set<Qualification> qs = new HashSet<>();
 		qs.add(new Qualification("Sean Kelley"));
 		qs.add(new Qualification("Grace Kelsey"));
-		Project p = new Project("", qs, ProjectSize.MEDIUM);
+		new Project("", qs, ProjectSize.MEDIUM);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void test_nonNullName_nullQualifications_mediumProject(){
-		Project p = new Project("Project Runway", null, ProjectSize.MEDIUM);
+		new Project("Project Runway", null, ProjectSize.MEDIUM);
 	}
 
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void test_nonNullName_noQualifications_mediumProject(){
 		Set<Qualification> qs = new HashSet<>();
-		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
-
-		assertNotNull(p);
-		//assertEquals(0, p.getRequiredQualifications().size());
-
+		new Project("Project Runway", qs, ProjectSize.MEDIUM);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
