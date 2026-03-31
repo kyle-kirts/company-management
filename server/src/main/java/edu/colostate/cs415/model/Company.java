@@ -87,7 +87,7 @@ public class Company {
 		if (qualifications == null || qualifications.isEmpty()) {
 			return null;
 		}
-		if (salary < 0 || Double.isNaN(salary)) {
+		if (salary < 0 || Double.isNaN(salary) || Double.isInfinite(salary)) {
 			return null;
 		}
 		if (!this.qualifications.containsAll(qualifications)) {
@@ -115,7 +115,15 @@ public class Company {
 	}
 
 	public Project createProject(String name, Set<Qualification> qualifications, ProjectSize size) {
-		// All integrity constraints for variables are caught using the Project constructor
+		if (name == null || qualifications == null || size == null) {
+			return null;
+		}
+		if (qualifications.isEmpty()) {
+			return null;
+		}
+		if (!this.qualifications.containsAll(qualifications)) {
+			return null;
+		}
 		Project p = new Project(name, qualifications, size);
 		this.projects.add(p);
 		return p;
@@ -135,6 +143,9 @@ public class Company {
 	}
 
 	public void finish(Project project) {
+		if (project == null || !this.projects.contains(project)) {
+			throw new IllegalArgumentException("Cannot finish a null project or one that does not belong to company");
+		}
 		if (project.getStatus() == ProjectStatus.ACTIVE) {
 			Set<Worker> assigned_workers = new HashSet<>(project.getWorkers());
 			for (Worker worker : assigned_workers) {
@@ -145,13 +156,19 @@ public class Company {
 	}
 
 	public void assign(Worker worker, Project project) {
+		if (worker == null || project == null) {
+        	throw new IllegalArgumentException("Cannot assign a null worker or project");
+    	}
+		if (!this.employees.contains(worker) || !this.projects.contains(project)) {
+			throw new IllegalArgumentException("Worker or Project does not belong to");
+		}
 		if(this.available.contains(worker) && !project.getWorkers().contains(worker)){
 			if(project.getStatus() != ProjectStatus.ACTIVE && project.getStatus() != ProjectStatus.FINISHED){
 				if(!worker.willOverload(project) && project.isHelpful(worker)){
 					this.assigned.add(worker);
 					project.addWorker(worker);
 					worker.addProject(project);
-					if(worker.getWorkload() == 12){
+					if(!worker.isAvailable()){
 						this.available.remove(worker);
 					}
 				}
@@ -161,14 +178,14 @@ public class Company {
 
 	public void unassign(Worker worker, Project project) {
 		if (worker == null || project == null) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Worker or Project cannot be null");
 		}
 		if (!this.employees.contains(worker) || !this.projects.contains(project)) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Worker and Project must belong to Company");
 		}
 
 		if (!project.getWorkers().contains(worker) || !worker.getProjects().contains(project)) {
-			return;
+			throw new IllegalArgumentException("Worker must belong to Project and Worker must be assigned Project");
 		}
 
 		project.removeWorker(worker);
