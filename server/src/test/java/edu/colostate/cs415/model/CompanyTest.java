@@ -287,9 +287,8 @@ public class CompanyTest {
 	public void test_oneWorker_getAvailableWorkers() {
 		Company c = new Company("ABC");
 
-		Qualification q = c.createQualification("Java");
 		Set<Qualification> qs = new HashSet<>();
-		qs.add(q);
+		qs.add(c.createQualification("Java"));
 
 		Worker w = c.createWorker("Bob", qs, 1000.0);
 
@@ -302,9 +301,8 @@ public class CompanyTest {
 	public void test_twoWorkers_getAvailableWorkers() {
 		Company c = new Company("ABC");
 
-		Qualification q = c.createQualification("Java");
 		Set<Qualification> qs = new HashSet<>();
-		qs.add(q);
+		qs.add(c.createQualification("Java"));
 
 		Worker w1 = c.createWorker("Bob", qs, 1000.0);
 		Worker w2 = c.createWorker("Susan", qs, 2000.0);
@@ -372,6 +370,21 @@ public class CompanyTest {
 	}
 
 	@Test
+	public void test_unknownQualifications_createProject() {
+		Company company = new Company("Company");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
+
+		assertEquals(null, company.createProject("Project", qs, ProjectSize.BIG));
+	}
+
+
+	@Test
+	public void test_nullQualifications_createProject() {
+		Company company = new Company("Company");
+		assertEquals(null, company.createProject("Project", null, ProjectSize.BIG));
+	}
+	@Test
 	public void test_nonEmptyName_hasQualifications_validEnum_createProject() {
 		Company c = new Company("AMD");
 		c.createQualification("design");
@@ -387,7 +400,7 @@ public class CompanyTest {
 		assertEquals(1, c.getProjects().size());
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void test_nullName_hasQualifications_validEnum_createProject() {
 		Company c = new Company("AMD");
 		c.createQualification("design");
@@ -396,7 +409,7 @@ public class CompanyTest {
 		Set<Qualification> qs = new HashSet<Qualification>();
 		qs.add(new Qualification("design"));
 
-		c.createProject(null, qs, ProjectSize.MEDIUM);
+		assertEquals(null, c.createProject(null, qs, ProjectSize.MEDIUM));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -408,24 +421,10 @@ public class CompanyTest {
 		Set<Qualification> qs = new HashSet<Qualification>();
 		qs.add(new Qualification("design"));
 
-		c.createProject("", qs, ProjectSize.MEDIUM);
+		assertEquals(null, c.createProject("", qs, ProjectSize.MEDIUM));
 	}
 
 	@Test
-	public void test_nonEmptyName_noQualifications_validEnum_createProject() {
-		Company c = new Company("AMD");
-		c.createQualification("design");
-		c.createQualification("walking");
-
-		assertEquals(0, c.getProjects().size());
-
-		Set<Qualification> qs = new HashSet<Qualification>();
-		c.createProject("Project Runway", qs, ProjectSize.MEDIUM);
-
-		assertEquals(1, c.getProjects().size());
-	}
-
-	@Test(expected = IllegalArgumentException.class)
 	public void test_nonEmptyName_hasQualifications_nullEnum_createProject() {
 		Company c = new Company("AMD");
 		c.createQualification("design");
@@ -434,7 +433,7 @@ public class CompanyTest {
 		Set<Qualification> qs = new HashSet<Qualification>();
 		qs.add(new Qualification("design"));
 
-		c.createProject("Project Runway", qs, null);
+		assertEquals(null, c.createProject("Project Runway", qs, null));
 	}
 
 	@Test
@@ -442,7 +441,8 @@ public class CompanyTest {
 		Company c = new Company("AMD");
 
 		Set<Qualification> qs = new HashSet<Qualification>();
-		qs.add(new Qualification("design"));
+		Qualification qual = c.createQualification("design");
+		qs.add(qual);
 
 		c.createProject("Project Runway", qs, ProjectSize.MEDIUM);
 
@@ -473,6 +473,7 @@ public class CompanyTest {
 	public void test_normalString_noWorkers_hasProjects_toString() {
 		Company c = new Company("Nvidia");
 		Set<Qualification> qs = new HashSet<Qualification>();
+		qs.add(c.createQualification("Java"));
 		c.createProject("Project Runway", qs, ProjectSize.MEDIUM);
 
 		assertEquals("Nvidia:0:1", c.toString());
@@ -548,6 +549,17 @@ public class CompanyTest {
 		assertEquals(ProjectStatus.ACTIVE, p.getStatus());
 	}
 
+	@Test
+	public void test_suspendedProjecet_start() {
+		Company company = new Company("Company");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(company.createQualification("Java"));
+		Project project = company.createProject("Project", qs, ProjectSize.BIG);
+		project.setStatus(ProjectStatus.SUSPENDED);
+		company.start(project);
+		assertEquals(ProjectStatus.SUSPENDED, project.getStatus());
+	}
+
 	@Test(expected = IllegalArgumentException.class)
 	public void test_nullProject_start() {
 		Company c = new Company("ABC");
@@ -611,25 +623,26 @@ public class CompanyTest {
 		assertEquals(1, c.getUnavailableWorkers().size());
 	}
 
-	@Test
-	public void test_neither_underloaded_helpful_notInAssigned_inAvailable_assign(){
-		Company c = new Company("Nvidia");
+	@Test(expected = IllegalArgumentException.class)
+	public void test_unknownProject_assign() {
+		Company c = new Company("Company");
 		Set<Qualification> qs = new HashSet<Qualification>();
-		qs.add(new Qualification("use"));
-		c.createQualification("use");
-		c.createProject("Project Runway", qs, ProjectSize.BIG);
-		c.createWorker("Bob b", qs, 10450.5);
-		Worker w = new Worker("Bob b", qs, 10450.5);
-		Project p = new Project("Project Runway", qs, ProjectSize.BIG);
+		qs.add(c.createQualification("Java"));
+		Worker worker = c.createWorker("Bob B", qs, 100);
+		Project project = new Project ("Unknown_Project", qs, ProjectSize.BIG);
 
-		assertEquals(0, c.getAssignedWorkers().size());
+		c.assign(worker, project);
+	}
 
-		c.assign(w, p);
+	@Test(expected = IllegalArgumentException.class)
+	public void test_unknownWorker_assign() {
+		Company c = new Company("Company");
+		Set<Qualification> qs = new HashSet<Qualification>();
+		qs.add(c.createQualification("Java"));
+		Worker worker = new Worker("Bob B", qs, 100);
+		Project project = c.createProject("Unknown_Project", qs, ProjectSize.BIG);
 
-		assertEquals(1, c.getAssignedWorkers().size());
-		assertEquals(1, c.getAvailableWorkers().size());
-		assertTrue(p.getWorkers().contains(w));
-		assertEquals(3, w.getWorkload());
+		c.assign(worker, project);
 	}
 
 	@Test
@@ -674,42 +687,6 @@ public class CompanyTest {
 		assertEquals(1, c.getAvailableWorkers().size());
 		assertFalse(p.getWorkers().contains(w));
 		assertEquals(0, w.getWorkload());
-	}
-
-	@Test
-	public void test_neither_overloaded_helpful_notInAssigned_inAvailable_assign(){
-		Company c = new Company("Nvidia");
-		String[] qualDescriptions = {"useless", "useful", "goner", "blah"};
-		String[] projectNames = {"Uselessness", "Usefulness", "Gonerness", "blahness"};
-		Set<Qualification> qs = new HashSet<Qualification>();
-
-		for(String qual : qualDescriptions){
-			c.createQualification(qual);
-			qs.add(new Qualification(qual));
-		}
-
-		c.createWorker("Bob b", qs, 10450.5);
-		Worker w = new Worker("Bob b", qs, 10450.5);
-		Project p = new Project("Project Runway", qs, ProjectSize.BIG);
-		
-		for(int i = 0; i < qualDescriptions.length; i++){
-			Set<Qualification> q = new HashSet<Qualification>();
-			q.add(new Qualification(qualDescriptions[i]));
-			c.createProject(projectNames[i], q, ProjectSize.BIG);
-		}
-
-		for(Project px : c.getProjects()){
-				c.assign(w, px);
-		}
-
-		assertEquals(1, c.getAssignedWorkers().size());
-
-		c.assign(w, p);
-		String logInfo = "WORKER INFO: " + w.getName() + ":" + w.getWorkload() + ":Availability - " + w.isAvailable();
-		log.info(logInfo);
-		assertEquals(1, c.getAssignedWorkers().size());
-		assertEquals(0, c.getAvailableWorkers().size());
-		assertFalse(p.getWorkers().contains(w));
 	}
 
 	@Test
@@ -761,24 +738,6 @@ public class CompanyTest {
 		assertEquals(5, w.getWorkload());
 	}
 
-	@Test
-	public void test_neither_underloaded_helpful_notInAssigned_notInAvailable_assign(){
-		Company c = new Company("Nvidia");
-		Set<Qualification> qs = new HashSet<Qualification>();
-		qs.add(new Qualification("use"));
-		c.createQualification("use");
-		c.createProject("Project Runway", qs, ProjectSize.BIG);
-		Worker w = new Worker("Bob b", qs, 10450.5);
-		Project p = new Project("Project Runway", qs, ProjectSize.BIG);
-
-		c.assign(w, p);
-
-		assertEquals(0, c.getAssignedWorkers().size());
-		assertEquals(0, c.getAvailableWorkers().size());
-		assertFalse(p.getWorkers().contains(w));
-		assertEquals(0, w.getWorkload());
-	}
-
 	@Test(expected = IllegalArgumentException.class)
 	public void test_nullWorker_unassign() {
 		Company c = new Company("ABC");
@@ -820,6 +779,26 @@ public class CompanyTest {
 
 		assertFalse(p.getWorkers().contains(w));
 		assertFalse(w.getProjects().contains(p));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void test_unknownProject_unassign() {
+		Company company = new Company("Company");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(company.createQualification("Java"));
+		Worker worker = company.createWorker("Bob B", qs, 1000);
+		Project project = new Project("Project", qs, ProjectSize.BIG);
+		company.unassign(worker, project);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void test_unkownWorker_unassign() {
+		Company company = new Company("Company");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(company.createQualification("Java"));
+		Worker worker = new Worker("Bob B", qs, 1000);
+		Project project = company.createProject("Project", qs, ProjectSize.BIG);
+		company.unassign(worker, project);
 	}
 
 	@Test
@@ -934,36 +913,6 @@ public class CompanyTest {
 		assertFalse(w.getProjects().contains(p));
 		assertEquals(ProjectStatus.SUSPENDED, p.getStatus());
 		assertTrue(c.getAvailableWorkers().contains(w));
-	}
-
-	@Test
-	public void test_nonCompanyProjectsSkippedAndWorkerBecomesUnavailable_unassignAll() {
-		Company c = new Company("ABC");
-
-		Qualification q = c.createQualification("Java");
-		Set<Qualification> qs = new HashSet<>();
-		qs.add(q);
-
-		Worker w = c.createWorker("Bob", qs, 1000.0);
-
-		Project p1 = new Project("P1", qs, ProjectSize.BIG);
-		Project p2 = new Project("P2", qs, ProjectSize.BIG);
-		Project p3 = new Project("P3", qs, ProjectSize.BIG);
-		Project p4 = new Project("P4", qs, ProjectSize.BIG);
-
-		w.addProject(p1);
-		w.addProject(p2);
-		w.addProject(p3);
-		w.addProject(p4);
-
-		assertFalse(w.isAvailable());
-		assertTrue(c.getAvailableWorkers().contains(w)); 
-
-		c.unassignAll(w);
-
-		assertEquals(4, w.getProjects().size());
-
-		assertFalse(c.getAvailableWorkers().contains(w));
 	}
 
 	@Test
@@ -1208,6 +1157,15 @@ public class CompanyTest {
 		assertTrue(project.getWorkers().isEmpty());
 		assertFalse(w1.getProjects().contains(project));
 		assertFalse(w2.getProjects().contains(project));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void test_unknownProject_finish() {
+		Company company = new Company("Company");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(company.createQualification("Java"));
+		Project project = new Project("Project", qs, ProjectSize.BIG);
+		company.finish(project);
 	}
 
 	@Test
