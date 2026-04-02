@@ -105,6 +105,7 @@ public class ProjectTest {
 	@Test
 	public void test_validEnumSize_getSize(){
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
 
 		assertEquals(2, p.getSize().getValue());
@@ -114,6 +115,7 @@ public class ProjectTest {
 	@Test
 	public void test_projectO_equalNames_equals(){
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Project p = new Project("Projected", qs, ProjectSize.MEDIUM);
 		Project proj = new Project("Projected", qs, ProjectSize.SMALL);
 
@@ -123,6 +125,7 @@ public class ProjectTest {
 	@Test
 	public void test_nullO_equalNames_equals(){
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Project p = new Project("Projected", qs, ProjectSize.MEDIUM);
 
 		assertFalse(p.equals(null));
@@ -131,6 +134,7 @@ public class ProjectTest {
 	@Test
 	 public void test_nonprojectO_equalNames_equals(){
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Project p = new Project("Projected", qs, ProjectSize.MEDIUM);
 
 		assertFalse(p.equals("NotAProject"));
@@ -139,6 +143,7 @@ public class ProjectTest {
 	@Test
 	public void test_projecto_nonEqualNames_equals(){
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Project p = new Project("Projected", qs, ProjectSize.MEDIUM);
 		Project proj = new Project("UnProjected", qs, ProjectSize.SMALL);
 
@@ -156,6 +161,7 @@ public class ProjectTest {
 	@Test
 	public void testNotNullStatus_setStatus(){
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Project p = new Project("Projected", qs, ProjectSize.MEDIUM);
 		p.setStatus(ProjectStatus.ACTIVE);
 
@@ -165,6 +171,7 @@ public class ProjectTest {
 	@Test
 	public void testValidEnumgetStatus(){
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Project p = new Project("Projected", qs, ProjectSize.MEDIUM);
 
 		assertEquals(p.getStatus(), ProjectStatus.PLANNED);
@@ -476,6 +483,7 @@ public class ProjectTest {
 	@Test
 	public void test_nullWorker_isHelpful() {
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Project p = new Project("Project", qs, ProjectSize.BIG);
 		assertFalse(p.isHelpful(null));
 	}
@@ -493,15 +501,6 @@ public class ProjectTest {
 		assertEquals(2, p.getRequiredQualifications().size());
 		assertTrue(p.getRequiredQualifications().contains(q1));
 		assertTrue(p.getRequiredQualifications().contains(q2));
-	}
-
-	@Test
-	public void test_noQualifications_getRequiredQualifications() {
-		Set<Qualification> qs = new HashSet<>();
-		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
-
-		assertNotNull(p.getRequiredQualifications());
-		assertEquals(0, p.getRequiredQualifications().size());
 	}
 
 	@Test
@@ -663,7 +662,59 @@ public class ProjectTest {
 		assertEquals("Project Runway", actualDTO.getName());
 		assertTrue(actualDTO.getMissingQualifications().length == 0);
 		assertTrue(actualDTO.getQualifications().length == 1);
+		assertTrue(actualDTO.getSize() == ProjectSize.MEDIUM);
 
 	}
 
+	@Test
+	public void test_bigSize_toDTO() {
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
+		Project p = new Project("Project", qs, ProjectSize.BIG);
+		ProjectDTO dto = p.toDTO();
+		assertEquals(ProjectSize.BIG, dto.getSize());
+	}
+
+	@Test
+	public void test_smallPlanned_toDTO() {
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
+		Project p = new Project("SmallProject", qs, ProjectSize.SMALL);
+		ProjectDTO dto = p.toDTO();
+		assertEquals(ProjectSize.SMALL, dto.getSize());
+		assertEquals(ProjectStatus.PLANNED, dto.getStatus());
+	}
+
+	@Test
+	public void test_mediumActive_toDTO() {
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
+		Project p = new Project("MediumProject", qs, ProjectSize.MEDIUM);
+		p.setStatus(ProjectStatus.ACTIVE);
+		ProjectDTO dto = p.toDTO();
+		assertEquals(ProjectSize.MEDIUM, dto.getSize());
+		assertEquals(ProjectStatus.ACTIVE, dto.getStatus());
+	}
+
+	@Test
+	public void test_bigSuspended_toDTO() {
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
+		Project p = new Project("BigProject", qs, ProjectSize.BIG);
+		p.setStatus(ProjectStatus.SUSPENDED);
+		ProjectDTO dto = p.toDTO();
+		assertEquals(ProjectSize.BIG, dto.getSize());
+		assertEquals(ProjectStatus.SUSPENDED, dto.getStatus());
+	}
+
+	@Test
+	public void test_smallFinished_toDTO() {
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
+		Project p = new Project("FinishedProject", qs, ProjectSize.SMALL);
+		p.setStatus(ProjectStatus.FINISHED);
+		ProjectDTO dto = p.toDTO();
+		assertEquals(ProjectSize.SMALL, dto.getSize());
+		assertEquals(ProjectStatus.FINISHED, dto.getStatus());
+	}
 }
