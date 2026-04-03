@@ -21,8 +21,8 @@ public class Project {
 		if (name.trim().length() == 0) {
 			throw new IllegalArgumentException("Project name cannot be empty");
 		}
-		if (qualifications == null) {
-			throw new IllegalArgumentException("Project qualifications cannot be null");
+		if (qualifications == null || qualifications.isEmpty()) {
+			throw new IllegalArgumentException("Project qualifications cannot be null or empty");
 		}
 		if (size == null) {
 			throw new IllegalArgumentException("Project size cannot be null");
@@ -97,7 +97,10 @@ public class Project {
 	public void addQualification(Qualification qualification) {
 		if (qualification == null) {
 		throw new IllegalArgumentException("Must be a valid qualification");
-	}
+		}
+		if (this.status == ProjectStatus.ACTIVE || this.status == ProjectStatus.FINISHED) {
+        throw new IllegalArgumentException("Cannot add qualification to an active or finished project");
+    	}
 		this.qualifications.add(qualification);
 	}
 
