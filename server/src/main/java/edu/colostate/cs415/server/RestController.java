@@ -112,8 +112,8 @@ public class RestController {
 	private WorkerDTO[] getWorkers() {
 		Set<Worker> workerSet = company.getEmployedWorkers();
 		WorkerDTO[] workers = workerSet.stream()
-		.map(Worker::toDTO)
-		.toArray(WorkerDTO[]::new);
+									   .map(Worker::toDTO)
+									   .toArray(WorkerDTO[]::new);
 
 		return workers;
 	}
@@ -124,19 +124,24 @@ public class RestController {
 									.filter(w -> w.getName().equals(name))
 									.map(Worker::toDTO)
 									.findFirst()
-									.orElse(null);
+									.orElseThrow(() -> new RuntimeException("Worker not found."));
 		return worker;
 	}
 
 	private String createWorker(Request request) {
 		WorkerDTO assignmentDTO = gson.fromJson(request.body(), WorkerDTO.class);
-		if (request.params("qualifications").equals(assignmentDTO.getQualifications()) 
-			&& request.params("salary").equals(assignmentDTO.getSalary())) {
+		if (request.params("name").equals(assignmentDTO.getName())) {
 			Stream<String> stream = Arrays.stream(assignmentDTO.getQualifications());
-			Set<Qualification> qualifications = stream.map(Qualification::new).collect(Collectors.toSet());
+			Set<Qualification> qualifications = stream.map(Qualification::new)
+													  .collect(Collectors.toSet());
+
+			if (!company.getQualifications().containsAll(qualifications)) {
+				throw new RuntimeException("Qualifications not found in company.");
+			}
+
 			company.createWorker(assignmentDTO.getName(), qualifications, assignmentDTO.getSalary());
 		} else
-			throw new RuntimeException("Worker name, qualifications or salary do not match.");
+			throw new RuntimeException("Worker names do not match.");
 		return OK;
 	}
 

@@ -1,6 +1,7 @@
 package edu.colostate.cs415.server;
 
 import org.junit.AfterClass;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -11,18 +12,16 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.HashSet;
-import java.util.Set;
 
 import edu.colostate.cs415.db.DBConnector;
 import edu.colostate.cs415.dto.WorkerDTO;
 import edu.colostate.cs415.model.Company;
-import edu.colostate.cs415.model.Worker;
-import edu.colostate.cs415.model.Qualification;
+
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.apache.hc.client5.http.fluent.Content;
 import org.apache.hc.client5.http.fluent.Request;
 import org.apache.hc.core5.http.ContentType;
 
@@ -31,7 +30,7 @@ public class RestControllerTest {
     private static Company company;
     private static RestController restController;
     Gson gson = new Gson();
-    private static final int PORT = 4567;
+    private static final int PORT = 8080;
 
     @BeforeClass
     public static void init(){
@@ -39,12 +38,16 @@ public class RestControllerTest {
 
         dbConnector = mock(DBConnector.class);
         company = new Company("Company");
-        when(dbConnector.loadCompanyData()).thenAnswer((i) -> company);
+        when(dbConnector.loadCompanyData()).thenAnswer((i) -> new DBConnector().loadCompanyData());
 
         restController = new RestController(PORT, dbConnector);
         restController.start();
         spark.Spark.awaitInitialization();
+    }
 
+    @Before
+    public void resetState() {
+        setControllerCompany(new DBConnector().loadCompanyData());
     }
 
     @AfterClass
@@ -96,37 +99,57 @@ public class RestControllerTest {
     @Test
     public void testGetWorkers() throws IOException {
         WorkerDTO[] workers = gson.fromJson(
-            Request.get("http://localhost:4567/api/workers").execute().returnContent().asString(),
+            Request.get(url("/api/workers")).execute().returnContent().asString(),
             WorkerDTO[].class);
         
+        assertTrue(workers.length == 12);
     }
 
     @Test
     public void testGetWorkerName() throws IOException {
-        String name = "Bob";
-        Set<Qualification> qs = new HashSet<>();
-        Worker worker2 = company.createWorker(name, qs, 1000);
         WorkerDTO worker = gson.fromJson(
-            Request.get("http://localhost:4567/api/workers/" + name).execute().returnContent().asString(),
+            Request.get(url("/api/workers/Nick%20Hubbard")).execute().returnContent().asString(),
             WorkerDTO.class);
-        assertEquals(worker.getName(), name);
+        assertEquals(worker.getName(), "Nick Hubbard");
+    }
+
+    @Test
+    public void testGetWorkerName_nonexistantName() throws IOException {
+        assertRequestFails(Request.get(url("/api/workers/dlkafhad")));
     }
 
     @Test
     public void testPostWorkerName() throws IOException {
-        String name = "Bob";
-        Set<Qualification> qs = new HashSet<>();
-        Worker worker2 = new Worker(name, qs, 1000);
-        String worker2String = gson.toJson(worker2.toDTO());
-
-        String response = Request.post(("http://localhost:4567/api/workers/" + name).replace(" ", "%20"))
+        String[] qualifications = new String[]{"Java"};
+        WorkerDTO workerDTO = new WorkerDTO("Bob Bobbington", 1000, 0, new String[]{}, qualifications);
+        String worker2String = gson.toJson(workerDTO);
+        String response = Request.post((url("/api/workers/Bob Bobbington")).replace(" ", "%20"))
                     .bodyString(worker2String, ContentType.APPLICATION_JSON).execute().returnContent().asString();
         
         WorkerDTO worker = gson.fromJson(
-                Request.get("http://localhost:4567/api/workers/" + name).execute().returnContent().asString(),
+                Request.get(url("/api/workers/Bob%20Bobbington")).execute().returnContent().asString(),
                 WorkerDTO.class);
+
+        assertEquals(worker.getName(), "Bob Bobbington");
         
-        assertEquals(worker.getName(), name);
+    }
+
+    @Test
+    public void testPostWorker_invalidQualification() throws IOException {
+        String[] qualifications = new String[]{"Outside Qualification"};
+        WorkerDTO workerDTO = new WorkerDTO("Bob Bobbington", 1000, 0, new String[]{}, qualifications);
+        String worker2String = gson.toJson(workerDTO);
+        assertRequestFails(Request.post(url("/api/workers/Bob Bobbington").replace(" ", "%20"))
+            .bodyString(worker2String, ContentType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void testPostWorker_wrongName() throws IOException {
+        String[] qualifications = new String[]{"Java"};
+        WorkerDTO workerDTO = new WorkerDTO("George", 10000, 0, new String[]{}, qualifications);
+        String worker2String = gson.toJson(workerDTO);
+        assertRequestFails(Request.post(url("/api/workers/Bob Bobbington").replace(" ", "%20"))
+        .bodyString(worker2String, ContentType.APPLICATION_JSON));
     }
 
     @Test
