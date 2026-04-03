@@ -27,7 +27,7 @@ public class Qualification {
 		}
 
 		Qualification otherQ = (Qualification) other;
-		return (this.description.equals(otherQ.description));
+		return (this.description.trim().equals(otherQ.description.trim()));
 	}
 
 	@Override
@@ -45,10 +45,12 @@ public class Qualification {
 	}
 
 	public void addWorker(Worker worker) {
+		if(worker == null) throw new IllegalArgumentException("Worker can't be null");
 		workers.add(worker);
 	}
 
 	public void removeWorker(Worker worker) {
+		if(worker == null) throw new IllegalArgumentException("Worker can't be null");
 		if (!(workers.isEmpty())) {
 			workers.remove(worker);
 		}
