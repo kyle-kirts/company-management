@@ -11,13 +11,20 @@ import static spark.Spark.redirect;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Arrays;
+import java.util.Set;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.google.gson.Gson;
 
 import edu.colostate.cs415.db.DBConnector;
 import edu.colostate.cs415.dto.QualificationDTO;
+import edu.colostate.cs415.dto.WorkerDTO;
 import edu.colostate.cs415.model.Company;
+import edu.colostate.cs415.model.Qualification;
+import edu.colostate.cs415.model.Worker;
 import spark.Request;
 import spark.Response;
 import spark.Spark;
@@ -65,6 +72,13 @@ public class RestController {
 						gson::toJson);
 				post("/:description", (req, res) -> createQualification(req));
 			});
+
+			path("/workers", () -> {
+				get("", (req, res) -> getWorkers(), gson::toJson);
+				get("/:name", (req, res) -> getWorker(req.params("name")),
+						gson::toJson);
+				post("/:name", (req, res) -> createWorker(req));
+			});
 		});
 	}
 
@@ -92,6 +106,42 @@ public class RestController {
 			company.createQualification(assignmentDTO.getDescription());
 		} else
 			throw new RuntimeException("Qualification descriptions do not match.");
+		return OK;
+	}
+
+	private WorkerDTO[] getWorkers() {
+		Set<Worker> workerSet = company.getEmployedWorkers();
+		WorkerDTO[] workers = workerSet.stream()
+									   .map(Worker::toDTO)
+									   .toArray(WorkerDTO[]::new);
+
+		return workers;
+	}
+
+	private WorkerDTO getWorker(String name) {
+		Set<Worker> workerSet = company.getEmployedWorkers();
+		WorkerDTO worker = workerSet.stream()
+									.filter(w -> w.getName().equals(name))
+									.map(Worker::toDTO)
+									.findFirst()
+									.orElseThrow(() -> new RuntimeException("Worker not found."));
+		return worker;
+	}
+
+	private String createWorker(Request request) {
+		WorkerDTO assignmentDTO = gson.fromJson(request.body(), WorkerDTO.class);
+		if (request.params("name").equals(assignmentDTO.getName())) {
+			Stream<String> stream = Arrays.stream(assignmentDTO.getQualifications());
+			Set<Qualification> qualifications = stream.map(Qualification::new)
+													  .collect(Collectors.toSet());
+
+			if (!company.getQualifications().containsAll(qualifications)) {
+				throw new RuntimeException("Qualifications not found in company.");
+			}
+
+			company.createWorker(assignmentDTO.getName(), qualifications, assignmentDTO.getSalary());
+		} else
+			throw new RuntimeException("Worker names do not match.");
 		return OK;
 	}
 
