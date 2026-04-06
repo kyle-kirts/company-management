@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 
 import edu.colostate.cs415.db.DBConnector;
+import edu.colostate.cs415.dto.QualificationDTO;
 import edu.colostate.cs415.dto.WorkerDTO;
 import edu.colostate.cs415.model.Company;
 
@@ -97,6 +98,65 @@ public class RestControllerTest {
     }
 
     @Test
+    public void testGetQualifications() throws IOException {
+        QualificationDTO[] qualifications = gson.fromJson(
+            Request.get(url("/api/qualifications")).execute().returnContent().asString(),
+    QualificationDTO[].class);
+
+        assertTrue(qualifications.length == 12);
+    }
+
+    @Test
+    public void testGetQualification() throws IOException {
+        QualificationDTO qualification = gson.fromJson(
+            Request.get(url("/api/qualifications/Java")).execute().returnContent().asString(),
+            QualificationDTO.class);
+
+        assertEquals(qualification.getDescription(), "Java");
+    }
+
+    @Test
+    public void testGetQualification_nonExistant() throws IOException {
+        assertRequestFails(Request.get(url("/api/qualifications/NonExistentQualification")));
+    }
+
+    @Test
+    public void testPostQualification() throws IOException {
+        QualificationDTO qualificationDTO = new QualificationDTO("C", new String[]{});
+        String qualification2String = gson.toJson(qualificationDTO);
+        String response = Request.post((url("/api/qualifications/C")).replace(" ", "%20"))
+                    .bodyString(qualification2String, ContentType.APPLICATION_JSON).execute().returnContent().asString();
+        
+        QualificationDTO qualification = gson.fromJson(
+                Request.get(url("/api/qualifications/C")).execute().returnContent().asString(),
+                QualificationDTO.class);
+
+        assertEquals(qualification.getDescription(), "C");
+    }
+
+    @Test
+    public void testPostQualification_descriptionMissMatch() throws IOException {
+        QualificationDTO qualificationDTO = new QualificationDTO("C++", new String[]{});
+        String qualification2String = gson.toJson(qualificationDTO);
+        assertRequestFails(Request.post(url("/api/qualifications/C").replace(" ", "%20"))
+                                  .bodyString(qualification2String, ContentType.APPLICATION_JSON));
+    }
+
+    @Test 
+    public void testPostQualification_qualificationCountCheck() throws IOException {
+        QualificationDTO qualificationDTO = new QualificationDTO("C++", new String[]{});
+
+        Request.post(url("/api/qualifications/C%2B%2B"))
+            .bodyString(gson.toJson(qualificationDTO), ContentType.APPLICATION_JSON)
+            .execute();
+        QualificationDTO[] qualifications = gson.fromJson(
+            Request.get(url("/api/qualifications")).execute().returnContent().asString(),
+            QualificationDTO[].class);
+
+        assertEquals(13, qualifications.length);
+    }
+
+    @Test
     public void testGetWorkers() throws IOException {
         WorkerDTO[] workers = gson.fromJson(
             Request.get(url("/api/workers")).execute().returnContent().asString(),
@@ -124,14 +184,13 @@ public class RestControllerTest {
         WorkerDTO workerDTO = new WorkerDTO("Bob Bobbington", 1000, 0, new String[]{}, qualifications);
         String worker2String = gson.toJson(workerDTO);
         String response = Request.post((url("/api/workers/Bob Bobbington")).replace(" ", "%20"))
-                    .bodyString(worker2String, ContentType.APPLICATION_JSON).execute().returnContent().asString();
+                                 .bodyString(worker2String, ContentType.APPLICATION_JSON).execute().returnContent().asString();
         
         WorkerDTO worker = gson.fromJson(
                 Request.get(url("/api/workers/Bob%20Bobbington")).execute().returnContent().asString(),
                 WorkerDTO.class);
 
         assertEquals(worker.getName(), "Bob Bobbington");
-        
     }
 
     @Test
@@ -140,7 +199,7 @@ public class RestControllerTest {
         WorkerDTO workerDTO = new WorkerDTO("Bob Bobbington", 1000, 0, new String[]{}, qualifications);
         String worker2String = gson.toJson(workerDTO);
         assertRequestFails(Request.post(url("/api/workers/Bob Bobbington").replace(" ", "%20"))
-            .bodyString(worker2String, ContentType.APPLICATION_JSON));
+                                  .bodyString(worker2String, ContentType.APPLICATION_JSON));
     }
 
     @Test
@@ -149,7 +208,22 @@ public class RestControllerTest {
         WorkerDTO workerDTO = new WorkerDTO("George", 10000, 0, new String[]{}, qualifications);
         String worker2String = gson.toJson(workerDTO);
         assertRequestFails(Request.post(url("/api/workers/Bob Bobbington").replace(" ", "%20"))
-        .bodyString(worker2String, ContentType.APPLICATION_JSON));
+                                  .bodyString(worker2String, ContentType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void testPostWorker_workerCountCheck() throws IOException {
+        String[] qualifications = new String[]{"Java"};
+        
+        WorkerDTO workerDTO = new WorkerDTO("Bob Bobbington", 1000, 0, new String[]{}, qualifications);
+        Request.post(url("/api/workers/Bob%20Bobbington"))
+            .bodyString(gson.toJson(workerDTO), ContentType.APPLICATION_JSON)
+            .execute();
+        WorkerDTO[] workers = gson.fromJson(
+            Request.get(url("/api/workers")).execute().returnContent().asString(),
+            WorkerDTO[].class);
+
+        assertEquals(13, workers.length);
     }
 
     @Test
