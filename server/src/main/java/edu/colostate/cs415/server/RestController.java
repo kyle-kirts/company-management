@@ -91,13 +91,21 @@ public class RestController {
 	}
 
 	private QualificationDTO[] getQualifications() {
-		// TODO: write actual implementation
-		return new QualificationDTO[] { new QualificationDTO("JavaScript", new String[] { "John Walker" }) };
+		Set<Qualification> qualifications = company.getQualifications();
+		QualificationDTO[] qualificationsDTO = qualifications.stream()
+															 .map(Qualification::toDTO)
+															 .toArray(QualificationDTO[]::new);
+		return qualificationsDTO;
 	}
 
 	private QualificationDTO getQualification(String description) {
-		// TODO: write actual implementation
-		return new QualificationDTO("JavaScript", new String[] { "John Walker" });
+		Set<Qualification> qualifications = company.getQualifications();
+		QualificationDTO  qualificationDTO = qualifications.stream()
+														   .filter(q -> q.equals(new Qualification(description)))
+														   .map(Qualification::toDTO)
+														   .findFirst()
+														   .orElseThrow(() -> new RuntimeException("Qualification not found."));
+		return qualificationDTO;
 	}
 
 	private String createQualification(Request request) {
