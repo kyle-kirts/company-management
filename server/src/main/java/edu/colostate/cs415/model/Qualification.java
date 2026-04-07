@@ -27,7 +27,7 @@ public class Qualification {
 		}
 
 		Qualification otherQ = (Qualification) other;
-		return (this.description.trim().equals(otherQ.description.trim()));
+	return this.description.trim().equals(otherQ.description.trim());
 	}
 
 	@Override
