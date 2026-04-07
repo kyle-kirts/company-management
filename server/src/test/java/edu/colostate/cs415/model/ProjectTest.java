@@ -92,15 +92,20 @@ public class ProjectTest {
 		assertEquals(p.getName(), "Project Runway");
 	}
 
-	@Test()
-	public void test_validNameHash_hashCode() {
-		int hashInteger = -307059209;
-		Set<Qualification> qs = new HashSet<>();
-		qs.add(new Qualification("Qualification"));
-		Project p = new Project("valid description", qs, ProjectSize.MEDIUM);
+	@Test
+     public void test_validNameHash_hashCode() {
+     Set<Qualification> qs1 = new HashSet<>();
+     qs1.add(new Qualification("Qualification"));
 
-		assertEquals("Hashcode should match hashInteger", p.hashCode(), hashInteger);
-	}
+     Set<Qualification> qs2 = new HashSet<>();
+     qs2.add(new Qualification("Qualification"));
+
+     Project p1 = new Project("valid description", qs1, ProjectSize.MEDIUM);
+     Project p2 = new Project("valid description", qs2, ProjectSize.MEDIUM);
+
+     assertEquals(p1, p2);
+     assertEquals(p1.hashCode(), p2.hashCode());
+    }
 
 	@Test
 	public void test_validEnumSize_getSize(){

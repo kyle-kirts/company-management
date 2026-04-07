@@ -117,17 +117,21 @@ public class WorkerTest {
 		assertTrue(worker.getQualifications().contains(q2));
 	}
 
-	@Test()
-	public void test_validNameHash_hashCode() {
-		int hashInteger = -307059209;
-		Set<Qualification> qs = new HashSet<>();
-		qs.add(new Qualification("Qualification"));
-		Worker worker = new Worker("valid description", qs, 1.00);
+	@Test
+       public void test_validNameHash_hashCode() {
+       Set<Qualification> qs1 = new HashSet<>();
+       qs1.add(new Qualification("Qualification"));
 
-		assertEquals("Hashcode should match hashInteger", worker.hashCode(), hashInteger);
+        Set<Qualification> qs2 = new HashSet<>();
+        qs2.add(new Qualification("Qualification"));
 
+        Worker w1 = new Worker("valid name", qs1, 1000.0);
+        Worker w2 = new Worker("valid name", qs2, 2000.0);
 
-	}
+        assertEquals(w1, w2);
+        assertEquals(w1.hashCode(), w2.hashCode());
+    }
+	
 
 	public void test_noProjects_LongQualifications_normalSalary_toString(){
 		Set<Qualification> qs = new HashSet<>();
