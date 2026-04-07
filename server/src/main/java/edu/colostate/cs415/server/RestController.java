@@ -80,6 +80,10 @@ public class RestController {
 
 			put("/unassign", (req, res) -> unassign(req));
 
+			put("/start", (req, res) -> start(req));
+
+			put("/finish", (req, res) -> finish(req));
+
 			path("/projects", () -> {
 				get("", (req, res) -> getProjects(), gson::toJson);
 				get("/:name", (req, res) -> getProject(req.params("name")),
@@ -123,7 +127,7 @@ public class RestController {
 		String workerName = adto.getWorker();
 		String projectName = adto.getProject();
 
-		if(workerName.isEmpty() || projectName.isEmpty()) throw new RuntimeException("Worker or Project is null.");
+		if(workerName == null || projectName == null) throw new RuntimeException("Worker or Project is null.");
 
 		Worker worker = company.getEmployedWorkers().stream()
 													.filter(w -> w.getName().equals(workerName))
@@ -137,6 +141,37 @@ public class RestController {
 		company.unassign(worker, project);
 
 		return OK;
+	}
+
+	private String start(Request request){
+		ProjectDTO proj = gson.fromJson(request.body(), ProjectDTO.class);
+		String projectName = proj.getName();
+
+		if(projectName == null) throw new RuntimeException("Project is null");
+
+		Project project = company.getProjects().stream()
+												.filter(p -> p.getName().equals(projectName))
+												.findFirst()
+												.orElseThrow(() -> new RuntimeException("Project not at this company."));
+		company.start(project);
+
+		return OK;
+	}
+
+	private String finish(Request request){
+		ProjectDTO proj = gson.fromJson(request.body(), ProjectDTO.class);
+		String projectName = proj.getName();
+
+		if(projectName == null) throw new RuntimeException("Project is null");
+
+		Project project = company.getProjects().stream()
+												.filter(p -> p.getName().equals(projectName))
+												.findFirst()
+												.orElseThrow(() -> new RuntimeException("Project not at this company."));
+		company.finish(project);
+
+		return OK;
+
 	}
 
 	private QualificationDTO[] getQualifications() {

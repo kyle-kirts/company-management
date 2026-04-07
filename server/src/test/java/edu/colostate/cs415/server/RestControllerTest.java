@@ -15,24 +15,13 @@ import org.junit.Test;
 
 import com.google.gson.Gson;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.io.IOException;
-import java.lang.reflect.Field;
 import edu.colostate.cs415.db.DBConnector;
 import edu.colostate.cs415.dto.ProjectDTO;
 import edu.colostate.cs415.dto.QualificationDTO;
 import edu.colostate.cs415.dto.WorkerDTO;
 import edu.colostate.cs415.model.Company;
-
 import edu.colostate.cs415.model.ProjectSize;
 import edu.colostate.cs415.model.ProjectStatus;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import org.apache.hc.client5.http.fluent.Request;
-import org.apache.hc.core5.http.ContentType;
 
 public class RestControllerTest {
     private static DBConnector dbConnector;
@@ -468,6 +457,96 @@ public class RestControllerTest {
         String project = "ABCDEFG";
         String jsonString = String.format("{\"worker\":\"%s\",\"project\":\"%s\"}",worker, project);
         assertRequestFails(Request.put(url("/api/unassign"))
+                                    .addHeader("Content-Type", "application/json")
+                                    .bodyString(jsonString, ContentType.APPLICATION_JSON));
+    }
+
+    @Test 
+    public void test_valid_start() throws IOException{
+        String project = "Face Detector";
+        String jsonString = String.format("{\"name\":\"%s\"}", project);
+        String returnValue = Request.put(url("/api/start"))
+                                    .addHeader("Content-Type", "application/json")
+                                    .bodyString(jsonString, ContentType.APPLICATION_JSON)
+                                    .execute().returnContent().asString();
+
+        assertEquals(returnValue, "OK");
+
+
+        ProjectDTO p = gson.fromJson(
+            Request.get(url("/api/projects/Face%20Detector")).execute().returnContent().asString(),
+            ProjectDTO.class);
+        
+        assertEquals(p.getStatus(), ProjectStatus.ACTIVE);
+    }
+
+    @Test
+    public void test_nullProject_start() throws IOException{
+        String project = null;
+        String jsonString = String.format("{\"name\":\"%s\"}", project);
+        assertRequestFails(Request.put(url("/api/start"))
+                                    .addHeader("Content-Type", "application/json")
+                                    .bodyString(jsonString, ContentType.APPLICATION_JSON));
+    }
+
+    public void test_emptyProject_start() throws IOException{
+        String project = "";
+        String jsonString = String.format("{\"name\":\"%s\"}", project);
+        assertRequestFails(Request.put(url("/api/start"))
+                                    .addHeader("Content-Type", "application/json")
+                                    .bodyString(jsonString, ContentType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void test_projectNotInCompany_start() throws IOException{
+        String project = "ABCDEFG";
+        String jsonString = String.format("{\"name\":\"%s\"}", project);
+        assertRequestFails(Request.put(url("/api/start"))
+                                    .addHeader("Content-Type", "application/json")
+                                    .bodyString(jsonString, ContentType.APPLICATION_JSON));
+    }
+
+    @Test 
+    public void test_valid_finish() throws IOException{
+        String project = "Smart Chatbot";
+        String jsonString = String.format("{\"name\":\"%s\"}", project);
+        String returnValue = Request.put(url("/api/finish"))
+                                    .addHeader("Content-Type", "application/json")
+                                    .bodyString(jsonString, ContentType.APPLICATION_JSON)
+                                    .execute().returnContent().asString();
+
+        assertEquals(returnValue, "OK");
+
+
+        ProjectDTO p = gson.fromJson(
+            Request.get(url("/api/projects/Smart%20Chatbot")).execute().returnContent().asString(),
+            ProjectDTO.class);
+        
+        assertEquals(ProjectStatus.FINISHED, p.getStatus());
+    }
+
+    @Test
+    public void test_nullProject_finish() throws IOException{
+        String project = null;
+        String jsonString = String.format("{\"name\":\"%s\"}", project);
+        assertRequestFails(Request.put(url("/api/finish"))
+                                    .addHeader("Content-Type", "application/json")
+                                    .bodyString(jsonString, ContentType.APPLICATION_JSON));
+    }
+
+    public void test_emptyProject_finish() throws IOException{
+        String project = "";
+        String jsonString = String.format("{\"name\":\"%s\"}", project);
+        assertRequestFails(Request.put(url("/api/finish"))
+                                    .addHeader("Content-Type", "application/json")
+                                    .bodyString(jsonString, ContentType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void test_projectNotInCompany_finish() throws IOException{
+        String project = "ABCDEFG";
+        String jsonString = String.format("{\"name\":\"%s\"}", project);
+        assertRequestFails(Request.put(url("/api/finish"))
                                     .addHeader("Content-Type", "application/json")
                                     .bodyString(jsonString, ContentType.APPLICATION_JSON));
     }
