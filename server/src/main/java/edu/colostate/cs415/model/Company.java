@@ -163,8 +163,8 @@ public class Company {
 			throw new IllegalArgumentException("Worker or Project does not belong to");
 		}
 		if(this.available.contains(worker) && !project.getWorkers().contains(worker)){
-			if(project.getStatus() != ProjectStatus.ACTIVE && project.getStatus() != ProjectStatus.FINISHED){
-				if(!worker.willOverload(project) && project.isHelpful(worker)){
+        if(project.getStatus() != ProjectStatus.ACTIVE && project.getStatus() != ProjectStatus.FINISHED){
+        if(!worker.willOverload(project) && project.isHelpful(worker)){
 					this.assigned.add(worker);
 					project.addWorker(worker);
 					worker.addProject(project);
