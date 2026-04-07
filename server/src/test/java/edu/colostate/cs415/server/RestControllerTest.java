@@ -6,23 +6,21 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.google.gson.Gson;
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
-
 import edu.colostate.cs415.db.DBConnector;
+import edu.colostate.cs415.dto.ProjectDTO;
 import edu.colostate.cs415.dto.QualificationDTO;
 import edu.colostate.cs415.dto.WorkerDTO;
 import edu.colostate.cs415.model.Company;
-
-
+import edu.colostate.cs415.model.ProjectSize;
+import edu.colostate.cs415.model.ProjectStatus;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.apache.hc.client5.http.fluent.Content;
 import org.apache.hc.client5.http.fluent.Request;
 import org.apache.hc.core5.http.ContentType;
 
@@ -224,6 +222,80 @@ public class RestControllerTest {
             WorkerDTO[].class);
 
         assertEquals(13, workers.length);
+    }
+
+    @Test
+    public void testGetProjects() throws IOException {
+        ProjectDTO[] projects = gson.fromJson(
+            Request.get(url("/api/projects")).execute().returnContent().asString(),
+            ProjectDTO[].class);
+        
+        assertTrue(projects.length == 12);
+    }
+
+ @Test
+    public void testGetProjectName() throws IOException {
+        ProjectDTO project = gson.fromJson(
+            Request.get(url("/api/projects/Financial%20Banking%20System")).execute().returnContent().asString(),
+            ProjectDTO.class);
+        assertEquals(project.getName(), "Financial Banking System");
+    }
+
+    @Test
+    public void testGetProjectName_nonexistantName() throws IOException {
+        assertRequestFails(Request.get(url("/api/projects/dlkafhad")));
+    }
+
+    @Test
+    public void testPostCreateProject() throws IOException {
+        String[] qualifications = new String[]{"Java"};
+        String[] workers = new String[]{"Bob"};
+        ProjectDTO projectDTO = new ProjectDTO("Test Project", ProjectSize.MEDIUM, ProjectStatus.ACTIVE, workers, qualifications, qualifications);
+        String project2String = gson.toJson(projectDTO);
+        String response = Request.post((url("/api/projects/Test Project")).replace(" ", "%20"))
+                    .bodyString(project2String, ContentType.APPLICATION_JSON).execute().returnContent().asString();
+        
+        assertEquals("OK", response);
+
+        ProjectDTO savedProject = gson.fromJson(
+            Request.get(url("/api/projects/Test%20Project")).execute().returnContent().asString(),
+            ProjectDTO.class);
+        assertEquals("Test Project", savedProject.getName());
+        assertEquals(ProjectStatus.PLANNED, savedProject.getStatus());
+        assertEquals(0, savedProject.getWorkers().length);
+    }
+
+    @Test
+    public void testPostProject_emptyQualifications() throws IOException {
+        String[] qualifications = new String[]{};
+        String[] workers = new String[]{"Bob"};
+        ProjectDTO projectDTO = new ProjectDTO("Test Project", ProjectSize.MEDIUM, ProjectStatus.ACTIVE, workers, qualifications, qualifications);
+
+        String project2String = gson.toJson(projectDTO);
+        assertRequestFails(Request.post(url("/api/projects/Test Project").replace(" ", "%20"))
+            .bodyString(project2String, ContentType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void testPostProject_invalidQualification() throws IOException {
+        String[] qualifications = new String[]{"Outside Qualification"};
+        String[] workers = new String[]{"Bob"};
+        ProjectDTO projectDTO = new ProjectDTO("Test Project", ProjectSize.MEDIUM, ProjectStatus.ACTIVE, workers, qualifications, qualifications);
+
+        String project2String = gson.toJson(projectDTO);
+        assertRequestFails(Request.post(url("/api/projects/Test Project").replace(" ", "%20"))
+            .bodyString(project2String, ContentType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void testPostProject_wrongName() throws IOException {
+        String[] qualifications = new String[]{"Java"};
+        String[] workers = new String[]{"Bob"};
+        ProjectDTO projectDTO = new ProjectDTO("Test", ProjectSize.MEDIUM, ProjectStatus.ACTIVE, workers, qualifications, qualifications);
+
+        String project2String = gson.toJson(projectDTO);
+        assertRequestFails(Request.post(url("/api/projects/Test Project").replace(" ", "%20"))
+            .bodyString(project2String, ContentType.APPLICATION_JSON));
     }
 
     @Test
