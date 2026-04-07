@@ -1,13 +1,6 @@
 package edu.colostate.cs415.server;
 
-import static spark.Spark.after;
-import static spark.Spark.exception;
-import static spark.Spark.get;
-import static spark.Spark.options;
-import static spark.Spark.path;
-import static spark.Spark.port;
-import static spark.Spark.post;
-import static spark.Spark.redirect;
+import static spark.Spark.*;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -20,9 +13,11 @@ import java.util.stream.Stream;
 import com.google.gson.Gson;
 
 import edu.colostate.cs415.db.DBConnector;
+import edu.colostate.cs415.dto.AssignmentDTO;
 import edu.colostate.cs415.dto.QualificationDTO;
 import edu.colostate.cs415.dto.WorkerDTO;
 import edu.colostate.cs415.model.Company;
+import edu.colostate.cs415.model.Project;
 import edu.colostate.cs415.model.Qualification;
 import edu.colostate.cs415.model.Worker;
 import spark.Request;
@@ -79,6 +74,10 @@ public class RestController {
 						gson::toJson);
 				post("/:name", (req, res) -> createWorker(req));
 			});
+
+			put("/assign",  (req, res) -> assign(req));
+
+			put("/unassign", (req, res) -> unassign(req));
 		});
 	}
 
@@ -88,6 +87,48 @@ public class RestController {
 
 	private String helloWorld() {
 		return "Hello World!";
+	}
+
+	private String assign(Request request){
+		AssignmentDTO adto = gson.fromJson(request.body(), AssignmentDTO.class);
+		String workerName = adto.getWorker();
+		String projectName = adto.getProject();
+
+		if(workerName == null || projectName == null) throw new RuntimeException("Worker or Project is null.");
+
+		Worker worker = company.getEmployedWorkers().stream()
+													.filter(w -> w.getName().equals(workerName))
+													.findFirst()
+													.orElseThrow(() -> new RuntimeException("Worker not at this company."));
+		Project project = company.getProjects().stream()
+												.filter(p -> p.getName().equals(projectName))
+												.findFirst()
+												.orElseThrow(() -> new RuntimeException("Project not at this company."));
+
+		company.assign(worker, project);
+
+		return OK;
+	}
+
+	private String unassign(Request request){
+		AssignmentDTO adto = gson.fromJson(request.body(), AssignmentDTO.class);
+		String workerName = adto.getWorker();
+		String projectName = adto.getProject();
+
+		if(workerName.isEmpty() || projectName.isEmpty()) throw new RuntimeException("Worker or Project is null.");
+
+		Worker worker = company.getEmployedWorkers().stream()
+													.filter(w -> w.getName().equals(workerName))
+													.findFirst()
+													.orElseThrow(() -> new RuntimeException("Worker not at this company."));
+		Project project = company.getProjects().stream()
+												.filter(p -> p.getName().equals(projectName))
+												.findFirst()
+												.orElseThrow(() -> new RuntimeException("Project not at this company."));
+
+		company.unassign(worker, project);
+
+		return OK;
 	}
 
 	private QualificationDTO[] getQualifications() {
