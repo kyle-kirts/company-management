@@ -51,7 +51,7 @@ public class Worker {
 	@Override
 	public String toString() {
 		long sal = (long)this.salary;
-		return (this.name + ":" + Integer.toString(this.projects.size()) + ":" + Integer.toString(this.qualifications.size()) + ":" + sal);
+		return this.name + ":" + Integer.toString(this.projects.size()) + ":" + Integer.toString(this.qualifications.size()) + ":" + sal;
 	}
 
 	public String getName() {
