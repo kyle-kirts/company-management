@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 
 import edu.colostate.cs415.db.DBConnector;
 import edu.colostate.cs415.dto.AssignmentDTO;
+import edu.colostate.cs415.dto.ProjectDTO;
 import edu.colostate.cs415.dto.QualificationDTO;
 import edu.colostate.cs415.dto.WorkerDTO;
 import edu.colostate.cs415.model.Company;
@@ -78,6 +79,13 @@ public class RestController {
 			put("/assign",  (req, res) -> assign(req));
 
 			put("/unassign", (req, res) -> unassign(req));
+
+			path("/projects", () -> {
+				get("", (req, res) -> getProjects(), gson::toJson);
+				get("/:name", (req, res) -> getProject(req.params("name")),
+						gson::toJson);
+				post("/:name", (req, res) -> createProject(req));
+			});
 		});
 	}
 
@@ -132,13 +140,21 @@ public class RestController {
 	}
 
 	private QualificationDTO[] getQualifications() {
-		// TODO: write actual implementation
-		return new QualificationDTO[] { new QualificationDTO("JavaScript", new String[] { "John Walker" }) };
+		Set<Qualification> qualifications = company.getQualifications();
+		QualificationDTO[] qualificationsDTO = qualifications.stream()
+															 .map(Qualification::toDTO)
+															 .toArray(QualificationDTO[]::new);
+		return qualificationsDTO;
 	}
 
 	private QualificationDTO getQualification(String description) {
-		// TODO: write actual implementation
-		return new QualificationDTO("JavaScript", new String[] { "John Walker" });
+		Set<Qualification> qualifications = company.getQualifications();
+		QualificationDTO  qualificationDTO = qualifications.stream()
+														   .filter(q -> q.equals(new Qualification(description)))
+														   .map(Qualification::toDTO)
+														   .findFirst()
+														   .orElseThrow(() -> new RuntimeException("Qualification not found."));
+		return qualificationDTO;
 	}
 
 	private String createQualification(Request request) {
@@ -183,6 +199,50 @@ public class RestController {
 			company.createWorker(assignmentDTO.getName(), qualifications, assignmentDTO.getSalary());
 		} else
 			throw new RuntimeException("Worker names do not match.");
+		return OK;
+	}
+
+	private ProjectDTO[] getProjects() {
+		Set<Project> projectSet = company.getProjects();
+		ProjectDTO[] projects = projectSet.stream()
+									   .map(Project::toDTO)
+									   .toArray(ProjectDTO[]::new);
+
+		return projects;
+	}
+
+	private ProjectDTO getProject(String projectName) {
+		Set<Project> projectSet = company.getProjects();
+		ProjectDTO project = projectSet.stream()
+									.filter(w -> w.getName().equals(projectName))
+									.map(Project::toDTO)
+									.findFirst()
+									.orElseThrow(() -> new RuntimeException("Project not found."));
+		return project;
+	}
+
+	private String createProject(Request request) {
+		ProjectDTO projectDTO = gson.fromJson(request.body(), ProjectDTO.class);
+		if (request.params("name").equals(projectDTO.getName())) {
+			if (projectDTO.getQualifications() == null || projectDTO.getQualifications().length == 0) {
+				throw new RuntimeException("Project qualifications cannot be null or empty.");
+			}
+
+			Stream<String> stream = Arrays.stream(projectDTO.getQualifications());
+			Set<Qualification> qualifications = stream.map(Qualification::new)
+													  .collect(Collectors.toSet());
+
+			if (!company.getQualifications().containsAll(qualifications)) {
+				throw new RuntimeException("Qualifications not found in company.");
+			}
+
+			Project createdProject = company.createProject(projectDTO.getName(), qualifications, projectDTO.getSize());
+			if (createdProject == null) {
+				throw new RuntimeException("Failed to create project.");
+			}
+		} else {
+			throw new RuntimeException("Project names do not match.");
+		}
 		return OK;
 	}
 
