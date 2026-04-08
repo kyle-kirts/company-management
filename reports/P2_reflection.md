@@ -1,0 +1,5 @@
+## Reflection
+
+The beginning of the sprint started strong with a team meeting with most members attending and then creating a document based on lecture of what needed to be done for P2. We determined that a solid way to deal with the issues was to use the document as the design document for creating issues as we needed. This kept the board from being overwhelming to look at while allowing everyone to contribute back to the project. We have continued to do thorough reviews of the PR's that are created and timely commits of those PR's so that we don't have a lot of rebasing to do and the builds have remained clean.
+
+A member was missing for a few weeks and the team moved right along and when that member was ready to contribute the team was open and accomodating to the work. It does show that this team is following along in the Norming stage of work and dealing with differences in schedules and can accomodate those. This team is handling the coordinating of some issues well and working together to finalize the project.
