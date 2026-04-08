@@ -139,8 +139,7 @@ public class Project {
 										.map(Qualification::toString)
 										.toArray(String[]::new);
 
-		Set<Qualification> missingQualifications = new HashSet<>();
-		missingQualifications = getMissingQualifications();
+		Set<Qualification> missingQualifications = getMissingQualifications();
 
 		String[] missingQualificationsString = missingQualifications.stream()
 										.map(Qualification::toString)
