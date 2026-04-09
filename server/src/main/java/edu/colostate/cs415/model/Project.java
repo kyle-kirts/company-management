@@ -98,9 +98,7 @@ public class Project {
 		if (qualification == null) {
 		throw new IllegalArgumentException("Must be a valid qualification");
 		}
-		if (this.status == ProjectStatus.FINISHED) {
-        throw new IllegalArgumentException("Cannot add qualification to an active or finished project");
-    	}
+
 		this.qualifications.add(qualification);
 	}
 
