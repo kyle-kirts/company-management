@@ -578,6 +578,32 @@ public class CompanyTest {
 		c.start(p);
 	}
 
+	@Test
+	public void test_activeProject_start() {
+		Company company = new Company("Company");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(company.createQualification("Java"));
+		Project project = company.createProject("Project Runway", qs, ProjectSize.MEDIUM);
+		Worker worker = company.createWorker("Bob", new HashSet<>(qs), 1000.0);
+		project.addWorker(worker);
+		project.setStatus(ProjectStatus.ACTIVE);
+		company.start(project);
+		assertEquals(ProjectStatus.ACTIVE, project.getStatus());
+	}
+
+	@Test
+	public void test_finishedProject_start() {
+		Company company = new Company("Company");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(company.createQualification("Java"));
+		Project project = company.createProject("Project Runway", qs, ProjectSize.MEDIUM);
+		Worker worker = company.createWorker("Bob", new HashSet<>(qs), 1000.0);
+		project.addWorker(worker);
+		project.setStatus(ProjectStatus.FINISHED);
+		company.start(project);
+		assertEquals(ProjectStatus.FINISHED, project.getStatus());
+	}
+
 
 	@Test 
 	public void test_hasEmployed_underLoaded_getUnavailableWorkers(){
@@ -736,6 +762,154 @@ public class CompanyTest {
 		assertEquals(1, c.getAvailableWorkers().size());
 		assertTrue(p.getWorkers().contains(w));
 		assertEquals(5, w.getWorkload());
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void test_nullWorker_assign() {
+		Company company = new Company("Company");
+		Set<Qualification> qs = new HashSet<Qualification>();
+		qs.add(company.createQualification("Java"));
+		Project project = company.createProject("Project", qs, ProjectSize.SMALL);
+
+		company.assign(null, project);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void test_nullProjecet_assign() {
+		Company company = new Company("Company");
+		Set<Qualification> qs = new HashSet<Qualification>();
+		qs.add(company.createQualification("Java"));
+		Worker worker = company.createWorker("Bob", qs, 1000);
+
+		company.assign(worker, null);
+	}
+
+	@Test
+	public void test_alreadyAssigned_assign() {
+		Company company = new Company("Company");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(company.createQualification("Java"));
+
+		Worker worker = company.createWorker("Bob", qs, 1000);
+		Project project = company.createProject("Project", qs, ProjectSize.BIG);
+
+		assertEquals(0, project.getWorkers().size());
+    	assertEquals(0, worker.getProjects().size());
+    	assertEquals(0, company.getAssignedWorkers().size());
+
+		company.assign(worker, project);
+
+		assertEquals(1, project.getWorkers().size());
+    	assertEquals(1, worker.getProjects().size());
+    	assertEquals(1, company.getAssignedWorkers().size());
+
+		company.assign(worker, project);
+
+		assertEquals(1, project.getWorkers().size());
+    	assertEquals(1, worker.getProjects().size());
+    	assertEquals(1, company.getAssignedWorkers().size());
+
+	}
+
+	@Test
+	public void test_willOverload_assign() {
+		Company company = new Company("Company");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(company.createQualification("Java"));
+		Worker worker = company.createWorker("Bob", qs, 1000);
+		Project p1 = company.createProject("Project1", qs, ProjectSize.BIG);
+		Project p2 = company.createProject("Project2", qs, ProjectSize.BIG);
+		Project p3 = company.createProject("Project3", qs, ProjectSize.BIG);
+		Project p4 = company.createProject("Project4", qs, ProjectSize.SMALL);
+		company.assign(worker, p1);
+		company.assign(worker, p2);
+		company.assign(worker, p3);
+		company.assign(worker, p4);
+		assertTrue(company.getAvailableWorkers().contains(worker));
+		
+		Project p5 = company.createProject("Project5", qs, ProjectSize.BIG);
+		company.assign(worker, p5);
+		
+		assertFalse(worker.getProjects().contains(p5));
+		assertEquals(4, worker.getProjects().size());
+		assertEquals(10, worker.getWorkload());
+		assertTrue(company.getAvailableWorkers().contains(worker));
+	}
+
+	@Test
+	public void test_workerNoLongerAvailable_assign() {
+		Company company = new Company("Company");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(company.createQualification("Java"));
+		Worker worker = company.createWorker("Bob", qs, 1000);
+		Project p1 = company.createProject("Project1", qs, ProjectSize.BIG);
+		Project p2 = company.createProject("Project2", qs, ProjectSize.BIG);
+		Project p3 = company.createProject("Project3", qs, ProjectSize.BIG);
+		company.assign(worker, p1);
+		company.assign(worker, p2);
+		company.assign(worker, p3);
+
+		assertTrue(company.getAvailableWorkers().contains(worker));
+		Project p4 = company.createProject("Project4", qs, ProjectSize.BIG);
+		company.assign(worker, p4);
+
+		assertFalse(company.getAvailableWorkers().contains(worker));
+		assertTrue(company.getAssignedWorkers().contains(worker));
+	}
+
+	@Test
+	public void test_plannedProject_assign() {
+		Company company = new Company("Company");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(company.createQualification("Java"));
+		Worker worker = company.createWorker("Bob", qs, 1000);
+		Project project = company.createProject("Project", qs, ProjectSize.BIG);
+
+		project.setStatus(ProjectStatus.PLANNED);
+		company.assign(worker, project);
+
+		assertTrue(project.getWorkers().contains(worker));
+		assertTrue(worker.getProjects().contains(project));
+		assertTrue(company.getAssignedWorkers().contains(worker));
+	}
+
+	@Test
+	public void test_suspendedProject_assign() {
+		Company company = new Company("Company");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(company.createQualification("Java"));
+		Worker worker = company.createWorker("Bob", qs, 1000);
+		Project project = company.createProject("Project", qs, ProjectSize.BIG);
+
+		project.setStatus(ProjectStatus.SUSPENDED);
+		company.assign(worker, project);
+
+		assertTrue(project.getWorkers().contains(worker));
+		assertTrue(worker.getProjects().contains(project));
+		assertTrue(company.getAssignedWorkers().contains(worker));
+	}
+
+	@Test
+	public void test_workerNotAvailable_assign() {
+		Company company = new Company("Company");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(company.createQualification("Java"));
+		Worker worker = company.createWorker("Bob", qs, 1000);
+		Project p1 = company.createProject("Project1", qs, ProjectSize.BIG);
+		Project p2 = company.createProject("Project2", qs, ProjectSize.BIG);
+		Project p3 = company.createProject("Project3", qs, ProjectSize.BIG);
+		Project p4 = company.createProject("Project4", qs, ProjectSize.BIG);
+		company.assign(worker, p1);
+		company.assign(worker, p2);
+		company.assign(worker, p3);
+		company.assign(worker, p4);
+
+		assertFalse(company.getAvailableWorkers().contains(worker));
+		
+		Project p5 = company.createProject("Project5", qs, ProjectSize.SMALL);
+		company.assign(worker, p5);
+		assertFalse(p5.getWorkers().contains(worker));
+		assertTrue(worker.getWorkload() == 12);
 	}
 
 	@Test(expected = IllegalArgumentException.class)

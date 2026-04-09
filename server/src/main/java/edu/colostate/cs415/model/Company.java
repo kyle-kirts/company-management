@@ -159,19 +159,41 @@ public class Company {
 		if (worker == null || project == null) {
         	throw new IllegalArgumentException("Cannot assign a null worker or project");
     	}
-		if (!this.employees.contains(worker) || !this.projects.contains(project)) {
-			throw new IllegalArgumentException("Worker or Project does not belong to");
+
+		if (!this.getEmployedWorkers().contains(worker) || !this.getProjects().contains(project)) {
+			throw new IllegalArgumentException("Worker and Project must belong to the company");
 		}
-		if(this.available.contains(worker) && !project.getWorkers().contains(worker)){
-        if(project.getStatus() != ProjectStatus.ACTIVE && project.getStatus() != ProjectStatus.FINISHED && !worker.willOverload(project) && project.isHelpful(worker)){
-					this.assigned.add(worker);
-					project.addWorker(worker);
-					worker.addProject(project);
-					if(!worker.isAvailable()){
-						this.available.remove(worker);
-					}
-			}
+		if (unableToAssign(worker, project)) {
+			return;
 		}
+
+		if (!this.getAssignedWorkers().contains(worker)) {
+			this.assigned.add(worker);
+		}
+		project.addWorker(worker);
+		worker.addProject(project);
+		if (!worker.isAvailable()) {
+			this.available.remove(worker);
+		}
+	}
+
+	private boolean unableToAssign(Worker worker, Project project) {
+		if (!this.available.contains(worker)) {
+			return true;
+		}
+		if (project.getWorkers().contains(worker)) {
+			return true;
+		}
+		if (project.getStatus() == ProjectStatus.ACTIVE || project.getStatus() == ProjectStatus.FINISHED) {
+			return true;
+		}
+		if (worker.willOverload(project)) {
+			return true;
+		}
+		if (!project.isHelpful(worker)) {
+			return true;
+		}
+		return false;
 	}
 
 	public void unassign(Worker worker, Project project) {
