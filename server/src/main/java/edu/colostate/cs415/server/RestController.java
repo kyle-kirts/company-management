@@ -281,6 +281,31 @@ public class RestController {
 		return OK;
 	}
 
+	//Helper to ensure that only canonical instance of Qualifications is used 
+	private Qualification resolveQualification(String description) {
+    if (description == null || description.trim().isEmpty()) {
+        throw new RuntimeException("Qualification description is null or empty.");
+    }
+
+    Qualification probe = new Qualification(description);
+
+    return company.getQualifications().stream()
+            .filter(q -> q.equals(probe))
+            .findFirst()
+            .orElseThrow(() -> new RuntimeException("Qualifications not found in company."));
+	}
+
+	private Set<Qualification> resolveQualifications(String[] descriptions) {
+		if (descriptions == null || descriptions.length == 0) {
+			throw new RuntimeException("Qualifications cannot be null or empty.");
+		}
+
+		return Arrays.stream(descriptions)
+				.map(this::resolveQualification)
+				.collect(Collectors.toSet());
+	}
+
+
 	// Logs every request received
 	private void logRequest(Request request, Response response) {
 		log.info(request.requestMethod() + " " + request.pathInfo() + "\nREQUEST:\n" + request.body() + "\nRESPONSE:\n"
