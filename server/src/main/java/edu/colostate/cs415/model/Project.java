@@ -91,14 +91,14 @@ public class Project {
 	}
 
 	public Set<Qualification> getRequiredQualifications() {
-		return this.qualifications;
+		return new HashSet<>(this.qualifications);
 	}
 
 	public void addQualification(Qualification qualification) {
 		if (qualification == null) {
 		throw new IllegalArgumentException("Must be a valid qualification");
 		}
-		if (this.status == ProjectStatus.ACTIVE || this.status == ProjectStatus.FINISHED) {
+		if (this.status == ProjectStatus.FINISHED) {
         throw new IllegalArgumentException("Cannot add qualification to an active or finished project");
     	}
 		this.qualifications.add(qualification);

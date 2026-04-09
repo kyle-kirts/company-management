@@ -21,8 +21,8 @@ public class ProjectTest {
 		assertEquals("Project Runway", p.getName());
 		assertEquals(2, p.getSize().getValue());
 		assertEquals(ProjectStatus.PLANNED, p.getStatus());
-		//assertEquals(0, p.getWorkers.size());
-		//assertEquals(2, p.getRequiredQualifications().size());
+		assertEquals(0, p.getWorkers().size());
+		assertEquals(2, p.getRequiredQualifications().size());
 		
 	}
 
@@ -58,7 +58,7 @@ public class ProjectTest {
 		Set<Qualification> qs = new HashSet<>();
 		qs.add(new Qualification("Sean Kelley"));
 		qs.add(new Qualification("Grace Kelsey"));
-		Project p = new Project("Project Runway", qs, null);
+		new Project("Project Runway", qs, null);
 	}
 
 	@Test
@@ -81,6 +81,26 @@ public class ProjectTest {
 
 		assertNotNull(p);
 		assertEquals(3, p.getSize().getValue());
+	}
+
+	@Test
+	public void test_does_nothing_constructor() {
+
+	}
+
+	@Test
+	public void test_empty_name_constructor() {
+
+	}
+
+	@Test
+	public void test_wrong_name_constructor() {
+
+	}
+
+	@Test
+	public void test_wrong_qualifications_constructor() {
+
 	}
 
 	@Test
@@ -174,12 +194,32 @@ public class ProjectTest {
 	}
 
 	@Test
+	public void test_null_setStatus() {
+
+	}
+
+	@Test
 	public void testValidEnumgetStatus(){
 		Set<Qualification> qs = new HashSet<>();
 		qs.add(new Qualification("Java"));
 		Project p = new Project("Projected", qs, ProjectSize.MEDIUM);
 
 		assertEquals(p.getStatus(), ProjectStatus.PLANNED);
+	}
+
+	@Test
+	public void test_active_getStatus() {
+
+	}
+
+	@Test
+	public void test_finished_getStatus() {
+
+	}
+
+	@Test
+	public void test_null_getStatus() {
+
 	}
 
 	@Test
@@ -494,6 +534,11 @@ public class ProjectTest {
 	}
 
 	@Test
+	public void test_false_isHelpful() {
+
+	}
+
+	@Test
 	public void test_someQualifications_getRequiredQualifications() {
 		Set<Qualification> qs = new HashSet<>();
 		Qualification q1 = new Qualification("Sean Kelley");
@@ -506,6 +551,11 @@ public class ProjectTest {
 		assertEquals(2, p.getRequiredQualifications().size());
 		assertTrue(p.getRequiredQualifications().contains(q1));
 		assertTrue(p.getRequiredQualifications().contains(q2));
+	}
+
+	@Test
+	public void test_without_copy_getRequiredQualifications() {
+
 	}
 
 	@Test
@@ -549,6 +599,16 @@ public class ProjectTest {
 		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
 
 		p.addQualification(null);
+	}
+
+	@Test
+	public void test_suspend_any_status_addQualification() {
+
+	}
+
+	@Test
+	public void test_without_change_status_addQualification() {
+
 	}
 
 	@Test
@@ -649,6 +709,11 @@ public class ProjectTest {
 	}
 
 	@Test
+	public void test_emptyQualifications_getMissingQualifications() {
+
+	}
+
+	@Test
 	public void test_expectedState_toDTO() {
 		Set<Qualification> projectQs = new HashSet<>();
 		Qualification q1 = new Qualification("Bob B.");
@@ -721,5 +786,20 @@ public class ProjectTest {
 		ProjectDTO dto = p.toDTO();
 		assertEquals(ProjectSize.SMALL, dto.getSize());
 		assertEquals(ProjectStatus.FINISHED, dto.getStatus());
+	}
+
+	@Test
+	public void test_wrong_missing_qualifications_toDTO() {
+
+	}
+
+	@Test
+	public void test_wrong_qualifications_toDTO() {
+
+	}
+
+	@Test
+	public void test_wrong_workers_toDTO() {
+
 	}
 }
