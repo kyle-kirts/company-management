@@ -41,7 +41,7 @@ public class Qualification {
 	}
 
 	public Set<Worker> getWorkers() {
-		return this.workers;
+		return new HashSet<>(workers);
 	}
 
 	public void addWorker(Worker worker) {
@@ -51,7 +51,7 @@ public class Qualification {
 
 	public void removeWorker(Worker worker) {
 		if(worker == null) throw new IllegalArgumentException("Worker can't be null");
-		if (!(workers.isEmpty())) {
+		if (!workers.isEmpty()) {
 			workers.remove(worker);
 		}
 	}

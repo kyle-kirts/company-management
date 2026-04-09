@@ -73,11 +73,11 @@ public class Company {
 }
 
 	public Set<Project> getProjects() {
-		return this.projects;
+		return new HashSet<>(projects);
 	}
 
 	public Set<Qualification> getQualifications() {
-		return this.qualifications;
+		return new HashSet<>(qualifications);
 	}
 
 	public Worker createWorker(String name, Set<Qualification> qualifications, double salary) {
@@ -163,15 +163,13 @@ public class Company {
 			throw new IllegalArgumentException("Worker or Project does not belong to");
 		}
 		if(this.available.contains(worker) && !project.getWorkers().contains(worker)){
-        if(project.getStatus() != ProjectStatus.ACTIVE && project.getStatus() != ProjectStatus.FINISHED){
-        if(!worker.willOverload(project) && project.isHelpful(worker)){
+        if(project.getStatus() != ProjectStatus.ACTIVE && project.getStatus() != ProjectStatus.FINISHED && !worker.willOverload(project) && project.isHelpful(worker)){
 					this.assigned.add(worker);
 					project.addWorker(worker);
 					worker.addProject(project);
 					if(!worker.isAvailable()){
 						this.available.remove(worker);
 					}
-				}
 			}
 		}
 	}
