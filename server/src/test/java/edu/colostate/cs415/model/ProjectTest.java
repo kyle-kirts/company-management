@@ -13,17 +13,20 @@ public class ProjectTest {
 	@Test
 	public void test_nonNullName_someQualifications_mediumProject() {
 		Set<Qualification> qs = new HashSet<>();
-		qs.add(new Qualification("Sean Kelley"));
-		qs.add(new Qualification("Grace Kelsey"));
+		Qualification q1 = new Qualification("Sean Kelley");
+		Qualification q2 = new Qualification("Grace Kelsey");
+		qs.add(q1);
+		qs.add(q2);
 		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
 
 		assertNotNull(p);
 		assertEquals("Project Runway", p.getName());
-		assertEquals(2, p.getSize().getValue());
+		assertEquals(ProjectSize.MEDIUM, p.getSize());
 		assertEquals(ProjectStatus.PLANNED, p.getStatus());
 		assertEquals(0, p.getWorkers().size());
 		assertEquals(2, p.getRequiredQualifications().size());
-		
+		assertTrue(p.getMissingQualifications().contains(q1));
+		assertTrue(p.getMissingQualifications().contains(q2));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -88,19 +91,27 @@ public class ProjectTest {
 
 	}
 
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void test_empty_name_constructor() {
-
-	}
-
-	@Test
-	public void test_wrong_name_constructor() {
-
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Qualificaiton1"));
+		new Project("   ", qs, ProjectSize.SMALL);
 	}
 
 	@Test
 	public void test_wrong_qualifications_constructor() {
+		Qualification q1 = new Qualification("Sean Kelley");
+		Qualification q2 = new Qualification("Grace Kelsey");
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(q1);
+		qs.add(q2);
+		Project p = new Project("Project Runway", qs, ProjectSize.MEDIUM);
 
+		qs.clear();
+
+		assertEquals(2, p.getRequiredQualifications().size());
+		assertTrue(p.getRequiredQualifications().contains(q1));
+		assertTrue(p.getRequiredQualifications().contains(q2));
 	}
 
 	@Test
@@ -602,16 +613,6 @@ public class ProjectTest {
 	}
 
 	@Test
-	public void test_suspend_any_status_addQualification() {
-
-	}
-
-	@Test
-	public void test_without_change_status_addQualification() {
-
-	}
-
-	@Test
 	public void test_hasWorkers_removeAllWorkers() {
 		Set<Qualification> qs = new HashSet<>();
 		Qualification q = new Qualification("Java");
@@ -706,11 +707,6 @@ public class ProjectTest {
 
 		assertNotNull(missing);
 		assertEquals(0, missing.size());
-	}
-
-	@Test
-	public void test_emptyQualifications_getMissingQualifications() {
-
 	}
 
 	@Test

@@ -98,7 +98,6 @@ public class Project {
 		if (qualification == null) {
 		throw new IllegalArgumentException("Must be a valid qualification");
 		}
-
 		this.qualifications.add(qualification);
 	}
 
