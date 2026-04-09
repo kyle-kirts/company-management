@@ -221,19 +221,20 @@ public class RestController {
 	}
 
 	private String createWorker(Request request) {
-		WorkerDTO assignmentDTO = gson.fromJson(request.body(), WorkerDTO.class);
-		if (request.params("name").equals(assignmentDTO.getName())) {
-			Stream<String> stream = Arrays.stream(assignmentDTO.getQualifications());
-			Set<Qualification> qualifications = stream.map(Qualification::new)
-													  .collect(Collectors.toSet());
+		WorkerDTO workerDTO = gson.fromJson(request.body(), WorkerDTO.class);
 
-			if (!company.getQualifications().containsAll(qualifications)) {
-				throw new RuntimeException("Qualifications not found in company.");
-			}
-
-			company.createWorker(assignmentDTO.getName(), qualifications, assignmentDTO.getSalary());
-		} else
+		if (!request.params("name").equals(workerDTO.getName())) {
 			throw new RuntimeException("Worker names do not match.");
+		}
+
+		// Resolve to the company’s Qualification instances (no new Qualification objects)
+		Set<Qualification> qualifications = resolveQualifications(workerDTO.getQualifications());
+
+		Worker created = company.createWorker(workerDTO.getName(), qualifications, workerDTO.getSalary());
+		if (created == null) {
+			throw new RuntimeException("Failed to create worker.");
+		}
+
 		return OK;
 	}
 
@@ -258,26 +259,19 @@ public class RestController {
 
 	private String createProject(Request request) {
 		ProjectDTO projectDTO = gson.fromJson(request.body(), ProjectDTO.class);
-		if (request.params("name").equals(projectDTO.getName())) {
-			if (projectDTO.getQualifications() == null || projectDTO.getQualifications().length == 0) {
-				throw new RuntimeException("Project qualifications cannot be null or empty.");
-			}
 
-			Stream<String> stream = Arrays.stream(projectDTO.getQualifications());
-			Set<Qualification> qualifications = stream.map(Qualification::new)
-													  .collect(Collectors.toSet());
-
-			if (!company.getQualifications().containsAll(qualifications)) {
-				throw new RuntimeException("Qualifications not found in company.");
-			}
-
-			Project createdProject = company.createProject(projectDTO.getName(), qualifications, projectDTO.getSize());
-			if (createdProject == null) {
-				throw new RuntimeException("Failed to create project.");
-			}
-		} else {
+		if (!request.params("name").equals(projectDTO.getName())) {
 			throw new RuntimeException("Project names do not match.");
 		}
+
+		// Resolve to the company’s Qualification instances (no new Qualification objects)
+		Set<Qualification> qualifications = resolveQualifications(projectDTO.getQualifications());
+
+		Project createdProject = company.createProject(projectDTO.getName(), qualifications, projectDTO.getSize());
+		if (createdProject == null) {
+			throw new RuntimeException("Failed to create project.");
+		}
+
 		return OK;
 	}
 

@@ -12,6 +12,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import java.util.Arrays;
 
 import com.google.gson.Gson;
 
@@ -549,6 +550,94 @@ public class RestControllerTest {
         assertRequestFails(Request.put(url("/api/finish"))
                                     .addHeader("Content-Type", "application/json")
                                     .bodyString(jsonString, ContentType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void testPostWorker_updatesQualificationWorkersList() throws IOException {
+        String[] qualifications = new String[] { "Java" };
+        WorkerDTO workerDTO = new WorkerDTO("Alice A", 1000, 0, new String[] {}, qualifications);
+
+        // POST new worker
+        Request.post(url("/api/workers/Alice%20A"))
+            .bodyString(gson.toJson(workerDTO), ContentType.APPLICATION_JSON)
+            .execute()
+            .returnContent()
+            .asString();
+
+        // GET qualification and confirm it now lists the new worker
+        QualificationDTO javaDto = gson.fromJson(
+            Request.get(url("/api/qualifications/Java"))
+                .execute()
+                .returnContent()
+                .asString(),
+            QualificationDTO.class
+        );
+
+        assertTrue(Arrays.asList(javaDto.getWorkers()).contains("Alice A"));
+    }
+
+    @Test
+    public void testPostWorker_multipleQualifications_updatesAllQualificationWorkersLists() throws IOException {
+        String[] qualifications = new String[] { "Java", "Python" };
+        WorkerDTO workerDTO = new WorkerDTO("Multi Qual", 1000, 0, new String[] {}, qualifications);
+
+        Request.post(url("/api/workers/Multi%20Qual"))
+            .bodyString(gson.toJson(workerDTO), ContentType.APPLICATION_JSON)
+            .execute()
+            .returnContent()
+            .asString();
+
+        QualificationDTO javaDto = gson.fromJson(
+            Request.get(url("/api/qualifications/Java"))
+                .execute()
+                .returnContent()
+                .asString(),
+            QualificationDTO.class
+        );
+
+        QualificationDTO pythonDto = gson.fromJson(
+            Request.get(url("/api/qualifications/Python"))
+                .execute()
+                .returnContent()
+                .asString(),
+            QualificationDTO.class
+        );
+
+        assertTrue(Arrays.asList(javaDto.getWorkers()).contains("Multi Qual"));
+        assertTrue(Arrays.asList(pythonDto.getWorkers()).contains("Multi Qual"));
+    }
+
+    @Test
+    public void testPostProject_projectListCountIncreases() throws IOException {
+        ProjectDTO[] before = gson.fromJson(
+            Request.get(url("/api/projects")).execute().returnContent().asString(),
+            ProjectDTO[].class
+        );
+        assertEquals(12, before.length);
+
+        String[] qualifications = new String[] { "Java" };
+        ProjectDTO projectDTO = new ProjectDTO(
+            "Count Project",
+            ProjectSize.SMALL,
+            ProjectStatus.ACTIVE,     // controller/model should still store PLANNED initially
+            new String[] {},
+            qualifications,
+            new String[] {}
+        );
+
+        Request.post(url("/api/projects/Count%20Project"))
+            .bodyString(gson.toJson(projectDTO), ContentType.APPLICATION_JSON)
+            .execute()
+            .returnContent()
+            .asString();
+
+        ProjectDTO[] after = gson.fromJson(
+            Request.get(url("/api/projects")).execute().returnContent().asString(),
+            ProjectDTO[].class
+        );
+
+        assertEquals(13, after.length);
+        assertTrue(Arrays.stream(after).anyMatch(p -> "Count Project".equals(p.getName())));
     }
     
     @Test
