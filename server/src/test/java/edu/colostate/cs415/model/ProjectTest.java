@@ -2,6 +2,7 @@ package edu.colostate.cs415.model;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -84,11 +85,6 @@ public class ProjectTest {
 
 		assertNotNull(p);
 		assertEquals(3, p.getSize().getValue());
-	}
-
-	@Test
-	public void test_does_nothing_constructor() {
-
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -189,6 +185,7 @@ public class ProjectTest {
 	@Test (expected = IllegalArgumentException.class)
 	public void testNullStatus_setStatus(){
 		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
 		Project p = new Project("Projected", qs, ProjectSize.MEDIUM);
 
 		p.setStatus(null);
@@ -205,11 +202,6 @@ public class ProjectTest {
 	}
 
 	@Test
-	public void test_null_setStatus() {
-
-	}
-
-	@Test
 	public void testValidEnumgetStatus(){
 		Set<Qualification> qs = new HashSet<>();
 		qs.add(new Qualification("Java"));
@@ -220,17 +212,24 @@ public class ProjectTest {
 
 	@Test
 	public void test_active_getStatus() {
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
+		Project project = new Project("Project", qs, ProjectSize.SMALL);
 
+		project.setStatus(ProjectStatus.ACTIVE);
+		assertTrue(project.getStatus() == ProjectStatus.ACTIVE);
+		assertNotNull(project);
 	}
 
 	@Test
 	public void test_finished_getStatus() {
+		Set<Qualification> qs = new HashSet<>();
+		qs.add(new Qualification("Java"));
+		Project project = new Project("Project", qs, ProjectSize.SMALL);
 
-	}
-
-	@Test
-	public void test_null_getStatus() {
-
+		project.setStatus(ProjectStatus.FINISHED);
+		assertTrue(project.getStatus() == ProjectStatus.FINISHED);
+		assertNotNull(project);
 	}
 
 	@Test
@@ -545,11 +544,6 @@ public class ProjectTest {
 	}
 
 	@Test
-	public void test_false_isHelpful() {
-
-	}
-
-	@Test
 	public void test_someQualifications_getRequiredQualifications() {
 		Set<Qualification> qs = new HashSet<>();
 		Qualification q1 = new Qualification("Sean Kelley");
@@ -566,7 +560,14 @@ public class ProjectTest {
 
 	@Test
 	public void test_without_copy_getRequiredQualifications() {
-
+		Set<Qualification> qs = new HashSet<>();
+		Qualification q1 = new Qualification("Sean Kelley");
+		Qualification q2 = new Qualification("Grace Kelsey");
+		qs.add(q1);
+		qs.add(q2);
+		Project p = new Project("ProjeRunwayct ", qs, ProjectSize.MEDIUM);
+		qs.clear();
+		assertEquals(2, p.getRequiredQualifications().size());
 	}
 
 	@Test
@@ -729,7 +730,8 @@ public class ProjectTest {
 		assertTrue(actualDTO.getMissingQualifications().length == 0);
 		assertTrue(actualDTO.getQualifications().length == 1);
 		assertTrue(actualDTO.getSize() == ProjectSize.MEDIUM);
-
+		assertTrue(Arrays.asList(actualDTO.getWorkers()).contains("Bob b"));
+		assertTrue(Arrays.asList(actualDTO.getQualifications()).contains("Bob B."));
 	}
 
 	@Test
@@ -786,16 +788,19 @@ public class ProjectTest {
 
 	@Test
 	public void test_wrong_missing_qualifications_toDTO() {
+		Set<Qualification> projectQs = new HashSet<>();
+		Qualification q1 = new Qualification("Bob B.");
+		projectQs.add(q1);
 
-	}
+		Project p = new Project("Project Runway", projectQs, ProjectSize.MEDIUM);
 
-	@Test
-	public void test_wrong_qualifications_toDTO() {
+		Set<Qualification> workerQs = new HashSet<>();
+		workerQs.add(new Qualification("Java"));
+		Worker w = new Worker("Bob b", workerQs, 100000.0);
 
-	}
+		p.addWorker(w);
 
-	@Test
-	public void test_wrong_workers_toDTO() {
-
+		ProjectDTO actualDTO = p.toDTO();
+		assertTrue(Arrays.asList(actualDTO.getMissingQualifications()).contains("Bob B."));
 	}
 }
