@@ -73,11 +73,11 @@ public class Company {
 }
 
 	public Set<Project> getProjects() {
-		return this.projects;
+		return new HashSet<>(projects);
 	}
 
 	public Set<Qualification> getQualifications() {
-		return this.qualifications;
+		return new HashSet<>(qualifications);
 	}
 
 	public Worker createWorker(String name, Set<Qualification> qualifications, double salary) {
@@ -159,6 +159,7 @@ public class Company {
 		if (worker == null || project == null) {
         	throw new IllegalArgumentException("Cannot assign a null worker or project");
     	}
+
 		if (!this.getEmployedWorkers().contains(worker) || !this.getProjects().contains(project)) {
 			throw new IllegalArgumentException("Worker and Project must belong to the company");
 		}

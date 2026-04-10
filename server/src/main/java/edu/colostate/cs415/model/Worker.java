@@ -70,7 +70,7 @@ public class Worker {
 	}
 
 	public Set<Qualification> getQualifications() {
-		return this.qualifications;
+		return new HashSet<>(qualifications);
 	}
 
 	public void addQualification(Qualification qualification) {
@@ -81,7 +81,7 @@ public class Worker {
 	}
 
 	public Set<Project> getProjects() {
-		return this.projects;
+		return new HashSet<>(projects);
 	}
 
 	public void addProject(Project project) {

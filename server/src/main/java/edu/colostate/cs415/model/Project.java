@@ -83,7 +83,7 @@ public class Project {
 	}
 
 	public Set<Worker> getWorkers() {
-		return this.workers;
+		return new HashSet<>(workers);
 	}
 
 	public void removeAllWorkers() {
@@ -91,7 +91,7 @@ public class Project {
 	}
 
 	public Set<Qualification> getRequiredQualifications() {
-		return new HashSet<>(this.qualifications);
+		return new HashSet<>(qualifications);
 	}
 
 	public void addQualification(Qualification qualification) {
@@ -136,9 +136,7 @@ public class Project {
 										.map(Qualification::toString)
 										.toArray(String[]::new);
 
-		Set<Qualification> missingQualifications = getMissingQualifications();
-
-		String[] missingQualificationsString = missingQualifications.stream()
+		String[] missingQualificationsString = getMissingQualifications().stream()
 										.map(Qualification::toString)
 										.toArray(String[]::new);
 
