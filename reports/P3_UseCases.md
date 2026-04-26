@@ -40,7 +40,20 @@
 |-------------------------------|------------------------------------------------|
 | 1. (In projects page) User clicks "Create New Project" Button | 2. System Displays form with name(text), size(dropdown), required qualifications(checkbox) and submit button|
 | 3a. User Enters Values and presses submit | 4a. New Project is Created, displayed in Projects tab. form disappears |
-| 3b. User omits values from any part of the form and presses submit | 4b. Error message appears with text"[missing element] cannot be empty" | 
+| 3b. User omits values from any part of the form and presses submit | 4b. Error message appears with text"[missing element] cannot be empty" |
+
+## 10) Assign worker
+| Actor action                  | System Response                                |
+|-------------------------------|------------------------------------------------|
+| 1. User clicks on Assign button | 2. System displays a drop down of all available workers |
+| 3. User clicks on worker name | 4. System assigns worker to project and the change viewable on the project tab |
+
+## 11) Unassign worker
+| Actor action                  | System Response                                |
+|-------------------------------|------------------------------------------------|
+| 1. User clicks on Unassign button | 2. System displays a drop down of all assigned workers |
+| 3. User clicks on worker name | 4. System unassigns worker from project and the change is viewable on the project tab |
+
 ## 12) Start project
 | Actor action                  | System Response                                |
 |-------------------------------|------------------------------------------------|
