@@ -28,7 +28,7 @@ const Qualifications = () => {
     return (
         <div style={pageStyle}>
             <h1>
-                This page displays a table containing all the qualifications.
+                Company Qualifications
             </h1>
             <ClickList active={active} list={qualifications} item={Qualification} path='/qualifications' id='description' />
         </div>
