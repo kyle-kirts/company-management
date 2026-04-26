@@ -35,6 +35,15 @@
 | 3a. User clicks on an assigned worker | 4a. System redirects to Workers tab, highlighting specific worker |
 | 3b. User clicks on a qualification | 4b. System redirects to qualifications tab, highlighting specific qualifications |
 
+## 7) Create new qualification
+| Actor action                  | System Response                                |
+|-------------------------------|------------------------------------------------|
+| 1. (In qualifications page) User clicks "Create New Qualification" Button | System Displays form with name(text), workers(checkbox) and submit button |
+| 3a. User Enters Values and presses submit | 4a. New Qualification is created with selected workers. Form disaappears. Qualification is displayed in the Qualifications tab with workers selected.  |
+| 3b. Users omits name | 4b. Error message appears with text "[missing element] cannot be empty" |
+| 3c. Users doesn't select any workers | 4c. New Qualification is created. Form disappears. Qualification is now displayed in the Qualifications tab without list of workers. |
+
+
 ## 9) Create new project 
 | Actor action                  | System Response                                |
 |-------------------------------|------------------------------------------------|
