@@ -44,6 +44,16 @@
 | 3c. Users doesn't select any workers | 4c. New Qualification is created. Form disappears. Qualification is now displayed in the Qualifications tab without list of workers. |
 
 
+## 8) Create new worker
+| Actor action                  | System Response                                |
+|-------------------------------|------------------------------------------------|
+| 1. User clicks "Create New Worker" button on the Workers tab | 2. System displays a form with name, salary, qualifications, and a submit button |
+| 3a. User enters a valid name, salary, and selects at least one qualification, then presses submit | 4a. New worker is created and displayed in the Workers tab |
+| 3b. User leaves the name field empty and presses submit | 4b. Error message appears with text "name cannot be empty" |
+| 3c. User leaves the salary field empty or enters an invalid salary and presses submit | 4c. Error message appears with text "salary must be a non-negative number" |
+| 3d. User does not select any qualifications and presses submit | 4d. Error message appears with text "worker must have at least one qualification" |
+
+
 ## 9) Create new project 
 | Actor action                  | System Response                                |
 |-------------------------------|------------------------------------------------|
