@@ -16,14 +16,14 @@
 ## Use Case1: Scenarios
 
 **Successful View Table of Qualifications**
-*   **Test Path:** [UC 7 (View Qualification)]
+*   **Test Path:** [UC 1 (View Qualification)]
 *   **Setup:** Database contains multiple qualifications.
 *   **Action Steps:**
     1. Click on Qualifications tab
 *   **Expected Final Result:** Table of qualifications is shown.
 
 **Unsuccessful View Table of Qualifications**
-*   **Test Path:** [UC 7 (View Qualification)]
+*   **Test Path:** [UC 1 (View Qualification)]
 *   **Setup:** Database contains no qualifications.
 *   **Action Steps:**
     1. Click on Qualifications tab
