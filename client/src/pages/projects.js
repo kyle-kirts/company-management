@@ -138,8 +138,6 @@ const Projects = () => {
     return (
         <div style={pageStyle}>
             <h1>Company Projects</h1>
-            <ClickList active={active} list={projects} item={Project} path='/projects' id='name' />
-
             {!showForm && (
                 <button  style={createProjectButtonStyle}onClick={() => setShowForm(true)}>
                     + Create Project
@@ -151,6 +149,7 @@ const Projects = () => {
                     onCreated={handleCreated}
                 />
             )}
+            <ClickList active={active} list={projects} item={Project} path='/projects' id='name' />
         </div>
     )
 }
