@@ -137,7 +137,7 @@
 4. User starts the project
 
 * **Expected Final Result:** Project appears in project list with Active status and assigned workers displayed.
-
+* **Expected System Response:** System updates the project information, saves assigned workers, and changes the project status to Active.
 
 ### Workflow Test 2: Assign, Finish, and Unassign Worker
 
@@ -149,3 +149,4 @@
 5. User unassigns the worker
 
 * **Expected Final Result:** Project status changes to Finished and worker is removed from assigned employees list.
+* **Expected System Response:** System updates the project status correctly and refreshes the assigned workers list after each action.
