@@ -128,3 +128,25 @@
 
 ## **Workflow Tests**
 
+### Workflow Test 1: Create and Start Project
+
+* **Setup:** System contains workers and qualifications.
+1. User creates a new project
+2. User assigns workers to the project
+3. User views project details
+4. User starts the project
+
+* **Expected Final Result:** Project appears in project list with Active status and assigned workers displayed.
+* **Expected System Response:** System updates the project information, saves assigned workers, and changes the project status to Active.
+
+### Workflow Test 2: Assign, Finish, and Unassign Worker
+
+* **Setup:** System contains active projects and workers.
+1. User selects a project
+2. User assigns a worker
+3. User starts the project
+4. User finishes the project
+5. User unassigns the worker
+
+* **Expected Final Result:** Project status changes to Finished and worker is removed from assigned employees list.
+* **Expected System Response:** System updates the project status correctly and refreshes the assigned workers list after each action.
