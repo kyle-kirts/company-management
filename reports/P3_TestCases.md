@@ -33,30 +33,30 @@
 
 ### Use Case 2: View Workers
 **Successful List View (Happy Path)**
-**Setup:** Server is running and has multiple workers in the DB.
+* **Setup:** Server is running and has multiple workers in the DB.
 1. User clicks on Workers tab
 2. System displays the complete list of workers in the database
 
 
 **Empty Workers (Alternative Path)**
-**Setup:** Database contains no workers.
+* **Setup:** Database contains no workers.
 1. User clicks on Workers tab
 2. System displays an empty list of workers
 
 ### Use Case 3: View Projects
 **Successful List View (Happy Path)**
-**Setup:** Server is running and has multiple projects in the DB.
+* **Setup:** Server is running and has multiple projects in the DB.
 1. User clicks on Projects tab
 2. System displays the complete list of projects in the database
 
 **Empty Projects (Alternative Path)**'
-**Setup:** Database contains no projects.
+* **Setup:** Database contains no projects.
 1. User clicks on Projects tab
 2. System displays an empty list of projects
 
 ### Use Case 4: View Qualification Details
 **Successful List View (Happy Path)**
-**Setup:** Server is running and has a qualification in the DB.
+* **Setup:** Server is running and has a qualification in the DB.
 1. User clicks on Qualification tab
 2. System displays the complete list of qualifications in the database
 3. User clicks on a qualification in the list
@@ -64,7 +64,7 @@
 
 ### Use Case 5: View Worker Details
 **Successful List View (Happy Path)**
-**Setup:** Server is running and has a worker in the DB.
+* **Setup:** Server is running and has a worker in the DB.
 1. User clicks on Workers tab
 2. System displays the complete list of workers in the database
 3. User clicks on a worker in the list
@@ -72,7 +72,7 @@
 
 ### Use Case 6: View Project Details
 **Successful List View (Happy Path)**
-**Setup:** Server is running and has multiple projects in the DB.
+* **Setup:** Server is running and has multiple projects in the DB.
 1. User clicks on Projects tab
 2. System displays the complete list of projects in the database
 3. User clicks on a project in the list
