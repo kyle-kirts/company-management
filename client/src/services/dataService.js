@@ -35,3 +35,7 @@ export function getProjects() {
 export function getProject(name) {
    return axios.get(SERVER_ADDRESS + 'projects/' + name).then((res) => JSON.parse(res.request.response))
 }
+
+export function createProject(name, qualifications, size) {
+    return axios.post(SERVER_ADDRESS + 'projects/' + name, {name: name, qualifications: qualifications, size: size})
+}
