@@ -55,7 +55,7 @@
 2. System displays an empty list of projects
 
 ### Use Case 4: View Qualification Details
-**Successful List View (Happy Path)**
+**Successful View Details (Happy Path)**
 * **Setup:** Server is running and has a qualification in the DB.
 1. User clicks on Qualification tab
 2. System displays the complete list of qualifications in the database
@@ -63,7 +63,7 @@
 4. System expands the qualification object, showing the qualification description and workers that have that particular qualification
 
 ### Use Case 5: View Worker Details
-**Successful List View (Happy Path)**
+**Successful View Details (Happy Path)**
 * **Setup:** Server is running and has a worker in the DB.
 1. User clicks on Workers tab
 2. System displays the complete list of workers in the database
@@ -71,12 +71,102 @@
 4. System expands the worker object, showing the worker's name, salary, current workload value, projects they are assigned to, and their qualifications
 
 ### Use Case 6: View Project Details
-**Successful List View (Happy Path)**
+**Successful View Details (Happy Path)**
 * **Setup:** Server is running and has multiple projects in the DB.
 1. User clicks on Projects tab
 2. System displays the complete list of projects in the database
 3. User clicks on a project in the list
 4. System espands the project object, showing the project's name, size, status, assigned employees, required qualifications, and missing qualifications. Missing qualifications are visualized by color coding: red = missing, green = satisfied.
+
+### Use Case 7: Create Qualification
+**Successful Creation (Happy Path)**
+* **Setup:** Server is running, user is on Qualifications tab
+1. User clicks on create qualification button 
+2. System displays a form for the user to fill out asking for a description
+3. User enters a valid description (String containing 1 or more characters)
+4. User clicks on enter/submit
+5. System displays new qualification in the qualifications list
+
+**Invalid Description**
+* **Setup:** Server is running, user is on Qualifications tab
+1. User clicks on create qualification button 
+2. System displays a form for the user to fill out asking for a description
+3. User leaves description box blank
+4. User clicks on enter/submit
+5. System does not create qualification, displays message inside of the form stating a user has given an invalid description
+
+**Exit Form**
+* **Setup:** Server is running, user is on Qualifications tab
+1. User clicks on create qualification button 
+2. System displays a form for the user to fill out asking for a description
+3. User clicks on the cancel button
+4. System closes create qualification form and returns to displaying the list of qualifications
+
+### Use Case 8: Create Worker
+**Successful Creation (Happy Path)**
+* **Setup:** Server is running, user is on Workers tab
+1. User clicks on create worker button 
+2. System displays a form for the user to fill out asking for a name, salary and check boxes to select qualifications
+3. User enters a valid name, salary and checks atleast 1 qualification check box
+4. User clicks on enter/submit
+5. System displays new worker in the workers list
+
+**Invalid Name**
+* **Setup:** Server is running, user is on Workers tab
+1. User clicks on create worker button 
+2. System displays a form for the user to fill out asking for a name, salary and check boxes to select qualifications
+3. User leaves the name empty, gives a valid salary and checks atleast 1 qualification check box
+4. User clicks on enter/submit
+5. System does not create worker, displays message stating the user has given an invalid name
+
+**Invalid Salary**
+* **Setup:** Server is running, user is on Workers tab
+1. User clicks on create worker button 
+2. System displays a form for the user to fill out asking for a name, salary and check boxes to select qualifications
+3. User gives a valid name, a negative salary and checks atleast 1 qualification check box
+4. User clicks on enter/submit
+5. System does not create worker, displays message stating the user has given an invalid salary
+
+**Invalid Qualifications**
+* **Setup:** Server is running, user is on Workers tab
+1. User clicks on create worker button 
+2. System displays a form for the user to fill out asking for a name, salary and check boxes to select qualifications
+3. User gives a valid name, a valid salary and doesn't check any qualification check boxes
+4. User clicks on enter/submit
+5. System does not create worker, displays message stating the user has to select atleast one qualification
+
+**Exit Form**
+* **Setup:** Server is running, user is on Worker tab
+1. User clicks on create worker button 
+2. System displays a form for the user to fill out asking for a name, salary and check boxes to select qualifications
+3. User clicks on the cancel button
+4. System closes create worker form and returns to displaying the list of workers
+
+### Use Case 9: Create Project
+**Successful Creation (Happy Path)**
+* **Setup:** Server is running, user is on Projects tab
+1. User clicks on create project button
+2. System diplays a form to the user, asking for a name, size and qualifications
+3. User gives a valid name, selects a size, selects atleast one qualification
+4. User clicks on submit/enter
+5. System creates the project, displays the project in the list on Projects tab
+
+**Invalid Name**
+* **Setup:** Server is running, user is on Projects tab
+1. User clicks on create project button
+2. System diplays a form to the user, asking for a name, size and qualifications
+3. User gives a blank name, selects a size, selects atleast one qualification
+4. User clicks on submit/enter
+5. System does not create the project, displays message steating the user has given an invalid name
+
+**Exit Form**
+* **Setup:** Server is running, user is on Projects tab
+1. User clicks on create project button
+2. System diplays a form to the user, asking for a name, size and qualifications
+3. User clicks on the cancel button
+4. System closes create project form and returns to displaying the list of projects
+
+
 
 ### Use Case 10: Assign Worker
 
