@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import ClickList from '../components/ClickList'
-import { getProjects, createProject, getQualifications } from '../services/dataService'
+import { getProjects, createProject, getQualifications, start, finish } from '../services/dataService'
 import LocationID from '../utils/location'
 import { darkGrayContainerStyle, grayContainerStyle, pageStyle, createProjectButtonStyle, formStyle, labelStyle, inputStyle, qualListStyle, qualItemStyle, buttonRowStyle, buttonStyle } from '../utils/styles'
 
@@ -8,13 +8,41 @@ const Project = (project, active) => {
    return (
        <div>
            <div>{project.name}</div>
-           {active === true ? ProjectBody(project) : null}
+           {active === true ? <ProjectBody {...project} /> : null}
        </div>
    )
 }
 
 const ProjectBody = (project) => {
     let styles = project.qualifications.map((qualification) => project.missingQualifications.includes(qualification) ? { backgroundColor: 'Tomato'}: { backgroundColor: 'LightGreen'})
+
+    const [status, setStatus] = useState(project.status)
+    const [actionError, setActionError] = useState('')
+    const canStart = (status === 'PLANNED' || status === 'SUSPENDED') && project.missingQualifications.length === 0
+    const canFinish = status === 'ACTIVE'
+
+    const handleStart = async (e) => {
+        e.stopPropagation()
+        setActionError('')
+        try {
+            await start(project.name)
+            setStatus('ACTIVE')
+        } catch (error) {
+            setActionError(error?.response?.data || 'Failed to start project.')
+        }
+    }
+
+    const handleFinish = async (e) => {
+        e.stopPropagation()
+        setActionError('')
+        try {
+            await finish(project.name)
+            setStatus('FINISHED')
+        } catch (error) {
+            setActionError(error?.response?.data || 'Failed to finish project.')
+        }
+    }
+
     return (
         <div style={grayContainerStyle}>
             <div>
@@ -26,7 +54,7 @@ const ProjectBody = (project) => {
             </div>
 
             <div>
-                Status: {project.status}
+                Status: {status}
             </div>
 
             <div>
@@ -37,6 +65,11 @@ const ProjectBody = (project) => {
                 Qualifications: <ClickList list={project.qualifications} styles={styles} path="/qualifications" />
             </div>
 
+            {actionError && <div style={{ backgroundColor: 'Tomato' }}>{actionError}</div>}
+            <div style={buttonRowStyle}>
+                <button style={buttonRowStyle} onClick={(e) => handleStart(e)} disabled={!canStart}>Start</button>
+                <button style={buttonRowStyle} onClick={(e) => handleFinish(e)} disabled={!canFinish}>Finish</button>
+            </div>
             
             
         </div>
