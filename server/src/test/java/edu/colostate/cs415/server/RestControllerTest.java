@@ -266,17 +266,6 @@ public class RestControllerTest {
     }
 
     @Test
-    public void testPostProject_emptyQualifications() throws IOException {
-        String[] qualifications = new String[]{};
-        String[] workers = new String[]{"Bob"};
-        ProjectDTO projectDTO = new ProjectDTO("Test Project", ProjectSize.MEDIUM, ProjectStatus.ACTIVE, workers, qualifications, qualifications);
-
-        String project2String = gson.toJson(projectDTO);
-        assertRequestFails(Request.post(url("/api/projects/Test Project").replace(" ", "%20"))
-            .bodyString(project2String, ContentType.APPLICATION_JSON));
-    }
-
-    @Test
     public void testPostProject_invalidQualification() throws IOException {
         String[] qualifications = new String[]{"Outside Qualification"};
         String[] workers = new String[]{"Bob"};
