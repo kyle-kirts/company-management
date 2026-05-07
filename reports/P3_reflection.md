@@ -1,0 +1,3 @@
+# Reflection
+
+We followed the given design and decided to not change much in terms of style and the checklist layout of pages. We did a good job at trying to have a UI that is aimed at being user friendly, presenting the user with error messages when needed and that is generally easy to follow. We also had a good process of figuring out Use Cases first, then using them to build Test Cases and our implementation.  
