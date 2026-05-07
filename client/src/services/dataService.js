@@ -39,3 +39,11 @@ export function getProject(name) {
 export function createProject(name, qualifications, size) {
     return axios.post(SERVER_ADDRESS + 'projects/' + name, {name: name, qualifications: qualifications, size: size})
 }
+
+export function start(project) {
+   return axios.put(SERVER_ADDRESS + '/start', {name: project})
+}
+
+export function finish(project) {
+   return axios.put(SERVER_ADDRESS + '/finish', {name: project})
+}
