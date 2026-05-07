@@ -152,8 +152,20 @@
 5. System creates the project, displays the project in the list on Projects tab
 
 **Invalid Name**
+* **Setup:** Server is running, user is on Projects tab
+1. User clicks on create project button
+2. System diplays a form to the user, asking for a name, size and qualifications
+3. User gives a blank name, selects a size, selects atleast one qualification
+4. User clicks on submit/enter
+5. System does not create the project, displays message steating the user has given an invalid name
 
-**Invalid Size**
+**Exit Form**
+* **Setup:** Server is running, user is on Projects tab
+1. User clicks on create project button
+2. System diplays a form to the user, asking for a name, size and qualifications
+3. User clicks on the cancel button
+4. System closes create project form and returns to displaying the list of projects
+
 
 
 ### Use Case 10: Assign Worker
