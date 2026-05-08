@@ -47,3 +47,11 @@ export function start(project) {
 export function finish(project) {
    return axios.put(SERVER_ADDRESS + '/finish', {name: project})
 }
+
+export function assignWorker(projectName, workerName) {
+   return axios.put(SERVER_ADDRESS + 'assign', {worker: workerName, project: projectName})
+ }
+ 
+ export function unassignWorker(projectName, workerName) {
+   return axios.put(SERVER_ADDRESS + 'unassign', {worker: workerName, project: projectName})
+ }
