@@ -75,10 +75,10 @@ public class Worker_ESTest_scaffolding {
     java.lang.System.setProperty("java.awt.headless", "true"); 
     java.lang.System.setProperty("java.io.tmpdir", "/tmp"); 
     java.lang.System.setProperty("user.country", "US"); 
-    java.lang.System.setProperty("user.dir", "/s/bach/c/under/jonahh05/CS415/t16/server"); 
-    java.lang.System.setProperty("user.home", "/s/bach/c/under/jonahh05"); 
+    java.lang.System.setProperty("user.dir", "/home/user/CS415/t16/server"); 
+    java.lang.System.setProperty("user.home", "/home/user"); 
     java.lang.System.setProperty("user.language", "en"); 
-    java.lang.System.setProperty("user.name", "jonahh05"); 
+    java.lang.System.setProperty("user.name", "user"); 
     java.lang.System.setProperty("user.timezone", "America/Denver"); 
   }
 

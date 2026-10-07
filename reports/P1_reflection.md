@@ -1,3 +1,0 @@
-## Reflection
-
-This sprint we did a great job setting up our team dynamic and scheduling our team meetings. Figuring out how we wanted to breakdown issues and what was to be expected as a complete issue, such as each method PR including its ISP/BCC tables, JUnit Tests and implementation all at once. We also set up a reliable system in our Teams chat to allow for a queue in handling PR communication. When handling PRs we gave feedback on tables, tests and code when needed instead of approving everything instantly.

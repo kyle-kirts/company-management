@@ -1,13 +1,11 @@
 # server
-This repository contains the server for the CS-415 project. The server by default runs on port 4567.  You can check if the server is running correctly by accessing http://localhost:4567/helloworld.
+The Spark Java REST server for Company Management. It runs on port 4567 by default. To check that it's up, open http://localhost:4567/helloworld.
 
-`cd server/` before running any of the following commands.
+Run all of the following commands from `server/`.
 
 ## Start server
 
-You can either run `mvn exec:exec` in the command line,
-
-or through your IDE run the class Main directly.
+Run `mvn exec:exec`, or run the `Main` class from your IDE.
 
 ## Package server into standalone JAR
 
@@ -17,4 +15,10 @@ Run `mvn package`.
 
 Run `mvn test`.
 
-The coverage report will be inside `server/target/site/jacoco`.
+The coverage report is written to `server/target/site/jacoco`.
+
+## Run mutation testing with PIT
+
+Run `mvn test-compile org.pitest:pitest-maven:mutationCoverage`.
+
+The report is written to `server/target/pit-reports`.

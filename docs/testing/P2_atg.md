@@ -34,12 +34,12 @@ About to look for failing assertions in 2480 regression sequences.
 Regression test output:
 Regression test count: 2480
 Writing regression JUnit tests...
-                                                                                                                                                            Created file /s/bach/c/under/jonahh05/CS415/t16/server/RegressionTest0.java
-Created file /s/bach/c/under/jonahh05/CS415/t16/server/RegressionTest1.java
-Created file /s/bach/c/under/jonahh05/CS415/t16/server/RegressionTest2.java
-Created file /s/bach/c/under/jonahh05/CS415/t16/server/RegressionTest3.java
-Created file /s/bach/c/under/jonahh05/CS415/t16/server/RegressionTest4.java
-Created file /s/bach/c/under/jonahh05/CS415/t16/server/RegressionTest.java
+                                                                                                                                                            Created file <repo>/server/RegressionTest0.java
+Created file <repo>/server/RegressionTest1.java
+Created file <repo>/server/RegressionTest2.java
+Created file <repo>/server/RegressionTest3.java
+Created file <repo>/server/RegressionTest4.java
+Created file <repo>/server/RegressionTest.java
 Wrote regression JUnit tests.
 About to look for flaky methods.
 
@@ -70,13 +70,13 @@ INFO: WORKER INFO: Bob b:12:Availability - false
 [INFO] 
 [INFO] 
 [INFO] --- jacoco-maven-plugin:0.8.8:report (report) @ company_management ---
-[INFO] Loading execution data file /s/bach/c/under/jonahh05/CS415/t16/server/target/jacoco.exec
+[INFO] Loading execution data file <repo>/server/target/jacoco.exec
 [INFO] Analyzed bundle 'company_management' with 13 classes
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
 
-**EvoSuite Test Generation Log. Excerpts from test generation. See also *reports/evosuite-report/report.csv***
+**EvoSuite Test Generation Log. Excerpts from test generation. See also *docs/testing/evosuite-report/statistics.csv***
 * EvoSuite 1.0.6
 * Analyzing classpath (generating inheritance tree)
   - target/classes

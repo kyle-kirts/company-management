@@ -1,16 +1,15 @@
 # client
-This repository contains the client for the CS-415 project. The client by default is on port 3000. Go to http://localhost:3000/ to access the homepage. 
+The React client for Company Management. It runs on port 3000 by default; open http://localhost:3000/ to reach the homepage. It expects the server to be running on port 4567.
 
-## Install npm
+Run all of the following commands from `client/`.
+
+## Install dependencies
 
 Run `npm install`.
 
 ## Start client
 
 Run `npm start`.
-
-Output:
-![Screenshot_2025-01-27_17-07-51](https://github.com/user-attachments/assets/aa8c34b0-f36e-4b93-a9b8-1500fe66bc16)
 
 ## Build client
 

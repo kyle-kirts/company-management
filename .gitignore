@@ -8,3 +8,4 @@ server/target/
 server/evosuite*
 server/.clover/
 server/.ekstazi/
+.DS_Store
