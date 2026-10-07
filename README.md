@@ -1,7 +1,5 @@
 # Company Management
 
-[![Maven CI](https://github.com/kyle-kirts/company-management/actions/workflows/maven_ci.yaml/badge.svg)](https://github.com/kyle-kirts/company-management/actions/workflows/maven_ci.yaml)
-
 A web app for managing a company's workers, projects, and the qualifications that connect them. It has a Java REST server and a React client. We built it as a team project for CS415 (Software Testing) at Colorado State University in Spring 2026, so most of the work went into testing the domain model: input space partitioning, coverage and mutation analysis, automated test generation, static analysis, and use-case-driven UI tests.
 
 ![Projects page](docs/screenshots/projects.png)
